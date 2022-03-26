@@ -1,0 +1,13 @@
+version: "3"
+services:
+      
+  ts-data-analyzer:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      args:
+        NPM_TOKEN: $NPM_TOKEN
+    image: ts-data-analyzer
+    container_name: ts-data-analyzer
+    ports:
+      - "8000:8000"
