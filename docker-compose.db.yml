@@ -1,0 +1,24 @@
+version: '3'
+services:
+  influxdb:
+    image: influxdb
+    container_name: influxdb
+    environment:
+      - INFLUXDB_ADMIN_ENABLED=true
+    ports:
+      - "8086:8086"
+    volumes:
+      - influxdb_lib:/var/lib/influxdb
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "8030:3000"
+    volumes:
+      - grafana_lib:/var/lib/grafana
+    depends_on:
+      - influxdb
+
+volumes:
+  grafana_lib:
+  influxdb_lib:

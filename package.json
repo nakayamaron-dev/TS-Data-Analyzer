@@ -12,7 +12,7 @@
     "build-front": "npm run build --workspace=frontend",
     "build-server": "npm run build --workspace=backend",
     "build": "npm run build --workspaces",
-    "docker-build-up": "docker-compose -f docker-compose.ci.yml up -d --build",
+    "docker-build-up": "docker-compose up -d --build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
