@@ -2,6 +2,10 @@ name: ts-data-analyzer
 
 on:
   push:
+    paths-ignore:
+      - ".storybook/**"
+      - "stories/**"
+      - "**.md"
 
 jobs:
   build:
