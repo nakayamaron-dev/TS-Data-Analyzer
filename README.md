@@ -30,3 +30,9 @@ npm run start-server
 ```
 npm run start-front
 ```
+
+### write sample lineprotocol to influxDB
+
+```
+curl -i -XPOST "http://localhost:8086/write?db=t<dbname>" --data-binary @<lineprotocol filename>
+```
