@@ -6,7 +6,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const http_errors_1 = __importDefault(require("http-errors"));
 const path_1 = __importDefault(require("path"));
 const express_1 = __importDefault(require("express"));
+const body_parser_1 = __importDefault(require("body-parser"));
+const bodyParserText = body_parser_1.default.text({ limit: "1gb" });
+const api_influx_1 = __importDefault(require("./routes/api-influx"));
+const dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config({ path: path_1.default.join(__dirname, "../.env") });
 const app = (0, express_1.default)();
+app.use("/api/v1/ts", bodyParserText, api_influx_1.default);
 app.use(express_1.default.static(path_1.default.join(__dirname, '../../frontend/dist/ts-data-analyzer')));
 app.use('/*', express_1.default.static(path_1.default.join(__dirname, '../../frontend/dist/ts-data-analyzer/index.html')));
 app.use(function (next) {

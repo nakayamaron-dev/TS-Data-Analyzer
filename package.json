@@ -28,6 +28,7 @@
   "homepage": "https://github.com/nakayamaron-dev/TS-Data-Analyzer#readme",
   "dependencies": {
     "angular-plotly.js": "^4.0.4",
+    "dotenv": "^16.0.0",
     "plotly.js-dist-min": "^2.11.1"
   },
   "devDependencies": {

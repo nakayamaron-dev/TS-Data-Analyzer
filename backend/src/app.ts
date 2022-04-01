@@ -2,8 +2,18 @@ import { NextFunction, Request, Response } from "express";
 import createError from "http-errors";
 import path from "path";
 import express from "express";
+import bodyParser from "body-parser";
+const bodyParserText = bodyParser.text({ limit: "1gb" });
+
+import apiInfluxRouter from "./routes/api-influx";
+
+// read environment variables.
+import dotenv from "dotenv";
+dotenv.config({ path: path.join(__dirname, "../.env") });
 
 const app = express();
+
+app.use("/api/v1/ts", bodyParserText, apiInfluxRouter);
 
 // Angularのルーティング
 app.use(express.static(path.join(__dirname, '../../frontend/dist/ts-data-analyzer')));
