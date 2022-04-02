@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { VisualizerComponent } from './visualizer/visualizer.component';
 import * as PlotlyJS from 'plotly.js-dist-min';
 import { PlotlyModule } from 'angular-plotly.js';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -18,7 +19,8 @@ PlotlyModule.plotlyjs = PlotlyJS;
     BrowserModule,
     AppRoutingModule,
     PlotlyModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
