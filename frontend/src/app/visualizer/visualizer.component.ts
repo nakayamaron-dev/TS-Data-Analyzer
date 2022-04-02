@@ -9,15 +9,45 @@ import { InfluxService } from '../service/influx.service';
 })
 export class VisualizerComponent implements OnInit {
 
-  public graph: any = {
-    data: [{ x: [1, 2, 3], y: [2, 5, 3], type: 'bar' }],
-    layout: {autosize: true, title: 'A Fancy Plot'},
-};
+  config: Partial<Plotly.Config> = {
+    displaylogo: false,
+    displayModeBar: false,
+    modeBarButtonsToRemove: ['sendDataToCloud'],
+  }
 
+  layout: Partial<Plotly.Layout> =  {
+    xaxis: {
+      showgrid: false,
+      linewidth: 1,
+    },
+    yaxis: {
+      linewidth: 1,
+      gridwidth: 1,
+    }
+  }
+
+  data: Partial<Plotly.PlotData>[] = [
+    {
+      x: [],
+      y: [],
+      name: "test",
+      mode: 'lines+markers',
+      marker: { size: 1 }
+    }
+  ]
   constructor(private influx: InfluxService) { }
 
-  ngOnInit(): void {
+  async updateData(): Promise<void> {
+    const res = await this.influx.getHistoricalData(["Temp"]).toPromise();
 
+    if (res) {
+      this.data[0].x = res["Temp"].map(itm => itm.timeStamp)
+      this.data[0].y = res["Temp"].map(itm => itm.value)
+    }
+  }
+
+  ngOnInit(): void {
+    this.updateData()
   }
 
 }
