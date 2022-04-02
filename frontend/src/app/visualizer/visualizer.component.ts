@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as Plotly from 'plotly.js-dist-min';
+import { InfluxService } from '../service/influx.service';
 
 @Component({
   selector: 'app-visualizer',
@@ -13,7 +14,7 @@ export class VisualizerComponent implements OnInit {
     layout: {autosize: true, title: 'A Fancy Plot'},
 };
 
-  constructor() { }
+  constructor(private influx: InfluxService) { }
 
   ngOnInit(): void {
 
