@@ -50,7 +50,6 @@ router.get("/:measurement", async (req, res, next) => {
     }
     query += " group by \"tag\"";
     try {
-        console.log(query);
         await executeInfluxQuery([query], res);
     }
     catch (err) {

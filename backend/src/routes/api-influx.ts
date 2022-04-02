@@ -18,7 +18,7 @@ const getInfluxInstance = () => {
       port: Number(process.env.INFLUXDB_PORT),
       protocol: process.env.INFLUXDB_PROTOCOL as "http" | "https"
     });
-  };
+};
 
 router.get("/:measurement/last", async (req: any, res, next) => {
     let query = String.raw`SELECT last(value) as value FROM "${req.params.measurement}"`;

@@ -2,6 +2,8 @@ import { NextFunction, Request, Response } from "express";
 import createError from "http-errors";
 import path from "path";
 import express from "express";
+// import swaggerUi from "swagger-ui-express";
+// import swaggerJSDoc from "swagger-jsdoc";
 import bodyParser from "body-parser";
 const bodyParserText = bodyParser.text({ limit: "1gb" });
 
@@ -12,6 +14,18 @@ import dotenv from "dotenv";
 dotenv.config({ path: path.join(__dirname, "../.env") });
 
 const app = express();
+
+// // Swagger
+// const options = {
+//   swaggerDefinition: {
+//     info: {
+//       title: "Express TypeScript",
+//       version: "1.0.0"
+//     }
+//   },
+//   apis: ["routes/*"]
+// };
+// app.use("/spec", swaggerUi.serve, swaggerUi.setup(swaggerJSDoc(options)));
 
 app.use("/api/v1/ts", bodyParserText, apiInfluxRouter);
 
