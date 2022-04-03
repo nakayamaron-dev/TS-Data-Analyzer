@@ -24,6 +24,16 @@ const getInfluxInstance = () => {
 };
 router.get("/:measurement/last", async (req, res, next) => {
     let query = String.raw `SELECT last(value) as value FROM "${req.params.measurement}"`;
+    const conditions = [];
+    if (req.query.tags) {
+        const tags = "^" + req.query.tags.replace(/,/g, "$|^") + "$";
+        conditions.push(String.raw `"tag" =~ /${tags}/`);
+    }
+    if (conditions.length > 0) {
+        query += " WHERE ";
+        query += conditions.join(" AND ");
+    }
+    query += " group by \"tag\"";
     try {
         await executeInfluxQuery([query], res);
     }

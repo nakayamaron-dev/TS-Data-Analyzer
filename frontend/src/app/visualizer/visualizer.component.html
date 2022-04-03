@@ -1,14 +1,21 @@
-<select class="form-select" aria-label="Default select example">
-    <option selected>Open this select menu</option>
-    <option value="1">One</option>
-    <option value="2">Two</option>
-    <option value="3">Three</option>
-  </select>
 
-<plotly-plot 
-[data]="data" 
-[layout]="layout"
-[config]="config"
-[useResizeHandler]="true" 
-[style]="{position: 'relative', width: '100%', height: '100%'}">
-</plotly-plot>
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-2">
+                <select #tagSelect class="form-select" (change)="onSelectPlotTag(tagSelect.value)">
+                    <option *ngFor="let tag of tagList">{{tag}}</option>
+                </select>
+            </div>
+        </div>
+        
+        <plotly-plot 
+        [data]="data" 
+        [layout]="layout"
+        [config]="config"
+        [useResizeHandler]="true">
+        </plotly-plot>
+    </div>
+  </div>
+
+

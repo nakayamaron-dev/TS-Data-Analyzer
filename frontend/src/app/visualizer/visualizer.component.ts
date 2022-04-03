@@ -17,12 +17,18 @@ export class VisualizerComponent implements OnInit {
 
   layout: Partial<Plotly.Layout> =  {
     xaxis: {
+      domain: [0, 0.85],
       showgrid: false,
       linewidth: 1,
     },
     yaxis: {
       linewidth: 1,
       gridwidth: 1,
+    },
+    xaxis2: {
+      domain: [0.86, 1],
+      linewidth: 1,
+      showgrid: false,
     }
   }
 
@@ -30,24 +36,45 @@ export class VisualizerComponent implements OnInit {
     {
       x: [],
       y: [],
-      name: "test",
       mode: 'lines+markers',
-      marker: { size: 1 }
+      marker: { size: 1 },
+      showlegend: false,
+    },
+    {
+      y: [],
+      type: 'histogram',
+      xaxis: 'x2',
+      showlegend: false,
     }
   ]
+
+  tagList: string[] = [];
+
   constructor(private influx: InfluxService) { }
 
-  async updateData(): Promise<void> {
-    const res = await this.influx.getHistoricalData(["Temp"]).toPromise();
+  async updateData(tagList: string[]): Promise<void> {
+    const res = await this.influx.getHistoricalData(tagList).toPromise();
 
     if (res) {
-      this.data[0].x = res["Temp"].map(itm => itm.timeStamp)
-      this.data[0].y = res["Temp"].map(itm => itm.value)
+      tagList.forEach(tag => {
+        this.data[0].x = res[tag].map(itm => itm.timeStamp)
+        this.data[0].y = res[tag].map(itm => itm.value)
+        this.data[1].y = res[tag].map(itm => itm.value)
+      })
     }
   }
 
+  onSelectPlotTag(tag: string) {
+    this.updateData([tag]);
+  }
+
   ngOnInit(): void {
-    this.updateData()
+
+    this.influx.getTagList().subscribe(res => {
+      this.tagList = res
+    })
+
+    this.updateData([])
   }
 
 }

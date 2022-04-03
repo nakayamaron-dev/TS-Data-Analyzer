@@ -47,5 +47,19 @@ export class InfluxService {
             })
         );
       }
+  
+  getTagList(measurement: string = 'rawdata'): Observable<string[]> {
+    return this.http.get<IGetData[]>(`/api/v1/ts/${measurement}/last`, { responseType: 'json' })
+    .pipe(
+      map(res => {
+        const ret: string[] = [];
+        res.forEach(itm => {
+          ret.push(itm.tag)
+        })
+
+        return ret;
+      })
+    )
+  }
 
 }
