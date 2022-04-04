@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import * as Plotly from 'plotly.js-dist-min';
 import { InfluxService } from '../service/influx.service';
+import { MongoService } from '../service/mongo.service';
+
+interface Igraph {
+  tagList: string[]
+}
 
 @Component({
   selector: 'app-visualizer',
@@ -32,40 +37,47 @@ export class VisualizerComponent implements OnInit {
     }
   }
 
-  data: Partial<Plotly.PlotData>[] = [
-    {
-      x: [],
-      y: [],
-      mode: 'lines+markers',
-      marker: { size: 1 },
-      showlegend: false,
-    },
-    {
-      y: [],
-      type: 'histogram',
-      xaxis: 'x2',
-      showlegend: false,
-    }
-  ]
-
+  datasets: Partial<Plotly.PlotData>[][] = []
   tagList: string[] = [];
 
-  constructor(private influx: InfluxService) { }
+  constructor(private influx: InfluxService, private mongo: MongoService) { }
 
-  async updateData(tagList: string[]): Promise<void> {
-    const res = await this.influx.getHistoricalData(tagList).toPromise();
+  async updateData2(config: Igraph[]): Promise<void> {
+    this.datasets = []
 
-    if (res) {
-      tagList.forEach(tag => {
-        this.data[0].x = res[tag].map(itm => itm.timeStamp)
-        this.data[0].y = res[tag].map(itm => itm.value)
-        this.data[1].y = res[tag].map(itm => itm.value)
+    config.forEach((graphInfo, index) => {
+
+      this.datasets.push([
+        {
+          x: [],
+          y: [],
+          mode: 'lines+markers',
+          marker: { size: 1 },
+          showlegend: false,
+        },
+        {
+          y: [],
+          type: 'histogram',
+          xaxis: 'x2',
+          showlegend: false,
+        }
+      ]);
+
+      this.influx.getHistoricalData(graphInfo.tagList).subscribe(res => {
+
+        if (res) {
+          graphInfo.tagList.forEach(tag => {
+            this.datasets[index][0].x = res[tag].map(itm => itm.timeStamp)
+            this.datasets[index][0].y = res[tag].map(itm => itm.value)
+            this.datasets[index][1].y = res[tag].map(itm => itm.value)
+          })
+        }
       })
-    }
+    })
   }
 
   onSelectPlotTag(tag: string) {
-    this.updateData([tag]);
+    // this.updateData([tag]);
   }
 
   ngOnInit(): void {
@@ -74,7 +86,9 @@ export class VisualizerComponent implements OnInit {
       this.tagList = res
     })
 
-    this.updateData([])
+    this.mongo.getPlotInfo().subscribe(res => {
+      this.updateData2(res);
+    })
   }
 
 }

@@ -1,0 +1,1 @@
+mongoimport -u mongo -p mongo --db data --collection plotinfo --file /docker-entrypoint-initdb.d/sample.json --jsonArray

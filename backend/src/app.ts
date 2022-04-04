@@ -6,8 +6,10 @@ import express from "express";
 // import swaggerJSDoc from "swagger-jsdoc";
 import bodyParser from "body-parser";
 const bodyParserText = bodyParser.text({ limit: "1gb" });
+const bodyParserJson = bodyParser.json({ limit: "1gb" });
 
 import apiInfluxRouter from "./routes/api-influx";
+import apiPMongoRouter from "./routes/api-mongo";
 
 // read environment variables.
 import dotenv from "dotenv";
@@ -27,6 +29,7 @@ const app = express();
 // };
 // app.use("/spec", swaggerUi.serve, swaggerUi.setup(swaggerJSDoc(options)));
 
+app.use("/api/v1/info", bodyParserJson, apiPMongoRouter);
 app.use("/api/v1/ts", bodyParserText, apiInfluxRouter);
 
 // Angularのルーティング
@@ -36,7 +39,7 @@ app.use('/*', express.static(path.join(__dirname, '../../frontend/dist/ts-data-a
 // catch 404 and forward to error handler
 app.use(function(next: NextFunction) {
     next(createError(404));
-  });
+});
 
 // error handler
 app.use(function(err: any, req: Request, res: Response) {
