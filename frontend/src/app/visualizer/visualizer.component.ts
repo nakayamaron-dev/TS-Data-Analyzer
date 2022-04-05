@@ -39,11 +39,13 @@ export class VisualizerComponent implements OnInit {
 
   datasets: Partial<Plotly.PlotData>[][] = []
   tagList: string[] = [];
+  plotInfo: Igraph[] = []
 
   constructor(private influx: InfluxService, private mongo: MongoService) { }
 
-  async updateData2(config: Igraph[]): Promise<void> {
+  async updateData(config: Igraph[]): Promise<void> {
     this.datasets = []
+    this.plotInfo = config;
 
     config.forEach((graphInfo, index) => {
 
@@ -76,8 +78,11 @@ export class VisualizerComponent implements OnInit {
     })
   }
 
-  onSelectPlotTag(tag: string) {
-    // this.updateData([tag]);
+  onSelectPlotTag(tag: string, index: number) {
+    this.plotInfo[index].tagList[0] = tag;
+    this.mongo.updatePlotInfo(this.plotInfo).subscribe(res => {
+      this.updateData(this.plotInfo);
+    });
   }
 
   ngOnInit(): void {
@@ -87,7 +92,7 @@ export class VisualizerComponent implements OnInit {
     })
 
     this.mongo.getPlotInfo().subscribe(res => {
-      this.updateData2(res);
+      this.updateData(res);
     })
   }
 

@@ -12,4 +12,8 @@ export class MongoService {
   getPlotInfo(): Observable<any> {
     return this.http.get<any>('/api/v1/info/plotinfo', { responseType: 'json' });
   }
+
+  updatePlotInfo(data: any): Observable<any> {
+    return this.http.patch('/api/v1/info/plotinfo', data)
+  }
 }
