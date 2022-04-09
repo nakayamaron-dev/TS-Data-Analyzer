@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as Plotly from 'plotly.js-dist-min';
 import { InfluxService } from '../service/influx.service';
 import { MongoService } from '../service/mongo.service';
-import { faAdd } from '@fortawesome/free-solid-svg-icons';
+import { faCirclePlus, faCircleMinus, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 interface Igraph {
   tagList: string[]
@@ -15,7 +15,8 @@ interface Igraph {
 })
 export class VisualizerComponent implements OnInit {
 
-  plusIcon = faAdd;
+  plusIcon = faCirclePlus;
+  deleteIcon = faTrash;
 
   config: Partial<Plotly.Config> = {
     displaylogo: false,
@@ -24,6 +25,8 @@ export class VisualizerComponent implements OnInit {
   }
 
   layout: Partial<Plotly.Layout> =  {
+    margin: { l: 60, r: 70, b: 50, t: 30 },
+    height: 250,
     legend: {
       orientation: 'h',
     },
@@ -50,10 +53,11 @@ export class VisualizerComponent implements OnInit {
 
   constructor(private influx: InfluxService, private mongo: MongoService) { }
 
-  async updateData(): Promise<void> {
-    this.datasets = [[]]
+  updateGraph(): void {
+    this.datasets = [];
 
     this.plotInfo.forEach((graphInfo, graphIdx) => {
+      this.datasets.push([])
 
       this.influx.getHistoricalData(graphInfo.tagList).subscribe(res => {
         graphInfo.tagList.forEach((tag, idx) => {
@@ -65,8 +69,7 @@ export class VisualizerComponent implements OnInit {
               x: x,
               y: y,
               name: tag,
-              mode: 'lines+markers',
-              marker: { size: 1 },
+              mode: 'lines',
               yaxis: 'y' + (idx+1).toString(),
             }
           )
@@ -83,9 +86,7 @@ export class VisualizerComponent implements OnInit {
 
   onSelectPlotTag(tag: string, idx1: number, idx2: number) {
     this.plotInfo[idx1].tagList[idx2] = tag;
-    this.mongo.updatePlotInfo(this.plotInfo).subscribe(_ => {
-      this.updateData();
-    });
+    this.patchPlotInfo(this.plotInfo);
   }
 
   ngOnInit(): void {
@@ -96,8 +97,33 @@ export class VisualizerComponent implements OnInit {
 
     this.mongo.getPlotInfo().subscribe(res => {
       this.plotInfo = res;
-      this.updateData();
+      this.updateGraph();
     })
+  }
+
+  addTag(graphIdx: number) {
+    this.plotInfo[graphIdx].tagList.push(this.tagList[0])
+    this.patchPlotInfo(this.plotInfo);
+  }
+
+  removeTag(graphIdx: number, tagIdx: number) {
+    this.plotInfo[graphIdx].tagList.splice(tagIdx, 1);
+    this.patchPlotInfo(this.plotInfo);
+  }
+
+  patchPlotInfo(plotInfo: Igraph[]) {
+    this.mongo.updatePlotInfo(plotInfo).subscribe(_ => {
+      this.updateGraph();
+    });
+  }
+
+  addGraph() {
+    this.plotInfo.push(
+      {
+        tagList: [this.tagList[0]]
+      }
+    )
+    this.patchPlotInfo(this.plotInfo);
   }
 
 }
