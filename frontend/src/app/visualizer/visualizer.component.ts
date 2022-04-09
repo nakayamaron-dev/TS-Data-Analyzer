@@ -2,11 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import * as Plotly from 'plotly.js-dist-min';
 import { InfluxService } from '../service/influx.service';
 import { MongoService } from '../service/mongo.service';
-import { faCirclePlus, faCircleMinus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { ModalService } from '../service/modal.service';
+import { faCirclePlus, faTrash, faCog } from '@fortawesome/free-solid-svg-icons';
 
-interface Igraph {
+export interface Igraph {
   _id: number,
   tagList: string[]
+}
+
+export interface Imodal {
+  setting: Igraph,
+  tagListAll: string[]
 }
 
 @Component({
@@ -18,6 +24,7 @@ export class VisualizerComponent implements OnInit {
 
   plusIcon = faCirclePlus;
   deleteIcon = faTrash;
+  settingIcon = faCog;
 
   config: Partial<Plotly.Config> = {
     displaylogo: false,
@@ -28,6 +35,7 @@ export class VisualizerComponent implements OnInit {
   layout: Partial<Plotly.Layout> =  {
     margin: { l: 60, r: 70, b: 50, t: 30 },
     height: 250,
+    showlegend: true,
     legend: {
       orientation: 'h',
     },
@@ -52,7 +60,7 @@ export class VisualizerComponent implements OnInit {
   tagList: string[] = [];
   plotInfo: Igraph[] = []
 
-  constructor(private influx: InfluxService, private mongo: MongoService) { }
+  constructor(private influx: InfluxService, private mongo: MongoService, private modal: ModalService) { }
 
   updateAllGraph(): void {
     this.datasets = [];
@@ -78,7 +86,7 @@ export class VisualizerComponent implements OnInit {
 
   onSelectPlotTag(tag: string, idx1: number, idx2: number) {
     this.plotInfo[idx1].tagList[idx2] = tag;
-    this.patchPlotInfo(this.plotInfo);
+    this.patchPlotInfo(this.plotInfo[idx1]);
   }
 
   ngOnInit(): void {
@@ -95,21 +103,33 @@ export class VisualizerComponent implements OnInit {
 
   addTag(graphIdx: number) {
     this.plotInfo[graphIdx].tagList.push(this.tagList[0])
-    this.patchPlotInfo(this.plotInfo);
+    this.patchPlotInfo(this.plotInfo[graphIdx]);
   }
 
   removeTag(graphIdx: number, tagIdx: number) {
     this.plotInfo[graphIdx].tagList.splice(tagIdx, 1);
-    this.patchPlotInfo(this.plotInfo);
+    this.patchPlotInfo(this.plotInfo[graphIdx]);
   }
 
-  patchPlotInfo(plotInfo: Igraph[]) {
-    this.mongo.updatePlotInfo(plotInfo).subscribe(_ => {
+  patchPlotInfo(plotInfo: Igraph) {
+    this.mongo.updatePlotInfo(plotInfo).subscribe(res => {
       this.updateAllGraph();
     });
   }
 
   addGraph() {
 
+  }
+
+  plotSettingModal(idx: number) {
+    const data: Imodal = {
+      setting: this.plotInfo[idx],
+      tagListAll: this.tagList
+    }
+
+    this.modal.plotSettingModal(data).then(res => {
+      this.plotInfo[idx].tagList = res.setting.tagList;
+      this.patchPlotInfo(this.plotInfo[idx]);
+    });
   }
 }

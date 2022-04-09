@@ -1,7 +1,7 @@
 
 <div class="card" *ngFor="let gInfo of plotInfo; index as i">
     <div class="card-body">
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-2" *ngFor="let tag of gInfo.tagList; index as j">
                 <label class="col-11">tag{{ j+1 }}</label>
                 <fa-icon class="col-1 PrimaryColor" [icon]="deleteIcon" size="lg" (click)="removeTag(i, j)"></fa-icon>
@@ -14,8 +14,9 @@
                 </select>
             </div>
             <fa-icon class="col-1 PrimaryColor" [icon]="plusIcon" size="2x" (click)="addTag(i)"></fa-icon>
-        </div>
-        
+        </div> -->
+       
+        <fa-icon class="PrimaryColor" [icon]="settingIcon" size="2x" (click)="plotSettingModal(i)"></fa-icon>
         <plotly-plot 
         [data]="datasets[i]" 
         [layout]="layout"

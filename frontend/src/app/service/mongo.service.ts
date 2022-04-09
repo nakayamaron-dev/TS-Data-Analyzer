@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
+import { Igraph } from '../visualizer/visualizer.component';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class MongoService {
     return this.http.get<any>(`/api/v1/info/plotinfo/${id}`, { responseType: 'json' });
   }
 
-  updatePlotInfo(data: any): Observable<any> {
-    return this.http.patch('/api/v1/info/plotinfo', data)
+  updatePlotInfo(data: Igraph): Observable<any> {
+    return this.http.patch(`/api/v1/info/plotinfo`, data)
   }
 }

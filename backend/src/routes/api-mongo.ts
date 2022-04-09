@@ -47,7 +47,7 @@ router.patch("/plotinfo", async (req: express.Request, res: express.Response<str
   try {
     conn = await db.createConnection("data");
     const PlotInfo = conn.model("PlotInfo", plotinfo, "plotinfo");
-    await PlotInfo.findOneAndUpdate({}, { graph: req.body }, { upsert: true });
+    await PlotInfo.findByIdAndUpdate(req.body._id, {$set: req.body}, { upsert: true });
     res.status(200).json("status OK");
   } catch (err) {
     next(err);
