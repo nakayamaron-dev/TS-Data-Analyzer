@@ -5,6 +5,7 @@ import { MongoService } from '../service/mongo.service';
 import { faCirclePlus, faCircleMinus, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 interface Igraph {
+  _id: number,
   tagList: string[]
 }
 
@@ -53,7 +54,7 @@ export class VisualizerComponent implements OnInit {
 
   constructor(private influx: InfluxService, private mongo: MongoService) { }
 
-  updateGraph(): void {
+  updateAllGraph(): void {
     this.datasets = [];
 
     this.plotInfo.forEach((graphInfo, graphIdx) => {
@@ -61,24 +62,15 @@ export class VisualizerComponent implements OnInit {
 
       this.influx.getHistoricalData(graphInfo.tagList).subscribe(res => {
         graphInfo.tagList.forEach((tag, idx) => {
-          const x = res[tag].map(itm => itm.timeStamp);
-          const y = res[tag].map(itm => itm.value);
-
           this.datasets[graphIdx].push(
             {
-              x: x,
-              y: y,
+              x: res[tag].map(itm => itm.timeStamp),
+              y: res[tag].map(itm => itm.value),
               name: tag,
               mode: 'lines',
-              yaxis: 'y' + (idx+1).toString(),
+              yaxis: `y${idx+1}`,
             }
           )
-
-          if (idx === 0) {
-            this.layout.yaxis!.range = [Math.min(...y), Math.max(...y)]
-          } else if (idx === 1) {
-            this.layout.yaxis2!.range = [Math.min(...y), Math.max(...y)]
-          }
         })
       })
     })
@@ -95,9 +87,9 @@ export class VisualizerComponent implements OnInit {
       this.tagList = res
     })
 
-    this.mongo.getPlotInfo().subscribe(res => {
+    this.mongo.getPlotInfoAll().subscribe(res => {
       this.plotInfo = res;
-      this.updateGraph();
+      this.updateAllGraph();
     })
   }
 
@@ -113,17 +105,11 @@ export class VisualizerComponent implements OnInit {
 
   patchPlotInfo(plotInfo: Igraph[]) {
     this.mongo.updatePlotInfo(plotInfo).subscribe(_ => {
-      this.updateGraph();
+      this.updateAllGraph();
     });
   }
 
   addGraph() {
-    this.plotInfo.push(
-      {
-        tagList: [this.tagList[0]]
-      }
-    )
-    this.patchPlotInfo(this.plotInfo);
-  }
 
+  }
 }

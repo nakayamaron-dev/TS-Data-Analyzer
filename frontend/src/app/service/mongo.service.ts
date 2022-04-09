@@ -9,8 +9,12 @@ export class MongoService {
 
   constructor(private http: HttpClient) { }
 
-  getPlotInfo(): Observable<any> {
-    return this.http.get<any>('/api/v1/info/plotinfo', { responseType: 'json' });
+  getPlotInfoAll(): Observable<any> {
+    return this.http.get<any>('/api/v1/info/plotinfo/list', { responseType: 'json' });
+  }
+
+  getPlotInfo(id: number): Observable<any> {
+    return this.http.get<any>(`/api/v1/info/plotinfo/${id}`, { responseType: 'json' });
   }
 
   updatePlotInfo(data: any): Observable<any> {

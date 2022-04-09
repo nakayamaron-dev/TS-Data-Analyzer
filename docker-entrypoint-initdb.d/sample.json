@@ -1,13 +1,8 @@
 [
     {
-        "id": 0,
-        "graph": [
-            {
-                "tagList": [
-                    "Temp"
-                ]
-            }
+        "_id": 0,
+        "tagList": [
+            "Temp"
         ]
-    
     }
 ]
