@@ -4,3 +4,7 @@
 .PrimaryColor {
     color: #292b2c;
 }
+
+.modal-xl {
+    max-width: 1800px;
+  }

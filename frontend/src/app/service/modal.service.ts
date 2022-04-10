@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PlotSetting } from '../modal/plot-setting-modal';
-import { Imodal } from '../visualizer/visualizer.component';
+import { Igraph } from '../visualizer/visualizer.component';
 
 @Injectable({
   providedIn: 'root'
@@ -10,12 +10,13 @@ export class ModalService {
 
   constructor(private modalService: NgbModal) { }
 
-  plotSettingModal(args: Imodal): Promise<Imodal> {
-    const modalRef = this.modalService.open(PlotSetting, { size: 'lg', centered: true });
+  plotSettingModal(plotInfo: Igraph, tagList: string[]): Promise<Igraph> {
+    const modalRef = this.modalService.open(PlotSetting, { size: 'xl', centered: true });
     const component = modalRef.componentInstance as PlotSetting;
 
     if (component != null) {
-      component.setting = args;
+      component.setting = plotInfo;
+      component.tagListAll = tagList;
     }
 
     return modalRef.result;

@@ -7,12 +7,8 @@ import { faCirclePlus, faTrash, faCog } from '@fortawesome/free-solid-svg-icons'
 
 export interface Igraph {
   _id: number,
-  tagList: string[]
-}
-
-export interface Imodal {
-  setting: Igraph,
-  tagListAll: string[]
+  tagList: string[],
+  yrange: [number, number][],
 }
 
 @Component({
@@ -25,6 +21,19 @@ export class VisualizerComponent implements OnInit {
   plusIcon = faCirclePlus;
   deleteIcon = faTrash;
   settingIcon = faCog;
+
+  colors: string[] = [
+    '#1f77b4',  // muted blue
+    '#ff7f0e',  // safety orange
+    '#2ca02c',  // cooked asparagus green
+    '#d62728',  // brick red
+    '#9467bd',  // muted purple
+    '#8c564b',  // chestnut brown
+    '#e377c2',  // raspberry yogurt pink
+    '#7f7f7f',  // middle gray
+    '#bcbd22',  // curry yellow-green
+    '#17becf',  // blue-teal
+  ]
 
   config: Partial<Plotly.Config> = {
     displaylogo: false,
@@ -40,27 +49,70 @@ export class VisualizerComponent implements OnInit {
       orientation: 'h',
     },
     xaxis: {
+      domain: [0.08, 0.92],
       showgrid: false,
       linewidth: 1,
     },
     yaxis: {
-      linewidth: 1,
+      linewidth: 2,
       gridwidth: 1,
-      zeroline: false,
+      color: this.colors[0],
+      autorange: false,
     },
     yaxis2: {
+      linewidth: 2,
       overlaying: 'y',
       side: 'right',
       showgrid: false,
-      zeroline: false,
-    }
+      color: this.colors[1],
+      autorange: false,
+    },
+    yaxis3: {
+      linewidth: 2,
+      overlaying: 'y',
+      side: 'left',
+      showgrid: false,
+      position: 0.04,
+      color: this.colors[2],
+      autorange: false,
+    },
+    yaxis4: {
+      linewidth: 2,
+      overlaying: 'y',
+      side: 'right',
+      showgrid: false,
+      position: 0.96,
+      color: this.colors[3],
+      autorange: false,
+    },
+    yaxis5: {
+      linewidth: 2,
+      overlaying: 'y',
+      side: 'left',
+      showgrid: false,
+      position: 0,
+      color: this.colors[4],
+      autorange: false,
+    },
+    yaxis6: {
+      linewidth: 2,
+      overlaying: 'y',
+      side: 'right',
+      showgrid: false,
+      position: 1,
+      color: this.colors[5],
+      autorange: false,
+    },
   }
 
   datasets: Partial<Plotly.PlotData>[][] = [[]]
   tagList: string[] = [];
   plotInfo: Igraph[] = []
 
-  constructor(private influx: InfluxService, private mongo: MongoService, private modal: ModalService) { }
+  constructor(
+    private influx: InfluxService,
+    private mongo: MongoService,
+    private modal: ModalService) { }
 
   updateAllGraph(): void {
     this.datasets = [];
@@ -70,23 +122,51 @@ export class VisualizerComponent implements OnInit {
 
       this.influx.getHistoricalData(graphInfo.tagList).subscribe(res => {
         graphInfo.tagList.forEach((tag, idx) => {
+          const x = res[tag].map(itm => itm.timeStamp);
+          const y = res[tag].map(itm => itm.value);
+
           this.datasets[graphIdx].push(
             {
-              x: res[tag].map(itm => itm.timeStamp),
-              y: res[tag].map(itm => itm.value),
+              x: x,
+              y: y,
               name: tag,
               mode: 'lines',
               yaxis: `y${idx+1}`,
             }
           )
+
+          if (!graphInfo.yrange[idx]) {
+            graphInfo.yrange.push([Math.min(...y), Math.max(...y)]);
+          }
+
+          this.setYrange(idx, graphInfo.yrange[idx]);
+
         })
       })
     })
   }
 
-  onSelectPlotTag(tag: string, idx1: number, idx2: number) {
-    this.plotInfo[idx1].tagList[idx2] = tag;
-    this.patchPlotInfo(this.plotInfo[idx1]);
+  setYrange(graphIdx: number, yrange: [number, number]) {
+    switch (graphIdx) {
+      case 0:
+        this.layout.yaxis!.range = yrange;
+        return
+      case 1:
+        this.layout.yaxis2!.range = yrange;
+        return
+      case 2:
+        this.layout.yaxis3!.range = yrange;
+        return
+      case 3:
+        this.layout.yaxis4!.range = yrange;
+        return
+      case 4:
+        this.layout.yaxis5!.range = yrange;
+        return
+      case 5:
+        this.layout.yaxis6!.range = yrange;
+        return
+    }
   }
 
   ngOnInit(): void {
@@ -101,18 +181,8 @@ export class VisualizerComponent implements OnInit {
     })
   }
 
-  addTag(graphIdx: number) {
-    this.plotInfo[graphIdx].tagList.push(this.tagList[0])
-    this.patchPlotInfo(this.plotInfo[graphIdx]);
-  }
-
-  removeTag(graphIdx: number, tagIdx: number) {
-    this.plotInfo[graphIdx].tagList.splice(tagIdx, 1);
-    this.patchPlotInfo(this.plotInfo[graphIdx]);
-  }
-
   patchPlotInfo(plotInfo: Igraph) {
-    this.mongo.updatePlotInfo(plotInfo).subscribe(res => {
+    this.mongo.updatePlotInfo(plotInfo).subscribe(_ => {
       this.updateAllGraph();
     });
   }
@@ -122,13 +192,9 @@ export class VisualizerComponent implements OnInit {
   }
 
   plotSettingModal(idx: number) {
-    const data: Imodal = {
-      setting: this.plotInfo[idx],
-      tagListAll: this.tagList
-    }
-
-    this.modal.plotSettingModal(data).then(res => {
-      this.plotInfo[idx].tagList = res.setting.tagList;
+    this.modal.plotSettingModal(this.plotInfo[idx], this.tagList).then(res => {
+      this.plotInfo[idx].tagList = res.tagList;
+      this.plotInfo[idx].yrange = res.yrange;
       this.patchPlotInfo(this.plotInfo[idx]);
     });
   }

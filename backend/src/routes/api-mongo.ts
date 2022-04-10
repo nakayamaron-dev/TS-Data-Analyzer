@@ -3,9 +3,10 @@ const router = express.Router();
 import plotinfo from "../models/plotinfo.schema";
 import * as db from "../models/mongo-local-db";
 
-interface Igraph {
+export interface Igraph {
   _id: number,
-  tagList: string[]
+  tagList: string[],
+  yrange: [number, number][],
 }
 
 router.get("/plotinfo/list", async (_req: express.Request, res: express.Response, next: express.NextFunction) => {
