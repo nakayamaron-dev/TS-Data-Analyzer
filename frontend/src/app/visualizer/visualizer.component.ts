@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as Plotly from 'plotly.js-dist-min';
-import { InfluxService } from '../service/influx.service';
+import { InfluxService, IdefaultYranges } from '../service/influx.service';
 import { MongoService } from '../service/mongo.service';
 import { ModalService } from '../service/modal.service';
 import { faCirclePlus, faTrash, faCog } from '@fortawesome/free-solid-svg-icons';
@@ -65,6 +65,7 @@ export class VisualizerComponent implements OnInit {
       gridwidth: 1,
       color: this.colors[0],
       autorange: false,
+      zeroline: false,
     },
     yaxis2: {
       linewidth: 2,
@@ -73,6 +74,7 @@ export class VisualizerComponent implements OnInit {
       showgrid: false,
       color: this.colors[1],
       autorange: false,
+      zeroline: false,
     },
     yaxis3: {
       linewidth: 2,
@@ -82,6 +84,7 @@ export class VisualizerComponent implements OnInit {
       position: 0.04,
       color: this.colors[2],
       autorange: false,
+      zeroline: false,
     },
     yaxis4: {
       linewidth: 2,
@@ -91,6 +94,7 @@ export class VisualizerComponent implements OnInit {
       position: 0.96,
       color: this.colors[3],
       autorange: false,
+      zeroline: false,
     },
     yaxis5: {
       linewidth: 2,
@@ -100,6 +104,7 @@ export class VisualizerComponent implements OnInit {
       position: 0,
       color: this.colors[4],
       autorange: false,
+      zeroline: false,
     },
     yaxis6: {
       linewidth: 2,
@@ -109,12 +114,14 @@ export class VisualizerComponent implements OnInit {
       position: 1,
       color: this.colors[5],
       autorange: false,
+      zeroline: false,
     },
   }
 
-  datasets: Partial<Plotly.PlotData>[][] = [[]]
+  datasets: Partial<Plotly.PlotData>[][] = [[]];
   tagList: string[] = [];
-  plotInfo: IplotMulti[] = []
+  yrangeList: IdefaultYranges = {};
+  plotInfo: IplotMulti[] = [];
 
   constructor(
     private influx: InfluxService,
@@ -156,6 +163,43 @@ export class VisualizerComponent implements OnInit {
     })
   }
 
+  updateSingleGraph(graphIdx: number): void {
+    const graphInfo = this.plotInfo[graphIdx]
+    const tagList = graphInfo.items.map(itm => itm.tag);
+
+    if (this.datasets[graphIdx]) {
+      this.datasets[graphIdx] = [];
+    } else {
+      this.datasets.push([]);
+    }
+    
+    this.influx.getHistoricalData(tagList).subscribe(res => {
+      graphInfo.items.forEach((item, idx) => {
+        const x = res[item.tag].map(itm => itm.timeStamp);
+        const y = res[item.tag].map(itm => itm.value);
+
+        this.datasets[graphIdx].push(
+          {
+            x: x,
+            y: y,
+            name: item.tag,
+            mode: 'lines',
+            yaxis: `y${idx+1}`,
+          }
+        )
+
+        if (!item.yrange) {
+          item.yrange = {
+            min: Math.min(...y),
+            max: Math.max(...y)
+          }
+        }
+
+        this.setYrange(idx, item.yrange!);
+      })
+    })
+  }
+
   setYrange(graphIdx: number, yrange: {min: number, max: number}) {
     switch (graphIdx) {
       case 0:
@@ -183,6 +227,10 @@ export class VisualizerComponent implements OnInit {
 
     this.influx.getTagList().subscribe(res => {
       this.tagList = res
+
+      this.influx.getDefaultYrangeList(this.tagList).subscribe(res => {
+        this.yrangeList = res;
+      })
     })
 
     this.mongo.getTSmultiInfoAll().subscribe(res => {
@@ -193,18 +241,29 @@ export class VisualizerComponent implements OnInit {
 
   patchPlotInfo(plotInfo: IplotMulti) {
     this.mongo.updateTSmultiInfo(plotInfo).subscribe(_ => {
-      this.updateAllGraph();
+      this.updateSingleGraph(plotInfo._id);
     });
   }
 
   addGraph() {
-
+    const newItem: IplotMulti = {
+      _id: this.plotInfo.slice(-1)[0]._id + 1,
+      items: [
+          {
+              tag: this.tagList[0],
+          }
+      ]
+    }
+    this.plotInfo.push(newItem);
   }
 
   plotSettingModal(idx: number) {
-    this.modal.plotSettingModal(this.plotInfo[idx], this.tagList).then(res => {
-      this.plotInfo[idx] = res
-      this.patchPlotInfo(this.plotInfo[idx]);
+    this.modal.plotSettingModal(this.plotInfo[idx], this.tagList, this.yrangeList).then(res => {
+      this.patchPlotInfo(res);
     });
+  }
+
+  deleteGraph(idx: number) {
+    // TO DO: Delete item
   }
 }

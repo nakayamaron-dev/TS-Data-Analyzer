@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { IplotMulti } from '../visualizer/visualizer.component';
 import { faCirclePlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { IdefaultYranges } from '../service/influx.service';
 
 @Component({
     template:
@@ -22,6 +23,8 @@ import { faCirclePlus, faTrash } from '@fortawesome/free-solid-svg-icons';
                         *ngFor="let tag of tagListAll"
                         [selected]="tag === itm.tag">{{tag}}</option>
                     </select>
+                    <button type="button" class="btn" (click)="setDefaultYrange(i)">set default value</button>
+                    <br>
                     <label>min:</label>
                     <input #yrangeMin type="text" [value]="itm.yrange?.min" (input)="setYrangeMin(yrangeMin.value, i)">
                     <br>
@@ -33,7 +36,7 @@ import { faCirclePlus, faTrash } from '@fortawesome/free-solid-svg-icons';
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="activeModal.close(setting)">Close</button>
+        <button type="button" class="btn btn-outline-dark" (click)="activeModal.close(setting)">Update</button>
     </div>
     `
 })
@@ -42,9 +45,9 @@ export class PlotSetting {
     plusIcon = faCirclePlus;
     deleteIcon = faTrash;
 
-
-    tagListAll: string[] = [];
     _setting?: IplotMulti;
+    tagListAll: string[] = [];
+    yrangeList: IdefaultYranges = {};
 
     constructor(public activeModal: NgbActiveModal) { }
 
@@ -57,13 +60,23 @@ export class PlotSetting {
     }
 
     onSelectPlotTag(tag: string, idx: number) {
-        this.setting.items[idx].tag = tag;
+        this.setting.items[idx] = {
+            tag: tag,
+            yrange: {
+                min: this.yrangeList[tag].min,
+                max: this.yrangeList[tag].max,
+            }
+        }
     }
 
     addTag() {
         this.setting.items.push(
             {
                 tag: this.tagListAll[0],
+                yrange: {
+                    min: this.yrangeList[this.tagListAll[0]].min,
+                    max: this.yrangeList[this.tagListAll[0]].max,
+                }
             }
         )
     }
@@ -78,5 +91,12 @@ export class PlotSetting {
 
     setYrangeMax(val: string, idx: number) {
         this.setting.items[idx].yrange!.max = Number(val);
+    }
+
+    setDefaultYrange(idx: number) {
+        this.setting.items[idx].yrange = {
+            min: this.yrangeList[this.setting.items[idx].tag].min,
+            max: this.yrangeList[this.setting.items[idx].tag].max,
+        }
     }
 }

@@ -14,6 +14,13 @@ export interface IHistoricalValue<T> {
   value: number;
 }
 
+export interface IdefaultYranges {
+  [tag: string]: {
+      min: number,
+      max: number
+  }
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -36,11 +43,10 @@ export class InfluxService {
 
     return this.http.get<IGetData[]>(`/api/v1/ts/${measurement}/` + qstr, { responseType: 'json' })
         .pipe(
-            map( response => {
+            map( res => {
                 const ret: {[tag: string]: IHistoricalValue<string>[]} = {};
-                response.forEach( value => {
+                res.forEach( value => {
                     if ( !ret[value.tag] ) { ret[value.tag] = []; }
-
                     ret[value.tag].push({ timeStamp: value.time, value: value.value });
                 });
                 return ret;
@@ -58,6 +64,37 @@ export class InfluxService {
         })
 
         return ret;
+      })
+    )
+  }
+
+  getDefaultYrangeList(tags: string[], measurement: string='rawdata', fromDate?: string, toDate?: string): Observable<IdefaultYranges> {
+    let qstr = '?tags=' + tags.join(',');
+
+    if ( fromDate !== undefined) { qstr += '&from=' + fromDate; }
+    if ( toDate !== undefined) { qstr += '&to=' + toDate; }
+
+    if ( tags.length === 0 ) {
+        return of({});
+    }
+
+    return this.http.get<IGetData[]>(`/api/v1/ts/${measurement}/` + qstr, { responseType: 'json' })
+    .pipe(
+      map(res => {
+        const tmp: {[tag: string]: IHistoricalValue<string>[]} = {};
+        res.forEach( value => {
+            if ( !tmp[value.tag] ) { tmp[value.tag] = []; }
+            tmp[value.tag].push({ timeStamp: value.time, value: value.value });
+        });
+
+        const ret: IdefaultYranges = {};
+        res.forEach(itm => {
+          ret[itm.tag] = {
+            min: Math.min(...tmp[itm.tag].map(cell => cell.value)),
+            max: Math.max(...tmp[itm.tag].map(cell => cell.value)),
+          }
+        })
+        return ret
       })
     )
   }

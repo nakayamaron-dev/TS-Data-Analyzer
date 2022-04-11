@@ -59,6 +59,8 @@ router.patch("/plotinfo", async (req: express.Request, res: express.Response<str
   }
 });
 
+// TO DO: Delete API
+
 // Error Handling.
 // See: https://expressjs.com/en/guide/error-handling.html 
 router.use((err: unknown, _req: express.Request, res: express.Response<{ error: unknown }>) => {
