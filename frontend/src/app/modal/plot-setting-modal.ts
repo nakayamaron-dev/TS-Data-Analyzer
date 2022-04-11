@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Igraph } from '../visualizer/visualizer.component';
+import { IplotMulti } from '../visualizer/visualizer.component';
 import { faCirclePlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -12,7 +12,7 @@ import { faCirclePlus, faTrash } from '@fortawesome/free-solid-svg-icons';
     <div class="card">
         <div class="card-body">
             <div class="row">
-                <div class="col-2" *ngFor="let tag of setting.tagList; index as i">
+                <div class="col-2" *ngFor="let itm of setting.items; index as i">
                     <label class="col-10">tag{{ i+1 }}</label>
                     <fa-icon class="col-2 PrimaryColor" [icon]="deleteIcon" size="lg" (click)="removeTag(i)"></fa-icon>
                     <select 
@@ -20,15 +20,15 @@ import { faCirclePlus, faTrash } from '@fortawesome/free-solid-svg-icons';
                     (change)="onSelectPlotTag(tagSelect.value, i)">
                         <option 
                         *ngFor="let tag of tagListAll"
-                        [selected]="tag === setting.tagList[i]">{{tag}}</option>
+                        [selected]="tag === itm.tag">{{tag}}</option>
                     </select>
                     <label>min:</label>
-                    <input #yrangeMin type="text" [value]="setting.yrange[i][0]" (input)="setYrangeMin(yrangeMin.value, i)">
+                    <input #yrangeMin type="text" [value]="itm.yrange?.min" (input)="setYrangeMin(yrangeMin.value, i)">
                     <br>
                     <label>max:</label>
-                    <input #yrangeMax type="text" [value]="setting.yrange[i][1]" (input)="setYrangeMax(yrangeMax.value, i)">
+                    <input #yrangeMax type="text" [value]="itm.yrange?.max" (input)="setYrangeMax(yrangeMax.value, i)">
                 </div>
-                <fa-icon *ngIf="setting.tagList.length < 6" class="col-1 PrimaryColor" [icon]="plusIcon" size="2x" (click)="addTag()"></fa-icon>
+                <fa-icon *ngIf="setting.items.length < 6" class="col-1 PrimaryColor" [icon]="plusIcon" size="2x" (click)="addTag()"></fa-icon>
             </div>
         </div>
     </div>
@@ -41,34 +41,42 @@ import { faCirclePlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 export class PlotSetting {
     plusIcon = faCirclePlus;
     deleteIcon = faTrash;
-    setting: Igraph = {
-        _id: 0,
-        tagList: [],
-        yrange: [[0, 0]],
-    };
+
+
     tagListAll: string[] = [];
+    _setting?: IplotMulti;
 
     constructor(public activeModal: NgbActiveModal) { }
 
+    set setting(data: IplotMulti) {
+        this._setting = data;
+    }
+
+    get setting(): IplotMulti {
+        return this._setting!
+    }
+
     onSelectPlotTag(tag: string, idx: number) {
-        this.setting.tagList[idx] = tag;
+        this.setting.items[idx].tag = tag;
     }
 
     addTag() {
-        this.setting.tagList.push(this.setting.tagList[0])
-        this.setting.yrange.push(this.setting.yrange[0])
+        this.setting.items.push(
+            {
+                tag: this.tagListAll[0],
+            }
+        )
     }
 
     removeTag(idx: number) {
-        this.setting.tagList.splice(idx, 1);
-        this.setting.yrange.splice(idx, 1);
+        this.setting.items.splice(idx, 1);
     }
 
     setYrangeMin(val: string, idx: number) {
-        this.setting.yrange[idx][0] = Number(val);
+        this.setting.items[idx].yrange!.min = Number(val);
     }
 
     setYrangeMax(val: string, idx: number) {
-        this.setting.yrange[idx][1] = Number(val);
+        this.setting.items[idx].yrange!.max = Number(val);
     }
 }

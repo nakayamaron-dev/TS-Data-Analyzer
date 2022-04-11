@@ -1,8 +1,17 @@
 [
     {
         "_id": 0,
-        "tagList": [
-            "Temp"
+        "items": [
+            {
+                "tag": "SeaLevelPressure"
+            },
+            {
+                "yrange": {
+                    "min": 20,
+                    "max": 97
+                },
+                "tag": "RelativeHumidity"
+            }
         ]
     }
 ]

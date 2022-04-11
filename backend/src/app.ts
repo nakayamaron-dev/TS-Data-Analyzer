@@ -2,14 +2,13 @@ import { NextFunction, Request, Response } from "express";
 import createError from "http-errors";
 import path from "path";
 import express from "express";
-// import swaggerUi from "swagger-ui-express";
-// import swaggerJSDoc from "swagger-jsdoc";
 import bodyParser from "body-parser";
 const bodyParserText = bodyParser.text({ limit: "1gb" });
 const bodyParserJson = bodyParser.json({ limit: "1gb" });
 
 import apiInfluxRouter from "./routes/api-influx";
-import apiPMongoRouter from "./routes/api-mongo";
+// import apiPMongoRouter from "./routes/api-mongo";
+import apiPMongoRouter from "./routes/api-tsmulti";
 
 // read environment variables.
 import dotenv from "dotenv";
@@ -17,19 +16,8 @@ dotenv.config({ path: path.join(__dirname, "../.env") });
 
 const app = express();
 
-// // Swagger
-// const options = {
-//   swaggerDefinition: {
-//     info: {
-//       title: "Express TypeScript",
-//       version: "1.0.0"
-//     }
-//   },
-//   apis: ["routes/*"]
-// };
-// app.use("/spec", swaggerUi.serve, swaggerUi.setup(swaggerJSDoc(options)));
-
-app.use("/api/v1/info", bodyParserJson, apiPMongoRouter);
+// app.use("/api/v1/info", bodyParserJson, apiPMongoRouter);
+app.use("/api/v1/mongo", bodyParserJson, apiPMongoRouter);
 app.use("/api/v1/ts", bodyParserText, apiInfluxRouter);
 
 // Angularのルーティング

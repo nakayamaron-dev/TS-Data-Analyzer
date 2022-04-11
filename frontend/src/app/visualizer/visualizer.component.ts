@@ -5,10 +5,17 @@ import { MongoService } from '../service/mongo.service';
 import { ModalService } from '../service/modal.service';
 import { faCirclePlus, faTrash, faCog } from '@fortawesome/free-solid-svg-icons';
 
-export interface Igraph {
+export interface IplotMulti {
   _id: number,
-  tagList: string[],
-  yrange: [number, number][],
+  items: [
+      {
+          tag: string,
+          yrange?: {
+              min: number,
+              max: number
+          }
+      }
+  ]
 }
 
 @Component({
@@ -107,7 +114,7 @@ export class VisualizerComponent implements OnInit {
 
   datasets: Partial<Plotly.PlotData>[][] = [[]]
   tagList: string[] = [];
-  plotInfo: Igraph[] = []
+  plotInfo: IplotMulti[] = []
 
   constructor(
     private influx: InfluxService,
@@ -120,51 +127,54 @@ export class VisualizerComponent implements OnInit {
     this.plotInfo.forEach((graphInfo, graphIdx) => {
       this.datasets.push([])
 
-      this.influx.getHistoricalData(graphInfo.tagList).subscribe(res => {
-        graphInfo.tagList.forEach((tag, idx) => {
-          const x = res[tag].map(itm => itm.timeStamp);
-          const y = res[tag].map(itm => itm.value);
+      const tagList = graphInfo.items.map(itm => itm.tag);
+      this.influx.getHistoricalData(tagList).subscribe(res => {
+        graphInfo.items.forEach((item, idx) => {
+          const x = res[item.tag].map(itm => itm.timeStamp);
+          const y = res[item.tag].map(itm => itm.value);
 
           this.datasets[graphIdx].push(
             {
               x: x,
               y: y,
-              name: tag,
+              name: item.tag,
               mode: 'lines',
               yaxis: `y${idx+1}`,
             }
           )
 
-          if (!graphInfo.yrange[idx]) {
-            graphInfo.yrange.push([Math.min(...y), Math.max(...y)]);
+          if (!item.yrange) {
+            item.yrange = {
+              min: Math.min(...y),
+              max: Math.max(...y)
+            }
           }
 
-          this.setYrange(idx, graphInfo.yrange[idx]);
-
+          this.setYrange(idx, item.yrange!);
         })
       })
     })
   }
 
-  setYrange(graphIdx: number, yrange: [number, number]) {
+  setYrange(graphIdx: number, yrange: {min: number, max: number}) {
     switch (graphIdx) {
       case 0:
-        this.layout.yaxis!.range = yrange;
+        this.layout.yaxis!.range = [yrange.min, yrange.max];
         return
       case 1:
-        this.layout.yaxis2!.range = yrange;
+        this.layout.yaxis2!.range = [yrange.min, yrange.max];
         return
       case 2:
-        this.layout.yaxis3!.range = yrange;
+        this.layout.yaxis3!.range = [yrange.min, yrange.max];
         return
       case 3:
-        this.layout.yaxis4!.range = yrange;
+        this.layout.yaxis4!.range = [yrange.min, yrange.max];
         return
       case 4:
-        this.layout.yaxis5!.range = yrange;
+        this.layout.yaxis5!.range = [yrange.min, yrange.max];
         return
       case 5:
-        this.layout.yaxis6!.range = yrange;
+        this.layout.yaxis6!.range = [yrange.min, yrange.max];
         return
     }
   }
@@ -175,14 +185,14 @@ export class VisualizerComponent implements OnInit {
       this.tagList = res
     })
 
-    this.mongo.getPlotInfoAll().subscribe(res => {
+    this.mongo.getTSmultiInfoAll().subscribe(res => {
       this.plotInfo = res;
       this.updateAllGraph();
     })
   }
 
-  patchPlotInfo(plotInfo: Igraph) {
-    this.mongo.updatePlotInfo(plotInfo).subscribe(_ => {
+  patchPlotInfo(plotInfo: IplotMulti) {
+    this.mongo.updateTSmultiInfo(plotInfo).subscribe(_ => {
       this.updateAllGraph();
     });
   }
@@ -193,8 +203,7 @@ export class VisualizerComponent implements OnInit {
 
   plotSettingModal(idx: number) {
     this.modal.plotSettingModal(this.plotInfo[idx], this.tagList).then(res => {
-      this.plotInfo[idx].tagList = res.tagList;
-      this.plotInfo[idx].yrange = res.yrange;
+      this.plotInfo[idx] = res
       this.patchPlotInfo(this.plotInfo[idx]);
     });
   }
