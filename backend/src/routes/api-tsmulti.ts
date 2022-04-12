@@ -5,15 +5,13 @@ import * as db from "../models/mongo-local-db";
 
 export interface IplotMulti {
   _id: number,
-  items: [
-      {
-          tag: string,
-          yrange: {
-              min: number,
-              max: number
-          }
-      }
-  ]
+  items: {
+    tag: string,
+    yrange?: {
+        min: number,
+        max: number
+    }
+  }[]
 }
 
 router.get("/tsmulti/list", async (_req: express.Request, res: express.Response, next: express.NextFunction) => {
@@ -57,6 +55,22 @@ router.patch("/tsmulti", async (req: express.Request, res: express.Response<stri
     const TSMulti = conn.model("TSMulti", tsmultiSchema, "tsmulti");
     await TSMulti.findByIdAndUpdate(req.body._id, {$set: req.body}, { upsert: true });
     res.status(200).json("status OK");
+  } catch (err) {
+    next(err);
+  } finally {
+    if (conn) {
+      conn.close();
+    }
+  }
+});
+
+router.delete("/tsmulti/:id", async (req: express.Request, res: express.Response<string>, next: express.NextFunction) => {
+  let conn;
+  try {
+    conn = await db.createConnection("data");
+    const TSMulti = conn.model("TSMulti", tsmultiSchema, "tsmulti");
+    await TSMulti.findByIdAndDelete(req.params.id);
+    res.status(200).json('status OK');
   } catch (err) {
     next(err);
   } finally {

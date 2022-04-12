@@ -7,15 +7,13 @@ import { faCirclePlus, faTrash, faCog } from '@fortawesome/free-solid-svg-icons'
 
 export interface IplotMulti {
   _id: number,
-  items: [
-      {
-          tag: string,
-          yrange?: {
-              min: number,
-              max: number
-          }
-      }
-  ]
+  items: {
+    tag: string,
+    yrange?: {
+        min: number,
+        max: number
+    }
+  }[]
 }
 
 @Component({
@@ -49,11 +47,18 @@ export class VisualizerComponent implements OnInit {
   }
 
   layout: Partial<Plotly.Layout> =  {
-    margin: { l: 60, r: 70, b: 50, t: 30 },
-    height: 250,
+    margin: { l: 50, r: 50, b: 35, t: 0 },
+    height: 210,
     showlegend: true,
     legend: {
+      yanchor: 'top',
+      y: 1.4,
+      xanchor: 'center',
+      x: 0.5,
       orientation: 'h',
+      font: {
+        size: 12,
+      }
     },
     xaxis: {
       domain: [0.08, 0.92],
@@ -128,43 +133,21 @@ export class VisualizerComponent implements OnInit {
     private mongo: MongoService,
     private modal: ModalService) { }
 
-  updateAllGraph(): void {
+   async updateAllGraph(): Promise<void> {
     this.datasets = [];
+
+    // なぜ非推奨なのか後で調べる。
+    this.plotInfo = await this.mongo.getTSmultiInfoAll().toPromise();
 
     this.plotInfo.forEach((graphInfo, graphIdx) => {
       this.datasets.push([])
-
       const tagList = graphInfo.items.map(itm => itm.tag);
-      this.influx.getHistoricalData(tagList).subscribe(res => {
-        graphInfo.items.forEach((item, idx) => {
-          const x = res[item.tag].map(itm => itm.timeStamp);
-          const y = res[item.tag].map(itm => itm.value);
-
-          this.datasets[graphIdx].push(
-            {
-              x: x,
-              y: y,
-              name: item.tag,
-              mode: 'lines',
-              yaxis: `y${idx+1}`,
-            }
-          )
-
-          if (!item.yrange) {
-            item.yrange = {
-              min: Math.min(...y),
-              max: Math.max(...y)
-            }
-          }
-
-          this.setYrange(idx, item.yrange!);
-        })
-      })
+      this.setDataset(graphInfo, graphIdx, tagList);
     })
   }
 
   updateSingleGraph(graphIdx: number): void {
-    const graphInfo = this.plotInfo[graphIdx]
+    const graphInfo = this.plotInfo[graphIdx];
     const tagList = graphInfo.items.map(itm => itm.tag);
 
     if (this.datasets[graphIdx]) {
@@ -172,29 +155,29 @@ export class VisualizerComponent implements OnInit {
     } else {
       this.datasets.push([]);
     }
-    
+
+    this.setDataset(graphInfo, graphIdx, tagList);
+  }
+
+  setDataset(graphInfo: IplotMulti, graphIdx: number, tagList: string[]) {
     this.influx.getHistoricalData(tagList).subscribe(res => {
       graphInfo.items.forEach((item, idx) => {
-        const x = res[item.tag].map(itm => itm.timeStamp);
-        const y = res[item.tag].map(itm => itm.value);
 
         this.datasets[graphIdx].push(
           {
-            x: x,
-            y: y,
+            x: res[item.tag].map(itm => itm.timeStamp),
+            y: res[item.tag].map(itm => itm.value),
             name: item.tag,
-            mode: 'lines',
             yaxis: `y${idx+1}`,
           }
         )
 
         if (!item.yrange) {
           item.yrange = {
-            min: Math.min(...y),
-            max: Math.max(...y)
+            min: Math.min(...res[item.tag].map(itm => itm.value)),
+            max: Math.max(...res[item.tag].map(itm => itm.value))
           }
         }
-
         this.setYrange(idx, item.yrange!);
       })
     })
@@ -224,7 +207,11 @@ export class VisualizerComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.setBaseparams();
+    this.updateAllGraph();
+  }
 
+  setBaseparams(): void {
     this.influx.getTagList().subscribe(res => {
       this.tagList = res
 
@@ -232,16 +219,11 @@ export class VisualizerComponent implements OnInit {
         this.yrangeList = res;
       })
     })
-
-    this.mongo.getTSmultiInfoAll().subscribe(res => {
-      this.plotInfo = res;
-      this.updateAllGraph();
-    })
   }
 
-  patchPlotInfo(plotInfo: IplotMulti) {
+  patchPlotInfo(plotInfo: IplotMulti, idx: number) {
     this.mongo.updateTSmultiInfo(plotInfo).subscribe(_ => {
-      this.updateSingleGraph(plotInfo._id);
+      this.updateSingleGraph(idx);
     });
   }
 
@@ -251,19 +233,29 @@ export class VisualizerComponent implements OnInit {
       items: [
           {
               tag: this.tagList[0],
+              yrange: {
+                min: this.yrangeList[this.tagList[0]].min,
+                max: this.yrangeList[this.tagList[0]].max
+              }
           }
       ]
     }
     this.plotInfo.push(newItem);
+    this.patchPlotInfo(newItem, this.plotInfo.length - 1);
   }
 
   plotSettingModal(idx: number) {
     this.modal.plotSettingModal(this.plotInfo[idx], this.tagList, this.yrangeList).then(res => {
-      this.patchPlotInfo(res);
+      this.patchPlotInfo(res, idx);
     });
   }
 
   deleteGraph(idx: number) {
-    // TO DO: Delete item
+    // show confirm message before deleting graph.
+    if (confirm('Are you sure to delete?')) {
+      this.mongo.deleteTSmultiInfo(this.plotInfo[idx]._id).subscribe(_ => {
+        this.updateAllGraph();
+      });
+    }
   }
 }
