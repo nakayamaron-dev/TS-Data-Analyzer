@@ -13,7 +13,8 @@ export interface IplotMulti {
         min: number,
         max: number
     }
-  }[]
+  }[],
+  datasets?: Partial<Plotly.PlotData>[]
 }
 
 @Component({
@@ -34,16 +35,11 @@ export class VisualizerComponent implements OnInit {
     '#d62728',  // brick red
     '#9467bd',  // muted purple
     '#8c564b',  // chestnut brown
-    '#e377c2',  // raspberry yogurt pink
-    '#7f7f7f',  // middle gray
-    '#bcbd22',  // curry yellow-green
-    '#17becf',  // blue-teal
   ]
 
   config: Partial<Plotly.Config> = {
     displaylogo: false,
     displayModeBar: false,
-    modeBarButtonsToRemove: ['sendDataToCloud'],
   }
 
   layout: Partial<Plotly.Layout> =  {
@@ -56,9 +52,6 @@ export class VisualizerComponent implements OnInit {
       xanchor: 'center',
       x: 0.5,
       orientation: 'h',
-      font: {
-        size: 12,
-      }
     },
     xaxis: {
       domain: [0.08, 0.92],
@@ -123,7 +116,6 @@ export class VisualizerComponent implements OnInit {
     },
   }
 
-  datasets: Partial<Plotly.PlotData>[][] = [[]];
   tagList: string[] = [];
   yrangeList: IdefaultYranges = {};
   plotInfo: IplotMulti[] = [];
@@ -133,37 +125,29 @@ export class VisualizerComponent implements OnInit {
     private mongo: MongoService,
     private modal: ModalService) { }
 
-   async updateAllGraph(): Promise<void> {
-    this.datasets = [];
-
-    // なぜ非推奨なのか後で調べる。
-    this.plotInfo = await this.mongo.getTSmultiInfoAll().toPromise();
-
-    this.plotInfo.forEach((graphInfo, graphIdx) => {
-      this.datasets.push([])
-      const tagList = graphInfo.items.map(itm => itm.tag);
-      this.setDataset(graphInfo, graphIdx, tagList);
+  updateAllGraph(): void {
+    this.mongo.getTSmultiInfoAll().subscribe(res => {
+      this.plotInfo = res;
+      this.plotInfo.forEach(graphInfo => {
+        const tagList = graphInfo.items.map(itm => itm.tag);
+        this.setDataset(graphInfo, tagList);
+      })
     })
   }
 
   updateSingleGraph(graphIdx: number): void {
-    const graphInfo = this.plotInfo[graphIdx];
-    const tagList = graphInfo.items.map(itm => itm.tag);
-
-    if (this.datasets[graphIdx]) {
-      this.datasets[graphIdx] = [];
-    } else {
-      this.datasets.push([]);
-    }
-
-    this.setDataset(graphInfo, graphIdx, tagList);
+    this.mongo.getTSmultiInfo(this.plotInfo[graphIdx]._id).subscribe(res => {
+      this.plotInfo[graphIdx] = res;
+      const tagList = res.items.map(itm => itm.tag);
+      this.setDataset(this.plotInfo[graphIdx], tagList);
+    })
   }
 
-  setDataset(graphInfo: IplotMulti, graphIdx: number, tagList: string[]) {
+  setDataset(graphInfo: IplotMulti, tagList: string[]) {
     this.influx.getHistoricalData(tagList).subscribe(res => {
       graphInfo.items.forEach((item, idx) => {
 
-        this.datasets[graphIdx].push(
+        graphInfo.datasets!.push(
           {
             x: res[item.tag].map(itm => itm.timeStamp),
             y: res[item.tag].map(itm => itm.value),
@@ -187,31 +171,28 @@ export class VisualizerComponent implements OnInit {
     switch (graphIdx) {
       case 0:
         this.layout.yaxis!.range = [yrange.min, yrange.max];
-        return
+        break;
       case 1:
         this.layout.yaxis2!.range = [yrange.min, yrange.max];
-        return
+        break;
       case 2:
         this.layout.yaxis3!.range = [yrange.min, yrange.max];
-        return
+        break;
       case 3:
         this.layout.yaxis4!.range = [yrange.min, yrange.max];
-        return
+        break;
       case 4:
         this.layout.yaxis5!.range = [yrange.min, yrange.max];
-        return
+        break;
       case 5:
         this.layout.yaxis6!.range = [yrange.min, yrange.max];
-        return
+        break;
+      default:
+        break;
     }
   }
 
   ngOnInit(): void {
-    this.setBaseparams();
-    this.updateAllGraph();
-  }
-
-  setBaseparams(): void {
     this.influx.getTagList().subscribe(res => {
       this.tagList = res
 
@@ -219,6 +200,8 @@ export class VisualizerComponent implements OnInit {
         this.yrangeList = res;
       })
     })
+
+    this.updateAllGraph();
   }
 
   patchPlotInfo(plotInfo: IplotMulti, idx: number) {

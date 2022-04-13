@@ -11,13 +11,14 @@
         </div>
 
         <plotly-plot
-        [data]="datasets[i]" 
+        [data]="gInfo.datasets" 
         [layout]="layout"
         [config]="config"
         [useResizeHandler]="true">
         </plotly-plot>
     </div>
   </div>
+  <br>
   <div class="mx-auto" style="width: 0px;">
     <fa-icon class="PrimaryColor" [icon]="plusIcon" size="2x" (click)="addGraph()"></fa-icon>
   </div>

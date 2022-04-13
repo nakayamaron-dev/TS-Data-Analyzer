@@ -14,7 +14,7 @@ import { IdefaultYranges } from '../service/influx.service';
         <div class="card-body">
             <div class="row">
                 <div class="col-2" *ngFor="let itm of setting.items; index as i">
-                    <label class="col-10">tag{{ i+1 }}</label>
+                    <label class="col-11">tag{{ i+1 }}</label>
                     <fa-icon class="col-2 PrimaryColor" [icon]="deleteIcon" size="lg" (click)="removeTag(i)"></fa-icon>
                     <select 
                     #tagSelect class="form-select"
@@ -23,15 +23,23 @@ import { IdefaultYranges } from '../service/influx.service';
                         *ngFor="let tag of tagListAll"
                         [selected]="tag === itm.tag">{{tag}}</option>
                     </select>
-                    <button type="button" class="btn" (click)="setDefaultYrange(i)">set default value</button>
                     <br>
-                    <label>min:</label>
-                    <input #yrangeMin type="text" [value]="itm.yrange?.min" (input)="setYrangeMin(yrangeMin.value, i)">
-                    <br>
-                    <label>max:</label>
-                    <input #yrangeMax type="text" [value]="itm.yrange?.max" (input)="setYrangeMax(yrangeMax.value, i)">
+                    <form>
+                        <div class="mb-3">
+                            <label class="form-label">yrange min</label>
+                            <input #yrangeMin type="text" [value]="itm.yrange?.min" 
+                            (input)="setYrangeMin(yrangeMin.value, i)" class="form-control" style="width: 30%;">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">yrange max</label>
+                            <input #yrangeMax type="text" [value]="itm.yrange?.max" 
+                            (input)="setYrangeMax(yrangeMax.value, i)" class="form-control" style="width: 30%;">
+                        </div>
+                    </form>
+                    <button type="button" class="btn btn-outline-dark" (click)="setDefaultYrange(i)">set default yrange</button>
                 </div>
-                <fa-icon *ngIf="setting.items.length < 6" class="col-1 PrimaryColor" [icon]="plusIcon" size="2x" (click)="addTag()"></fa-icon>
+                <fa-icon *ngIf="setting.items.length < 6" class="col-1 PrimaryColor" [icon]="plusIcon"
+                 size="2x" (click)="addTag()" style="margin-top: 28px"></fa-icon>
             </div>
         </div>
     </div>
