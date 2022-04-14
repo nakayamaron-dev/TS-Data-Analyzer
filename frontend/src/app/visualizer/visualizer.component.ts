@@ -4,7 +4,6 @@ import { InfluxService, IdefaultYranges } from '../service/influx.service';
 import { MongoService } from '../service/mongo.service';
 import { ModalService } from '../service/modal.service';
 import { faCirclePlus, faTrash, faCog } from '@fortawesome/free-solid-svg-icons';
-import { Moment } from 'moment';
 
 export interface IplotMulti {
   _id: number,
