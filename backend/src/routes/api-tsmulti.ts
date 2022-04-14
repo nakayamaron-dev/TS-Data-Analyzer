@@ -5,6 +5,7 @@ import * as db from "../models/mongo-local-db";
 
 export interface IplotMulti {
   _id: number,
+  dateRange?: string[],
   items: {
     tag: string,
     yrange?: {
@@ -53,7 +54,10 @@ router.patch("/tsmulti", async (req: express.Request, res: express.Response<stri
   try {
     conn = await db.createConnection("data");
     const TSMulti = conn.model("TSMulti", tsmultiSchema, "tsmulti");
-    await TSMulti.findByIdAndUpdate(req.body._id, {$set: req.body}, { upsert: true });
+    for (const body of req.body) {
+      await TSMulti.findByIdAndUpdate(body._id, {$set: body}, { upsert: true });
+    }
+    
     res.status(200).json("status OK");
   } catch (err) {
     next(err);

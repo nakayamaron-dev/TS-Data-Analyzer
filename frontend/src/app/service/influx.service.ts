@@ -30,7 +30,7 @@ export class InfluxService {
 
   }
 
-  getHistoricalData(tags: string[], measurement: string = 'rawdata', fromDate?: string, toDate?: string):
+  getHistoricalData(tags: string[], measurement: string = 'rawdata', fromDate?: string | undefined, toDate?: string | undefined):
    Observable<{[tag: string]: IHistoricalValue<string>[]}> {
     let qstr = '?tags=' + tags.join(',');
 

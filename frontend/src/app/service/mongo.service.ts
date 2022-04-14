@@ -21,6 +21,7 @@ export class MongoService {
             {
               _id: itm._id,
               items: itm.items,
+              dateRange: itm.dateRange,
               datasets: []
             }
           )
@@ -38,6 +39,7 @@ export class MongoService {
         const ret: IplotMulti = {
           _id: res._id,
           items: res.items,
+          dateRange: res.dateRange,
           datasets: []
         }
         return ret;
@@ -45,7 +47,7 @@ export class MongoService {
     )
   }
 
-  updateTSmultiInfo(data: IplotMulti): Observable<any> {
+  updateTSmultiInfo(data: IplotMulti[]): Observable<any> {
     return this.http.patch(`/api/v1/mongo/tsmulti`, data);
   }
 

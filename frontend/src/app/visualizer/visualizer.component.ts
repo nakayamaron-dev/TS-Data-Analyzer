@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import * as Plotly from 'plotly.js-dist-min';
 import { InfluxService, IdefaultYranges } from '../service/influx.service';
 import { MongoService } from '../service/mongo.service';
 import { ModalService } from '../service/modal.service';
 import { faCirclePlus, faTrash, faCog } from '@fortawesome/free-solid-svg-icons';
+import { Moment } from 'moment';
 
 export interface IplotMulti {
   _id: number,
+  dateRange?: string[],
   items: {
     tag: string,
     yrange?: {
@@ -119,6 +121,19 @@ export class VisualizerComponent implements OnInit {
   tagList: string[] = [];
   yrangeList: IdefaultYranges = {};
   plotInfo: IplotMulti[] = [];
+  xrange: string[] = [];
+  measurement: string = 'rawdata';
+
+  @Input() 
+  set plotDateRange(data: string[]) {
+    this.xrange = data;
+    this.plotInfo = this.plotInfo.map(itm => {
+      itm.dateRange = data;
+      return itm
+    })
+
+    this.patchAllPlotInfo(this.plotInfo);
+  }
 
   constructor(
     private influx: InfluxService,
@@ -144,7 +159,10 @@ export class VisualizerComponent implements OnInit {
   }
 
   setDataset(graphInfo: IplotMulti, tagList: string[]) {
-    this.influx.getHistoricalData(tagList).subscribe(res => {
+    const From = graphInfo.dateRange? graphInfo.dateRange[0]: undefined;
+    const To = graphInfo.dateRange? graphInfo.dateRange[1]: undefined;
+
+    this.influx.getHistoricalData(tagList, this.measurement, From, To).subscribe(res => {
       graphInfo.items.forEach((item, idx) => {
 
         graphInfo.datasets!.push(
@@ -204,10 +222,16 @@ export class VisualizerComponent implements OnInit {
     this.updateAllGraph();
   }
 
-  patchPlotInfo(plotInfo: IplotMulti, idx: number) {
+  patchPlotInfo(plotInfo: IplotMulti[], idx: number) {
     this.mongo.updateTSmultiInfo(plotInfo).subscribe(_ => {
       this.updateSingleGraph(idx);
     });
+  }
+
+  patchAllPlotInfo(plotInfo: IplotMulti[]) {
+    this.mongo.updateTSmultiInfo(plotInfo).subscribe(_ => {
+      this.updateAllGraph();
+    })
   }
 
   addGraph() {
@@ -224,12 +248,12 @@ export class VisualizerComponent implements OnInit {
       ]
     }
     this.plotInfo.push(newItem);
-    this.patchPlotInfo(newItem, this.plotInfo.length - 1);
+    this.patchPlotInfo([newItem], this.plotInfo.length - 1);
   }
 
   plotSettingModal(idx: number) {
     this.modal.plotSettingModal(this.plotInfo[idx], this.tagList, this.yrangeList).then(res => {
-      this.patchPlotInfo(res, idx);
+      this.patchPlotInfo([res], idx);
     });
   }
 
