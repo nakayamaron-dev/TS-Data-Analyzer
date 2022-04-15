@@ -3,9 +3,21 @@
 @import "~ng-pick-datetime/assets/style/picker.min.css";
 
 .PrimaryColor {
-    color: #292b2c;
+    color: gray;
+}
+
+.SecondaryBGColor {
+    background-color: rgb(24, 27, 31);
 }
 
 .modal-xl {
     max-width: 1800px;
+}
+
+body {
+    background-color: rgb(17, 18, 23);
+}
+
+.textColor {
+    color: white;
 }

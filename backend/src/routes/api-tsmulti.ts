@@ -68,12 +68,14 @@ router.patch("/tsmulti", async (req: express.Request, res: express.Response<stri
   }
 });
 
-router.delete("/tsmulti/:id", async (req: express.Request, res: express.Response<string>, next: express.NextFunction) => {
+router.delete("/tsmulti", async (req: express.Request, res: express.Response<string>, next: express.NextFunction) => {
   let conn;
   try {
     conn = await db.createConnection("data");
     const TSMulti = conn.model("TSMulti", tsmultiSchema, "tsmulti");
-    await TSMulti.findByIdAndDelete(req.params.id);
+    for (const body of req.body) {
+      await TSMulti.findByIdAndDelete(body._id);
+    }
     res.status(200).json('status OK');
   } catch (err) {
     next(err);

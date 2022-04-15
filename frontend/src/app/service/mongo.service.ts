@@ -51,7 +51,7 @@ export class MongoService {
     return this.http.patch(`/api/v1/mongo/tsmulti`, data);
   }
 
-  deleteTSmultiInfo(id: number): Observable<any> {
-    return this.http.delete(`/api/v1/mongo/tsmulti/${id}`);
+  deleteTSmultiInfo(data: IplotMulti[]): Observable<any> {
+    return this.http.delete(`/api/v1/mongo/tsmulti`, {body: data});
   }
 }

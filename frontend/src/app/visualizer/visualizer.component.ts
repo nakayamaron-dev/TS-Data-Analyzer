@@ -1,9 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, HostListener } from '@angular/core';
 import * as Plotly from 'plotly.js-dist-min';
 import { InfluxService, IdefaultYranges } from '../service/influx.service';
 import { MongoService } from '../service/mongo.service';
 import { ModalService } from '../service/modal.service';
-import { faCirclePlus, faTrash, faCog } from '@fortawesome/free-solid-svg-icons';
+import { faCirclePlus, faTrashAlt, faCog } from '@fortawesome/free-solid-svg-icons';
+import { Observable, forkJoin } from 'rxjs';
 
 export interface IplotMulti {
   _id: number,
@@ -26,8 +27,10 @@ export interface IplotMulti {
 export class VisualizerComponent implements OnInit {
 
   plusIcon = faCirclePlus;
-  deleteIcon = faTrash;
+  deleteIcon = faTrashAlt;
   settingIcon = faCog;
+
+  isUnSaved = false;
 
   colors: string[] = [
     '#1f77b4',  // muted blue
@@ -45,6 +48,8 @@ export class VisualizerComponent implements OnInit {
 
   layout: Partial<Plotly.Layout> =  {
     margin: { l: 50, r: 50, b: 35, t: 0 },
+    paper_bgcolor: 'rgb(24, 27, 31)',
+    plot_bgcolor: 'rgb(24, 27, 31)',
     height: 210,
     showlegend: true,
     legend: {
@@ -53,11 +58,15 @@ export class VisualizerComponent implements OnInit {
       xanchor: 'center',
       x: 0.5,
       orientation: 'h',
+      font: {
+        color: 'white'
+      }
     },
     xaxis: {
       domain: [0.08, 0.92],
-      showgrid: false,
+      showgrid: true,
       linewidth: 1,
+      color: "white",
     },
     yaxis: {
       linewidth: 2,
@@ -120,18 +129,19 @@ export class VisualizerComponent implements OnInit {
   tagList: string[] = [];
   yrangeList: IdefaultYranges = {};
   plotInfo: IplotMulti[] = [];
+  deleteBuffer: IplotMulti[] = [];
   xrange: string[] = [];
   measurement: string = 'rawdata';
 
   @Input() 
-  set plotDateRange(data: string[]) {
-    this.xrange = data;
+  set plotDateRange(xrange: string[]) {
+    this.xrange = xrange;
     this.plotInfo = this.plotInfo.map(itm => {
-      itm.dateRange = data;
+      itm.dateRange = xrange;
       return itm
     })
 
-    this.patchAllPlotInfo(this.plotInfo);
+    this.patchPlotInfo(this.plotInfo);
   }
 
   constructor(
@@ -140,26 +150,21 @@ export class VisualizerComponent implements OnInit {
     private modal: ModalService) { }
 
   updateAllGraph(): void {
-    this.mongo.getTSmultiInfoAll().subscribe(res => {
-      this.plotInfo = res;
-      this.plotInfo.forEach(graphInfo => {
-        const tagList = graphInfo.items.map(itm => itm.tag);
-        this.setDataset(graphInfo, tagList);
-      })
+    this.plotInfo.forEach(graphInfo => {
+      const tagList = graphInfo.items.map(itm => itm.tag);
+      this.setDataset(graphInfo, tagList);
     })
   }
 
   updateSingleGraph(graphIdx: number): void {
-    this.mongo.getTSmultiInfo(this.plotInfo[graphIdx]._id).subscribe(res => {
-      this.plotInfo[graphIdx] = res;
-      const tagList = res.items.map(itm => itm.tag);
-      this.setDataset(this.plotInfo[graphIdx], tagList);
-    })
+    const tagList = this.plotInfo[graphIdx].items.map(itm => itm.tag);
+    this.setDataset(this.plotInfo[graphIdx], tagList);
   }
 
   setDataset(graphInfo: IplotMulti, tagList: string[]) {
     const From = graphInfo.dateRange? graphInfo.dateRange[0]: undefined;
     const To = graphInfo.dateRange? graphInfo.dateRange[1]: undefined;
+    graphInfo.datasets! = [];
 
     this.influx.getHistoricalData(tagList, this.measurement, From, To).subscribe(res => {
       graphInfo.items.forEach((item, idx) => {
@@ -218,22 +223,22 @@ export class VisualizerComponent implements OnInit {
       })
     })
 
-    this.updateAllGraph();
-  }
-
-  patchPlotInfo(plotInfo: IplotMulti[], idx: number) {
-    this.mongo.updateTSmultiInfo(plotInfo).subscribe(_ => {
-      this.updateSingleGraph(idx);
-    });
-  }
-
-  patchAllPlotInfo(plotInfo: IplotMulti[]) {
-    this.mongo.updateTSmultiInfo(plotInfo).subscribe(_ => {
+    this.mongo.getTSmultiInfoAll().subscribe(res => {
+      this.plotInfo = res;
       this.updateAllGraph();
     })
   }
 
+  patchPlotInfo(plotInfo: IplotMulti[]): Observable<void> {
+    return this.mongo.updateTSmultiInfo(plotInfo);
+  }
+
+  deletePlotInfo(plotInfo: IplotMulti[]): Observable<void> {
+    return this.mongo.deleteTSmultiInfo(plotInfo);
+  }
+
   addGraph() {
+    this.isUnSaved = true;
     const newItem: IplotMulti = {
       _id: this.plotInfo.slice(-1)[0]._id + 1,
       items: [
@@ -247,21 +252,47 @@ export class VisualizerComponent implements OnInit {
       ]
     }
     this.plotInfo.push(newItem);
-    this.patchPlotInfo([newItem], this.plotInfo.length - 1);
   }
 
   plotSettingModal(idx: number) {
     this.modal.plotSettingModal(this.plotInfo[idx], this.tagList, this.yrangeList).then(res => {
-      this.patchPlotInfo([res], idx);
+      this.isUnSaved = true;
+      this.plotInfo[idx] = res;
+      this.updateSingleGraph(idx);
     });
   }
 
   deleteGraph(idx: number) {
     // show confirm message before deleting graph.
     if (confirm('Are you sure to delete?')) {
-      this.mongo.deleteTSmultiInfo(this.plotInfo[idx]._id).subscribe(_ => {
-        this.updateAllGraph();
-      });
+      this.isUnSaved = true;
+      this.deleteBuffer.push(this.plotInfo[idx]);
+      this.plotInfo.splice(idx, 1);
+    }
+  }
+
+  save() {
+    forkJoin(
+      [
+        this.deletePlotInfo(this.deleteBuffer),
+        this.patchPlotInfo(this.plotInfo)
+      ]
+    ).subscribe(_ => {
+      alert('Saved Successfly!');
+      this.isUnSaved = false;
+    }, (err) => {
+      alert(err);
+    })
+  }
+
+  shouldConfirmOnBeforeunload() {
+    return this.isUnSaved;
+  }
+
+  @HostListener('window:beforeunload', ['$event'])
+  beforeUnload(e: Event) {
+    if (this.shouldConfirmOnBeforeunload()) {
+      e.returnValue = true;
     }
   }
 }
