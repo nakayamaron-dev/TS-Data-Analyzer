@@ -1,6 +1,6 @@
 import express from "express";
 const router = express.Router();
-import {InfluxDB} from "influx";
+import { InfluxDB } from "influx";
 import moment from "moment";
 
 interface IinfluxValue {
