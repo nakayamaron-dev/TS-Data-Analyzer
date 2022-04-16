@@ -1,10 +1,13 @@
-import { Component, OnInit, Input, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import * as Plotly from 'plotly.js-dist-min';
 import { InfluxService, IdefaultYranges } from '../service/influx.service';
 import { MongoService } from '../service/mongo.service';
 import { ModalService } from '../service/modal.service';
-import { faCirclePlus, faTrashAlt, faCog } from '@fortawesome/free-solid-svg-icons';
+import { faCirclePlus, faTrashAlt, faPen, faClock } from '@fortawesome/free-solid-svg-icons';
 import { Observable, forkJoin } from 'rxjs';
+import { Moment } from 'moment';
+import * as moment from 'moment';
+import { OWL_DATE_TIME_FORMATS } from '@danielmoncada/angular-datetime-picker';
 
 export interface IplotMulti {
   _id: number,
@@ -19,18 +22,34 @@ export interface IplotMulti {
   datasets?: Partial<Plotly.PlotData>[]
 }
 
+// see:https://danielykpan.github.io/date-time-picker/#Use%20picker%20with%20MomentJS
+export const MOMENT_FORMATS = {
+  parseInput: 'l LT',
+  fullPickerInput: 'YYYY/MM/DD HH:mm',
+  datePickerInput: 'l',
+  timePickerInput: 'LT',
+  monthYearLabel: 'MMM YYYY',
+  dateA11yLabel: 'LL',
+  monthYearA11yLabel: 'MMMM YYYY',
+};
+
 @Component({
   selector: 'app-visualizer',
   templateUrl: './visualizer.component.html',
-  styleUrls: ['./visualizer.component.css']
+  styleUrls: ['./visualizer.component.css'],
+  providers: [
+    { provide: OWL_DATE_TIME_FORMATS, useValue: MOMENT_FORMATS }
+  ]
 })
 export class VisualizerComponent implements OnInit {
 
   plusIcon = faCirclePlus;
   deleteIcon = faTrashAlt;
-  settingIcon = faCog;
+  editIcon = faPen;
+  clockIcon = faClock;
 
   isUnSaved = false;
+  fontColor = '#C9CDCE';
 
   colors: string[] = [
     '#1f77b4',  // muted blue
@@ -53,30 +72,25 @@ export class VisualizerComponent implements OnInit {
     height: 210,
     showlegend: true,
     legend: {
-      yanchor: 'top',
       y: 1.4,
       xanchor: 'center',
       x: 0.5,
       orientation: 'h',
       font: {
-        color: 'white'
+        color: this.fontColor
       }
     },
     xaxis: {
       domain: [0.08, 0.92],
       showgrid: true,
-      linewidth: 1,
-      color: "white",
+      color: this.fontColor,
     },
     yaxis: {
-      linewidth: 2,
-      gridwidth: 1,
       color: this.colors[0],
       autorange: false,
       zeroline: false,
     },
     yaxis2: {
-      linewidth: 2,
       overlaying: 'y',
       side: 'right',
       showgrid: false,
@@ -85,7 +99,6 @@ export class VisualizerComponent implements OnInit {
       zeroline: false,
     },
     yaxis3: {
-      linewidth: 2,
       overlaying: 'y',
       side: 'left',
       showgrid: false,
@@ -95,7 +108,6 @@ export class VisualizerComponent implements OnInit {
       zeroline: false,
     },
     yaxis4: {
-      linewidth: 2,
       overlaying: 'y',
       side: 'right',
       showgrid: false,
@@ -105,7 +117,6 @@ export class VisualizerComponent implements OnInit {
       zeroline: false,
     },
     yaxis5: {
-      linewidth: 2,
       overlaying: 'y',
       side: 'left',
       showgrid: false,
@@ -115,7 +126,6 @@ export class VisualizerComponent implements OnInit {
       zeroline: false,
     },
     yaxis6: {
-      linewidth: 2,
       overlaying: 'y',
       side: 'right',
       showgrid: false,
@@ -130,19 +140,10 @@ export class VisualizerComponent implements OnInit {
   yrangeList: IdefaultYranges = {};
   plotInfo: IplotMulti[] = [];
   deleteBuffer: IplotMulti[] = [];
-  xrange: string[] = [];
   measurement: string = 'rawdata';
-
-  @Input() 
-  set plotDateRange(xrange: string[]) {
-    this.xrange = xrange;
-    this.plotInfo = this.plotInfo.map(itm => {
-      itm.dateRange = xrange;
-      return itm
-    })
-
-    this.patchPlotInfo(this.plotInfo);
-  }
+  defaultXrange: Moment[] = [];
+  xrange: Moment[] = [];
+  placeholder: string = '';
 
   constructor(
     private influx: InfluxService,
@@ -162,17 +163,27 @@ export class VisualizerComponent implements OnInit {
   }
 
   setDataset(graphInfo: IplotMulti, tagList: string[]) {
-    const From = graphInfo.dateRange? graphInfo.dateRange[0]: undefined;
-    const To = graphInfo.dateRange? graphInfo.dateRange[1]: undefined;
-    graphInfo.datasets! = [];
+    let From: string;
+    let To: string;
 
+    if (graphInfo.dateRange?.length !== 2) {
+      From = this.defaultXrange[0].toISOString();
+      To = this.defaultXrange[1].toISOString();
+    } else {
+      From = graphInfo.dateRange[0];
+      To = graphInfo.dateRange[1];
+    }
+
+    graphInfo.datasets! = [];
     this.influx.getHistoricalData(tagList, this.measurement, From, To).subscribe(res => {
       graphInfo.items.forEach((item, idx) => {
+        const x = res[item.tag]? res[item.tag].map(itm => itm.timeStamp): [];
+        const y = res[item.tag]? res[item.tag].map(itm => itm.value): [];
 
         graphInfo.datasets!.push(
           {
-            x: res[item.tag].map(itm => itm.timeStamp),
-            y: res[item.tag].map(itm => itm.value),
+            x: x,
+            y: y,
             name: item.tag,
             yaxis: `y${idx+1}`,
           }
@@ -180,8 +191,8 @@ export class VisualizerComponent implements OnInit {
 
         if (!item.yrange) {
           item.yrange = {
-            min: Math.min(...res[item.tag].map(itm => itm.value)),
-            max: Math.max(...res[item.tag].map(itm => itm.value))
+            min: Math.min(...y),
+            max: Math.max(...y)
           }
         }
         this.setYrange(idx, item.yrange!);
@@ -223,8 +234,12 @@ export class VisualizerComponent implements OnInit {
       })
     })
 
+    this.getDefaultXrange();
+
     this.mongo.getTSmultiInfoAll().subscribe(res => {
       this.plotInfo = res;
+      this.xrange = res[0].dateRange? res[0].dateRange.map(itm => moment(itm)): []
+      this.placeholder = this.getTimePlaceholderValue();
       this.updateAllGraph();
     })
   }
@@ -249,9 +264,11 @@ export class VisualizerComponent implements OnInit {
                 max: this.yrangeList[this.tagList[0]].max
               }
           }
-      ]
+      ],
+      dateRange: [this.xrange[0].toISOString(), this.xrange[1].toISOString()]
     }
     this.plotInfo.push(newItem);
+    this.updateSingleGraph(this.plotInfo.length - 1);
   }
 
   plotSettingModal(idx: number) {
@@ -259,7 +276,7 @@ export class VisualizerComponent implements OnInit {
       this.isUnSaved = true;
       this.plotInfo[idx] = res;
       this.updateSingleGraph(idx);
-    });
+    }, (err) => {});
   }
 
   deleteGraph(idx: number) {
@@ -271,6 +288,12 @@ export class VisualizerComponent implements OnInit {
     }
   }
 
+  async getDefaultXrange() {
+    this.influx.getLatestTimeStamp().subscribe(res => {
+      this.defaultXrange = [moment(res).subtract(1, 'd'), moment(res)]
+    })
+  }
+
   save() {
     forkJoin(
       [
@@ -278,7 +301,7 @@ export class VisualizerComponent implements OnInit {
         this.patchPlotInfo(this.plotInfo)
       ]
     ).subscribe(_ => {
-      alert('Saved Successfly!');
+      alert('Saved Successfully!');
       this.isUnSaved = false;
     }, (err) => {
       alert(err);
@@ -294,5 +317,22 @@ export class VisualizerComponent implements OnInit {
     if (this.shouldConfirmOnBeforeunload()) {
       e.returnValue = true;
     }
+  }
+
+  onChangeDateTime() {
+    this.isUnSaved = true;
+    this.plotInfo = this.plotInfo.map(itm => {
+      itm.dateRange = [this.xrange[0].toISOString(), this.xrange[1].toISOString()];
+      return itm
+    })
+    this.placeholder = this.getTimePlaceholderValue();
+    this.updateAllGraph();
+  }
+
+  getTimePlaceholderValue(): string {
+    let ret = this.xrange[0]? moment(this.xrange[0]).format(MOMENT_FORMATS.fullPickerInput): this.defaultXrange[0].format(MOMENT_FORMATS.fullPickerInput);
+    ret += ' ~ ';
+    ret += this.xrange[1]? moment(this.xrange[1]).format(MOMENT_FORMATS.fullPickerInput): this.defaultXrange[1].format(MOMENT_FORMATS.fullPickerInput);
+    return ret;
   }
 }

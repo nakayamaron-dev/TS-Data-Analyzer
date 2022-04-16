@@ -9,8 +9,8 @@ export interface OnBeforeunload {
   export class BeforeunloadGuard implements CanDeactivate<OnBeforeunload> {
     canDeactivate(component: OnBeforeunload) {
       if (component.shouldConfirmOnBeforeunload()) {
-        const msg = 'このページを離れてもよろしいですか？'
-          + '\n行った変更が保存されない可能性があります。';
+        const msg = 'Are you sure you want to leave this page?'
+          + '\n The changes you have made may not be saved.';
         return confirm(msg);
       }
       return true;

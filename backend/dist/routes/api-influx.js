@@ -66,6 +66,17 @@ router.get("/:measurement", async (req, res, next) => {
         next(err);
     }
 });
+router.get("/:measurement/timestamp/last", async (req, res, next) => {
+    let query = String.raw `SELECT last(value) FROM "${req.params.measurement}"`;
+    try {
+        const influx = getInfluxInstance();
+        const result = (await influx.query(query)).flat();
+        res.status(200).json(result[0].time);
+    }
+    catch (err) {
+        next(err);
+    }
+});
 router.use(function (err, _req, res, _next) {
     res.status(500).json({ error: err });
 });

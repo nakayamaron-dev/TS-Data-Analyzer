@@ -68,6 +68,10 @@ export class InfluxService {
     )
   }
 
+  getLatestTimeStamp(measurement: string = "rawdata"): Observable<string> {
+    return this.http.get<string>(`/api/v1/ts/${measurement}/timestamp/last`);
+  }
+
   getDefaultYrangeList(tags: string[], measurement: string='rawdata', fromDate?: string, toDate?: string): Observable<IdefaultYranges> {
     let qstr = '?tags=' + tags.join(',');
 

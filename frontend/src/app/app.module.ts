@@ -19,9 +19,9 @@ PlotlyModule.plotlyjs = PlotlyJS;
 
 // owldatetimeのデフォルトの日付FormatをYYYY/MM/DD HH:mm:ssとする。
 // https://danielykpan.github.io/date-time-picker/#Use%20picker%20with%20MomentJS
-export const MY_MOMENT_FORMATS = {
+export const MOMENT_FORMATS = {
   parseInput: 'l LT',
-  fullPickerInput: 'YYYY/MM/DD HH:mm:ss',
+  fullPickerInput: 'YYYY/MM/DD HH:mm',
   datePickerInput: 'l',
   timePickerInput: 'LT',
   monthYearLabel: 'MMM YYYY',
@@ -50,7 +50,7 @@ export const MY_MOMENT_FORMATS = {
     OwlNativeDateTimeModule,
   ],
   providers: [
-    {provide: OWL_DATE_TIME_FORMATS, useValue: MY_MOMENT_FORMATS},
+    {provide: OWL_DATE_TIME_FORMATS, useValue: MOMENT_FORMATS},
   ],
   bootstrap: [AppComponent]
 })

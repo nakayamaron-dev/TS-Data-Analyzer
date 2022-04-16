@@ -3,6 +3,11 @@ const router = express.Router();
 import {InfluxDB} from "influx";
 import moment from "moment";
 
+interface IinfluxValue {
+    time: string;
+    value: number;
+}
+
 const executeInfluxQuery = async (influxQueries: string[], res: any) => {
     const influx = getInfluxInstance();
     const result = (await influx.query(influxQueries)).flat();
@@ -69,6 +74,18 @@ router.get("/:measurement", async (req: any, res, next) => {
 
     try {
         await executeInfluxQuery([query], res);
+    } catch (err) {
+        next(err);
+    }
+})
+
+router.get("/:measurement/timestamp/last", async (req: any, res, next) => {
+    let query = String.raw`SELECT last(value) FROM "${req.params.measurement}"`;
+    
+    try {
+        const influx = getInfluxInstance();
+        const result = (await influx.query(query)).flat() as IinfluxValue[];
+        res.status(200).json(result[0].time);
     } catch (err) {
         next(err);
     }

@@ -21,14 +21,18 @@
             <path fill="url(#a)" d="M116.7 24.9H103.6V11.8c0-.6-.5-1.1-1.1-1.1h-12c-.6 0-1.1.5-1.1 1.1v13.1H76.2c-.6 0-1.1.5-1.1 1.1v12c0 .6.5 1.1 1.1 1.1h13.2v13.2c0 .6.5 1.1 1.1 1.1h11.9c.6 0 1.1-.5 1.1-1.1V39.1h13.1c.6 0 1.1-.5 1.1-1.1V26.1c.1-.6-.4-1.2-1-1.2z"></path>
         </svg>
     </button>
+    <input [owlDateTime]="dt" [owlDateTimeTrigger]="dt" [selectMode]="'range'" size="35px"
+    [placeholder]="placeholder" (dateTimeChange)="onChangeDateTime()" [(ngModel)]="xrange"
+    style="margin-right: 10px; border: none;" class="SecondaryBGColor textColor" readonly>
+    <owl-date-time #dt></owl-date-time>
+    <fa-icon class="PrimaryColor" [icon]="clockIcon" size="lg" style="margin: 8px 5px 5px 5px"></fa-icon>
 </div>
-
 
 <div class="card SecondaryBGColor" style="margin: 10px 15px 10px 15px;" *ngFor="let gInfo of plotInfo; index as i">
     <div class="card-body">
         <div class="row">
             <div class="col-11">
-                <fa-icon class="PrimaryColor" [icon]="settingIcon" size="lg" (click)="plotSettingModal(i)"></fa-icon>  
+                <fa-icon class="PrimaryColor" [icon]="editIcon" size="lg" (click)="plotSettingModal(i)"></fa-icon>  
             </div>
             <div class="col-1 d-flex flex-row-reverse bd-highlight">
                 <fa-icon class="PrimaryColor" [icon]="deleteIcon" size="lg" (click)="deleteGraph(i)"></fa-icon>  
