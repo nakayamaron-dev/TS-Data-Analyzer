@@ -1,0 +1,17 @@
+version: "3"
+services:
+
+  ts-analyzer:
+    image: docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+    container_name: TS-Analyzer
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      MONGO_HOSTNAME: 52.192.22.89:27017
+      MONGO_USERNAME: mongo
+      MONGO_PASSWORD: mongo
+      INFLUXDB_HOST: 52.192.22.89
+      INFLUXDB_PORT: 8086
+      INFLUXDB_PROTOCOL: http
+      INFLUXDB_NAME: test

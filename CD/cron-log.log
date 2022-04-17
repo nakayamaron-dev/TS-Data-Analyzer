@@ -1,0 +1,1293 @@
+/bin/sh: /home/ec2-user/docker-pull-run.sh: No such file or directory
+/bin/sh: /home/ec2-user/docker-pull-run.sh: No such file or directory
+/bin/sh: /home/ec2-user/docker-pull-run.sh: No such file or directory
+/bin/sh: /home/ec2-user/docker-pull-run.sh: No such file or directory
+/bin/sh: /home/ec2-user/docker-pull-run.sh: No such file or directory
+/bin/sh: /home/ec2-user/docker-pull-run.sh: No such file or directory
+/bin/sh: /home/ec2-user/docker-pull-run.sh: No such file or directory
+/bin/sh: /home/ec2-user/docker-pull-run.sh: No such file or directory
+/bin/sh: /home/ec2-user/docker-pull-run.sh: No such file or directory
+/bin/sh: /home/ec2-user/docker-pull-run.sh: No such file or directory
+/bin/sh: /home/ec2-user/docker-pull-run.sh: No such file or directory
+/bin/sh: /home/ec2-user/docker-pull-run.sh: No such file or directory
+/bin/sh: /home/ec2-user/docker-pull-run.sh: No such file or directory
+/bin/sh: /home/ec2-user/docker-pull-run.sh: No such file or directory
+/bin/sh: /home/ec2-user/docker-pull-run.sh: No such file or directory
+/bin/sh: /home/ec2-user/docker-pull-run.sh: No such file or directory
+/bin/sh: /home/ec2-user/docker-pull-run.sh: No such file or directory
+/bin/sh: /home/ec2-user/docker-pull-run.sh: No such file or directory
+/bin/sh: /home/ec2-user/docker-pull-run.sh: No such file or directory
+/bin/sh: /home/ec2-user/docker-pull-run.sh: No such file or directory
+/bin/sh: /home/ec2-user/docker-pull-run.sh: No such file or directory
+/bin/sh: /home/ec2-user/docker-pull-run.sh: No such file or directory
+/bin/sh: /home/ec2-user/docker-pull-run.sh: No such file or directory
+/bin/sh: /home/ec2-user/docker-pull-run.sh: No such file or directory
+/bin/sh: /home/ec2-user/docker-pull-run.sh: No such file or directory
+/bin/sh: /home/ec2-user/docker-pull-run.sh: No such file or directory
+/bin/sh: /home/ec2-user/docker-pull-run.sh: No such file or directory
+/bin/sh: /home/ec2-user/docker-pull-run.sh: No such file or directory
+/bin/sh: /home/ec2-user/docker-pull-run.sh: No such file or directory
+/bin/sh: /home/ec2-user/docker-pull-run.sh: No such file or directory
+/usr/local/bin:/usr/bin:/bin
+Start - Sat Apr 16 13:45:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+Digest: sha256:e60b8a6426ed898b89394a4af0b32ddd020b85c2ee63505455acf573f5cb7439
+Status: Image is up to date for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+Creating network "ec2-user_default" with the default driver
+Creating TS-Analyzer ... 
+Creating TS-Analyzer ... error
+
+ERROR: for TS-Analyzer  Cannot create container for service ts-analyzer: Conflict. The container name "/TS-Analyzer" is already in use by container "297605f1fecf50be990f73dd9e0b24fa63d0577ff7cf71d74d4dedf97bfdb9cb". You have to remove (or rename) that container to be able to reuse that name.
+
+ERROR: for ts-analyzer  Cannot create container for service ts-analyzer: Conflict. The container name "/TS-Analyzer" is already in use by container "297605f1fecf50be990f73dd9e0b24fa63d0577ff7cf71d74d4dedf97bfdb9cb". You have to remove (or rename) that container to be able to reuse that name.
+Encountered errors while bringing up the project.
+Deleted Networks:
+ec2-user_default
+
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sat Apr 16 13:50:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+b281ebec60d2: Pulling fs layer
+74dae484504b: Pulling fs layer
+21739e3ef21a: Pulling fs layer
+e98d6bb51c7c: Pulling fs layer
+517ebafd9747: Pulling fs layer
+fa245e9d6fa2: Pulling fs layer
+662bb10a8d17: Pulling fs layer
+fad28b720f14: Pulling fs layer
+512c94f3667e: Pulling fs layer
+dc4c675dce74: Pulling fs layer
+d13848d5b285: Pulling fs layer
+6e3e839c0a1c: Pulling fs layer
+5a98ff912d33: Pulling fs layer
+464fbbcabab6: Pulling fs layer
+2191bd1bc64d: Pulling fs layer
+517ebafd9747: Waiting
+fa245e9d6fa2: Waiting
+662bb10a8d17: Waiting
+fad28b720f14: Waiting
+512c94f3667e: Waiting
+dc4c675dce74: Waiting
+d13848d5b285: Waiting
+6e3e839c0a1c: Waiting
+5a98ff912d33: Waiting
+464fbbcabab6: Waiting
+2191bd1bc64d: Waiting
+e98d6bb51c7c: Waiting
+21739e3ef21a: Verifying Checksum
+21739e3ef21a: Download complete
+74dae484504b: Verifying Checksum
+74dae484504b: Download complete
+b281ebec60d2: Verifying Checksum
+b281ebec60d2: Download complete
+fa245e9d6fa2: Verifying Checksum
+fa245e9d6fa2: Download complete
+e98d6bb51c7c: Verifying Checksum
+e98d6bb51c7c: Download complete
+fad28b720f14: Verifying Checksum
+fad28b720f14: Download complete
+662bb10a8d17: Verifying Checksum
+662bb10a8d17: Download complete
+512c94f3667e: Verifying Checksum
+512c94f3667e: Download complete
+b281ebec60d2: Pull complete
+dc4c675dce74: Verifying Checksum
+dc4c675dce74: Download complete
+74dae484504b: Pull complete
+d13848d5b285: Verifying Checksum
+d13848d5b285: Download complete
+21739e3ef21a: Pull complete
+6e3e839c0a1c: Verifying Checksum
+6e3e839c0a1c: Download complete
+5a98ff912d33: Verifying Checksum
+5a98ff912d33: Download complete
+2191bd1bc64d: Verifying Checksum
+2191bd1bc64d: Download complete
+464fbbcabab6: Verifying Checksum
+464fbbcabab6: Download complete
+517ebafd9747: Verifying Checksum
+517ebafd9747: Download complete
+e98d6bb51c7c: Pull complete
+517ebafd9747: Pull complete
+fa245e9d6fa2: Pull complete
+662bb10a8d17: Pull complete
+fad28b720f14: Pull complete
+512c94f3667e: Pull complete
+dc4c675dce74: Pull complete
+d13848d5b285: Pull complete
+6e3e839c0a1c: Pull complete
+5a98ff912d33: Pull complete
+464fbbcabab6: Pull complete
+2191bd1bc64d: Pull complete
+Digest: sha256:e60b8a6426ed898b89394a4af0b32ddd020b85c2ee63505455acf573f5cb7439
+Status: Downloaded newer image for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+Creating network "ec2-user_default" with the default driver
+Creating TS-Analyzer ... 
+Creating TS-Analyzer ... done
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sat Apr 16 13:55:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+Digest: sha256:e60b8a6426ed898b89394a4af0b32ddd020b85c2ee63505455acf573f5cb7439
+Status: Image is up to date for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+TS-Analyzer is up-to-date
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sat Apr 16 14:00:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+Digest: sha256:e60b8a6426ed898b89394a4af0b32ddd020b85c2ee63505455acf573f5cb7439
+Status: Image is up to date for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+TS-Analyzer is up-to-date
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sat Apr 16 14:05:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+Digest: sha256:e60b8a6426ed898b89394a4af0b32ddd020b85c2ee63505455acf573f5cb7439
+Status: Image is up to date for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+TS-Analyzer is up-to-date
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sat Apr 16 14:30:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+Digest: sha256:e60b8a6426ed898b89394a4af0b32ddd020b85c2ee63505455acf573f5cb7439
+Status: Image is up to date for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+TS-Analyzer is up-to-date
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sat Apr 16 15:00:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+Digest: sha256:e60b8a6426ed898b89394a4af0b32ddd020b85c2ee63505455acf573f5cb7439
+Status: Image is up to date for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+TS-Analyzer is up-to-date
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sat Apr 16 15:30:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+Digest: sha256:e60b8a6426ed898b89394a4af0b32ddd020b85c2ee63505455acf573f5cb7439
+Status: Image is up to date for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+TS-Analyzer is up-to-date
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sat Apr 16 16:00:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+Digest: sha256:e60b8a6426ed898b89394a4af0b32ddd020b85c2ee63505455acf573f5cb7439
+Status: Image is up to date for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+TS-Analyzer is up-to-date
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sat Apr 16 16:30:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+Digest: sha256:e60b8a6426ed898b89394a4af0b32ddd020b85c2ee63505455acf573f5cb7439
+Status: Image is up to date for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+TS-Analyzer is up-to-date
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sat Apr 16 17:00:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+error after falling back to get manifest by tag: Get "https://docker.pkg.github.com/v2/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer/manifests/main": EOF
+TS-Analyzer is up-to-date
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sat Apr 16 17:30:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+Digest: sha256:e60b8a6426ed898b89394a4af0b32ddd020b85c2ee63505455acf573f5cb7439
+Status: Image is up to date for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+TS-Analyzer is up-to-date
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sat Apr 16 18:00:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+Digest: sha256:e60b8a6426ed898b89394a4af0b32ddd020b85c2ee63505455acf573f5cb7439
+Status: Image is up to date for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+TS-Analyzer is up-to-date
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sat Apr 16 18:30:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+Digest: sha256:e60b8a6426ed898b89394a4af0b32ddd020b85c2ee63505455acf573f5cb7439
+Status: Image is up to date for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+TS-Analyzer is up-to-date
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sat Apr 16 19:00:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+Digest: sha256:e60b8a6426ed898b89394a4af0b32ddd020b85c2ee63505455acf573f5cb7439
+Status: Image is up to date for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+TS-Analyzer is up-to-date
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sat Apr 16 19:30:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+Digest: sha256:e60b8a6426ed898b89394a4af0b32ddd020b85c2ee63505455acf573f5cb7439
+Status: Image is up to date for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+TS-Analyzer is up-to-date
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sat Apr 16 20:00:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+Digest: sha256:e60b8a6426ed898b89394a4af0b32ddd020b85c2ee63505455acf573f5cb7439
+Status: Image is up to date for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+TS-Analyzer is up-to-date
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sat Apr 16 20:30:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+Digest: sha256:e60b8a6426ed898b89394a4af0b32ddd020b85c2ee63505455acf573f5cb7439
+Status: Image is up to date for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+TS-Analyzer is up-to-date
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sat Apr 16 21:00:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+Digest: sha256:e60b8a6426ed898b89394a4af0b32ddd020b85c2ee63505455acf573f5cb7439
+Status: Image is up to date for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+TS-Analyzer is up-to-date
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sat Apr 16 21:30:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+Digest: sha256:e60b8a6426ed898b89394a4af0b32ddd020b85c2ee63505455acf573f5cb7439
+Status: Image is up to date for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+TS-Analyzer is up-to-date
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sat Apr 16 22:00:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+Digest: sha256:e60b8a6426ed898b89394a4af0b32ddd020b85c2ee63505455acf573f5cb7439
+Status: Image is up to date for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+TS-Analyzer is up-to-date
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sat Apr 16 22:30:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+Digest: sha256:e60b8a6426ed898b89394a4af0b32ddd020b85c2ee63505455acf573f5cb7439
+Status: Image is up to date for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+TS-Analyzer is up-to-date
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sat Apr 16 23:00:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+Digest: sha256:e60b8a6426ed898b89394a4af0b32ddd020b85c2ee63505455acf573f5cb7439
+Status: Image is up to date for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+TS-Analyzer is up-to-date
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sat Apr 16 23:30:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+Digest: sha256:e60b8a6426ed898b89394a4af0b32ddd020b85c2ee63505455acf573f5cb7439
+Status: Image is up to date for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+TS-Analyzer is up-to-date
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sun Apr 17 00:00:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+Digest: sha256:e60b8a6426ed898b89394a4af0b32ddd020b85c2ee63505455acf573f5cb7439
+Status: Image is up to date for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+TS-Analyzer is up-to-date
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sun Apr 17 00:30:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+Digest: sha256:e60b8a6426ed898b89394a4af0b32ddd020b85c2ee63505455acf573f5cb7439
+Status: Image is up to date for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+TS-Analyzer is up-to-date
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sun Apr 17 01:00:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+Digest: sha256:e60b8a6426ed898b89394a4af0b32ddd020b85c2ee63505455acf573f5cb7439
+Status: Image is up to date for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+TS-Analyzer is up-to-date
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sun Apr 17 01:30:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+Digest: sha256:e60b8a6426ed898b89394a4af0b32ddd020b85c2ee63505455acf573f5cb7439
+Status: Image is up to date for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+TS-Analyzer is up-to-date
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sun Apr 17 02:00:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+Digest: sha256:e60b8a6426ed898b89394a4af0b32ddd020b85c2ee63505455acf573f5cb7439
+Status: Image is up to date for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+TS-Analyzer is up-to-date
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sun Apr 17 02:30:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+Digest: sha256:e60b8a6426ed898b89394a4af0b32ddd020b85c2ee63505455acf573f5cb7439
+Status: Image is up to date for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+TS-Analyzer is up-to-date
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sun Apr 17 03:00:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+Digest: sha256:e60b8a6426ed898b89394a4af0b32ddd020b85c2ee63505455acf573f5cb7439
+Status: Image is up to date for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+TS-Analyzer is up-to-date
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sun Apr 17 03:30:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+Digest: sha256:e60b8a6426ed898b89394a4af0b32ddd020b85c2ee63505455acf573f5cb7439
+Status: Image is up to date for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+TS-Analyzer is up-to-date
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sun Apr 17 04:00:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+b281ebec60d2: Already exists
+74dae484504b: Already exists
+21739e3ef21a: Already exists
+e98d6bb51c7c: Already exists
+517ebafd9747: Already exists
+fa245e9d6fa2: Already exists
+662bb10a8d17: Already exists
+fad28b720f14: Already exists
+512c94f3667e: Already exists
+3756f1e04db4: Pulling fs layer
+cf900b5b69e2: Pulling fs layer
+4c2ea7338292: Pulling fs layer
+354623ac4958: Pulling fs layer
+90d39dd90d13: Pulling fs layer
+ce522989ce65: Pulling fs layer
+354623ac4958: Waiting
+90d39dd90d13: Waiting
+ce522989ce65: Waiting
+4c2ea7338292: Verifying Checksum
+4c2ea7338292: Download complete
+3756f1e04db4: Download complete
+3756f1e04db4: Pull complete
+cf900b5b69e2: Verifying Checksum
+cf900b5b69e2: Download complete
+cf900b5b69e2: Pull complete
+4c2ea7338292: Pull complete
+354623ac4958: Verifying Checksum
+354623ac4958: Download complete
+354623ac4958: Pull complete
+ce522989ce65: Verifying Checksum
+ce522989ce65: Download complete
+90d39dd90d13: Verifying Checksum
+90d39dd90d13: Download complete
+90d39dd90d13: Pull complete
+ce522989ce65: Pull complete
+Digest: sha256:a3bf985592d605f2f5c238fd48abbc3f4fd264fbfb01441e08267d3c1f139ef5
+Status: Downloaded newer image for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+Recreating TS-Analyzer ... 
+Recreating TS-Analyzer ... done
+Deleted Images:
+untagged: docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer@sha256:e60b8a6426ed898b89394a4af0b32ddd020b85c2ee63505455acf573f5cb7439
+deleted: sha256:8d4ed385be515222d3f8e495f1ca0cf069b0a79c271978385fbb7f542f9b1e22
+deleted: sha256:d22e2fb35b10843a4043763416fab7464f8b54ea9e348b2fddfccfb485ae9952
+deleted: sha256:dff0f743bdf4084430f9531a961b4beb1b7971d35750efdce7a39aff1e999108
+deleted: sha256:7e670a0896bb2f27bb3396fd4e683c36a1752dfe87db060a87fea92dbac9b9ce
+deleted: sha256:32552c50f954b3b1ac9930744287981f62381739ca03656f5a9c0d6e96992186
+deleted: sha256:5d243db52c3797b4869b220eb03bf069d7dce75a7e789ceccaf86a4a976eb172
+deleted: sha256:26cae1845d470dc4f2e733b8771a3f7c0200cffc5e4e5db7f5c557b41ab2dcaf
+
+Total reclaimed space: 46.9MB
+/usr/local/bin:/usr/bin:/bin
+Start - Sun Apr 17 04:30:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+Digest: sha256:a3bf985592d605f2f5c238fd48abbc3f4fd264fbfb01441e08267d3c1f139ef5
+Status: Image is up to date for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+TS-Analyzer is up-to-date
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sun Apr 17 05:00:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+Digest: sha256:a3bf985592d605f2f5c238fd48abbc3f4fd264fbfb01441e08267d3c1f139ef5
+Status: Image is up to date for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+TS-Analyzer is up-to-date
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sun Apr 17 05:30:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+Digest: sha256:a3bf985592d605f2f5c238fd48abbc3f4fd264fbfb01441e08267d3c1f139ef5
+Status: Image is up to date for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+TS-Analyzer is up-to-date
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sun Apr 17 06:00:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+Digest: sha256:a3bf985592d605f2f5c238fd48abbc3f4fd264fbfb01441e08267d3c1f139ef5
+Status: Image is up to date for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+TS-Analyzer is up-to-date
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sun Apr 17 06:30:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+b281ebec60d2: Already exists
+74dae484504b: Already exists
+21739e3ef21a: Already exists
+e98d6bb51c7c: Already exists
+517ebafd9747: Already exists
+fa245e9d6fa2: Already exists
+662bb10a8d17: Already exists
+fad28b720f14: Already exists
+512c94f3667e: Already exists
+b8b6176fb8fe: Pulling fs layer
+5af8d6183143: Pulling fs layer
+7c64a765edba: Pulling fs layer
+989fac9c8d39: Pulling fs layer
+cc85c5f01a47: Pulling fs layer
+0b5db1cc3b9f: Pulling fs layer
+989fac9c8d39: Waiting
+cc85c5f01a47: Waiting
+0b5db1cc3b9f: Waiting
+b8b6176fb8fe: Verifying Checksum
+b8b6176fb8fe: Download complete
+7c64a765edba: Verifying Checksum
+7c64a765edba: Download complete
+b8b6176fb8fe: Pull complete
+5af8d6183143: Verifying Checksum
+5af8d6183143: Download complete
+5af8d6183143: Pull complete
+7c64a765edba: Pull complete
+989fac9c8d39: Verifying Checksum
+989fac9c8d39: Download complete
+0b5db1cc3b9f: Verifying Checksum
+0b5db1cc3b9f: Download complete
+989fac9c8d39: Pull complete
+cc85c5f01a47: Verifying Checksum
+cc85c5f01a47: Download complete
+cc85c5f01a47: Pull complete
+0b5db1cc3b9f: Pull complete
+Digest: sha256:f21f87ce52f7acad12aae1156cee50cf6e4983273fc22736a784896e19c14b58
+Status: Downloaded newer image for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+Recreating TS-Analyzer ... 
+Recreating TS-Analyzer ... done
+Deleted Images:
+untagged: docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer@sha256:a3bf985592d605f2f5c238fd48abbc3f4fd264fbfb01441e08267d3c1f139ef5
+deleted: sha256:034918500e1e7fd940670fec46b09f867c3014a56f0ac6f401a8ec32f947994a
+deleted: sha256:9263a79158ab38cc55b2dff09ebf205e333b56d548ec0dd12b261cfb020ab989
+deleted: sha256:4b57128153ba236fedd0183f2e85e92b6f435d785f09866c8403e4f28ad752e6
+deleted: sha256:cabcd4486f86938815ea0c10c14e12f3e998e75481e5079d25fef0aca65a05f5
+deleted: sha256:4e3825d750bea5daa700332e6911ac4d0d07bd27524ecb3fe99dd4dcf23bc413
+deleted: sha256:1764db9f3972ed88fc6a17a03445080f69ac6ebaca862b05132f3e98315cf894
+deleted: sha256:6cff5a643295c206701dace3693e6e23bff211d62482dc35e5e7bc18b14cc936
+
+Total reclaimed space: 46.91MB
+/usr/local/bin:/usr/bin:/bin
+Start - Sun Apr 17 07:00:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+b281ebec60d2: Already exists
+74dae484504b: Already exists
+21739e3ef21a: Already exists
+e98d6bb51c7c: Already exists
+517ebafd9747: Already exists
+fa245e9d6fa2: Already exists
+662bb10a8d17: Already exists
+fad28b720f14: Already exists
+512c94f3667e: Already exists
+64cb63d63b6f: Pulling fs layer
+71ce7bcfa1d3: Pulling fs layer
+00d735807a18: Pulling fs layer
+3b7085695992: Pulling fs layer
+8cabb604add6: Pulling fs layer
+e154f2246e6b: Pulling fs layer
+8cabb604add6: Waiting
+3b7085695992: Waiting
+e154f2246e6b: Waiting
+64cb63d63b6f: Verifying Checksum
+64cb63d63b6f: Download complete
+00d735807a18: Download complete
+64cb63d63b6f: Pull complete
+3b7085695992: Verifying Checksum
+3b7085695992: Download complete
+71ce7bcfa1d3: Verifying Checksum
+71ce7bcfa1d3: Download complete
+71ce7bcfa1d3: Pull complete
+00d735807a18: Pull complete
+3b7085695992: Pull complete
+8cabb604add6: Verifying Checksum
+8cabb604add6: Download complete
+e154f2246e6b: Verifying Checksum
+e154f2246e6b: Download complete
+8cabb604add6: Pull complete
+e154f2246e6b: Pull complete
+Digest: sha256:83be8b8787a6d8650466ee8722bfd9a156ea3aaf947b67a804663d1ecb918525
+Status: Downloaded newer image for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+Recreating TS-Analyzer ... 
+Recreating TS-Analyzer ... done
+Deleted Images:
+untagged: docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer@sha256:f21f87ce52f7acad12aae1156cee50cf6e4983273fc22736a784896e19c14b58
+deleted: sha256:a0b7b6bca142976bb04b6bf0e364d311281cfc16480981849e50a47e3edd92a1
+deleted: sha256:cb00a816b6586c5df49157bdcb09d7333affc3f0ec10d1d440c090a5b2e7446e
+deleted: sha256:b1763c8e5835504f34d23744ff3ebfe5c9f4f17fb4e1ba61e111de3eb42d78fd
+deleted: sha256:b09404c897e5201729988a88e63c46cfb803d8f08183dfefafc8b1b9c3d3f478
+deleted: sha256:aa37f2ae9aa436c0028449b6836c6993e17a109f4b7cee9a979f0e1f9bbc7d27
+deleted: sha256:e2b72ef341ed0fdb2f0b5b1cd27b45123e394ec6b89d3c59fbd95a2756d23c48
+deleted: sha256:4d77265bda87e19bfce472ead6f393d4bba62ce3b027245144c306a56fd83afb
+
+Total reclaimed space: 46.91MB
+/usr/local/bin:/usr/bin:/bin
+Start - Sun Apr 17 07:30:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+Digest: sha256:83be8b8787a6d8650466ee8722bfd9a156ea3aaf947b67a804663d1ecb918525
+Status: Image is up to date for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+TS-Analyzer is up-to-date
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sun Apr 17 08:00:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+Digest: sha256:83be8b8787a6d8650466ee8722bfd9a156ea3aaf947b67a804663d1ecb918525
+Status: Image is up to date for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+TS-Analyzer is up-to-date
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sun Apr 17 08:30:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+Digest: sha256:83be8b8787a6d8650466ee8722bfd9a156ea3aaf947b67a804663d1ecb918525
+Status: Image is up to date for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+TS-Analyzer is up-to-date
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sun Apr 17 09:00:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+Digest: sha256:83be8b8787a6d8650466ee8722bfd9a156ea3aaf947b67a804663d1ecb918525
+Status: Image is up to date for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+TS-Analyzer is up-to-date
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sun Apr 17 09:30:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+Digest: sha256:83be8b8787a6d8650466ee8722bfd9a156ea3aaf947b67a804663d1ecb918525
+Status: Image is up to date for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+TS-Analyzer is up-to-date
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sun Apr 17 10:00:02 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+Digest: sha256:83be8b8787a6d8650466ee8722bfd9a156ea3aaf947b67a804663d1ecb918525
+Status: Image is up to date for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+TS-Analyzer is up-to-date
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sun Apr 17 10:30:02 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+Digest: sha256:83be8b8787a6d8650466ee8722bfd9a156ea3aaf947b67a804663d1ecb918525
+Status: Image is up to date for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+TS-Analyzer is up-to-date
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sun Apr 17 11:00:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+Digest: sha256:83be8b8787a6d8650466ee8722bfd9a156ea3aaf947b67a804663d1ecb918525
+Status: Image is up to date for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+TS-Analyzer is up-to-date
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sun Apr 17 11:30:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+b281ebec60d2: Already exists
+74dae484504b: Already exists
+21739e3ef21a: Already exists
+e98d6bb51c7c: Already exists
+517ebafd9747: Already exists
+fa245e9d6fa2: Already exists
+662bb10a8d17: Already exists
+fad28b720f14: Already exists
+512c94f3667e: Already exists
+183faa7d05f6: Pulling fs layer
+e237b09a7dfc: Pulling fs layer
+429535c29284: Pulling fs layer
+f96ba978339b: Pulling fs layer
+8716ea3ccfc9: Pulling fs layer
+54b42ec75817: Pulling fs layer
+f96ba978339b: Waiting
+8716ea3ccfc9: Waiting
+54b42ec75817: Waiting
+183faa7d05f6: Verifying Checksum
+183faa7d05f6: Download complete
+429535c29284: Verifying Checksum
+429535c29284: Download complete
+183faa7d05f6: Pull complete
+e237b09a7dfc: Download complete
+e237b09a7dfc: Pull complete
+429535c29284: Pull complete
+f96ba978339b: Verifying Checksum
+f96ba978339b: Download complete
+54b42ec75817: Verifying Checksum
+54b42ec75817: Download complete
+f96ba978339b: Pull complete
+8716ea3ccfc9: Verifying Checksum
+8716ea3ccfc9: Download complete
+8716ea3ccfc9: Pull complete
+54b42ec75817: Pull complete
+Digest: sha256:b912b5c7eee54463746795d76fa22fe94375cbb2545a76f28466fd02b1740724
+Status: Downloaded newer image for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+Recreating TS-Analyzer ... 
+Recreating TS-Analyzer ... done
+Deleted Images:
+untagged: docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer@sha256:83be8b8787a6d8650466ee8722bfd9a156ea3aaf947b67a804663d1ecb918525
+deleted: sha256:b4b54d40fd97573f7b45ff1e073bff6a6fc3635d657627dd9ebe5560a5133a52
+deleted: sha256:b66c0a943dd666819f0808a9a1ca5a9ed91d3aaeafd0082ae1a918f22368e544
+deleted: sha256:23afc58e39137d4f09c5865e03aa7bfb999da289575dbfdf1452d18b6972d677
+deleted: sha256:9522fa1eacaacc93e5b97bade3fd8de3be29cdbf2158e4ca89d0b4d9cff830fa
+deleted: sha256:a4a63718d4fa9681f3bcd485e43b53e57350e9c0e7c9709005a7b3e3c331306b
+deleted: sha256:fbbd945832ad74c95d3a8b04d2678ffce32c8c5f81709214c0a16892a02d802c
+deleted: sha256:5f0c637eaea66fbaf5ed94e0ea4b849c2f27e50a4f4e3e9f2758fbea5bc2ddf8
+
+Total reclaimed space: 46.91MB
+/usr/local/bin:/usr/bin:/bin
+Start - Sun Apr 17 12:00:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+Digest: sha256:b912b5c7eee54463746795d76fa22fe94375cbb2545a76f28466fd02b1740724
+Status: Image is up to date for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+TS-Analyzer is up-to-date
+Total reclaimed space: 0B
+/usr/local/bin:/usr/bin:/bin
+Start - Sun Apr 17 12:30:01 UTC 2022
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+WARNING! Your password will be stored unencrypted in /home/ec2-user/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+WARNING: ⚠️ Failed to pull manifest by the resolved digest. This registry does not
+	appear to conform to the distribution registry specification; falling back to
+	pull by tag.  This fallback is DEPRECATED, and will be removed in a future
+	release.  Please contact admins of https://docker.pkg.github.com. ⚠️
+
+main: Pulling from nakayamaron-dev/ts-data-analyzer/ts-data-analyzer
+b281ebec60d2: Already exists
+74dae484504b: Already exists
+21739e3ef21a: Already exists
+e98d6bb51c7c: Already exists
+517ebafd9747: Already exists
+fa245e9d6fa2: Already exists
+662bb10a8d17: Already exists
+fad28b720f14: Already exists
+512c94f3667e: Already exists
+1fb1f1e88074: Pulling fs layer
+817b8451eb41: Pulling fs layer
+0f27f0d38916: Pulling fs layer
+bc526213f6fc: Pulling fs layer
+224c6f02ed58: Pulling fs layer
+85b5e6136483: Pulling fs layer
+224c6f02ed58: Waiting
+85b5e6136483: Waiting
+bc526213f6fc: Waiting
+0f27f0d38916: Verifying Checksum
+0f27f0d38916: Download complete
+1fb1f1e88074: Verifying Checksum
+1fb1f1e88074: Download complete
+817b8451eb41: Verifying Checksum
+817b8451eb41: Download complete
+1fb1f1e88074: Pull complete
+817b8451eb41: Pull complete
+0f27f0d38916: Pull complete
+bc526213f6fc: Verifying Checksum
+bc526213f6fc: Download complete
+bc526213f6fc: Pull complete
+85b5e6136483: Verifying Checksum
+85b5e6136483: Download complete
+224c6f02ed58: Verifying Checksum
+224c6f02ed58: Download complete
+224c6f02ed58: Pull complete
+85b5e6136483: Pull complete
+Digest: sha256:b479806cf85d6fb8c072cd030b1348ca3ab701080192491f35ad4a12e9a8e083
+Status: Downloaded newer image for docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer:main
+Recreating TS-Analyzer ... 
+Recreating TS-Analyzer ... done
+Deleted Images:
+untagged: docker.pkg.github.com/nakayamaron-dev/ts-data-analyzer/ts-data-analyzer@sha256:b912b5c7eee54463746795d76fa22fe94375cbb2545a76f28466fd02b1740724
+deleted: sha256:0d05237084b142bbd0f1fdb4e785be38a95b3abf670247dde327ffd4cc20a40b
+deleted: sha256:11d03a1413cd93178d5a5d1e828d805b57f3b7ef32bf776be6d7c887a4cfcce5
+deleted: sha256:3837b179732c66526992bd5547de00af32133277d1caebae611a435eb4f41193
+deleted: sha256:37d8dd2feb1f6db948d81fe6f1f938b9b8d103fcba20a6fdcc4f9a653c22cfa1
+deleted: sha256:bd4d221dde62cd4384e60be4e7bf273912318b3dde69897d5d4e5ed57b7c8c93
+deleted: sha256:938485fc1d80bd0c609262a57235b1a0368929f2df63a08c785e3b83c12d9ff5
+deleted: sha256:e441b7c679a2235293f7d0e1f5f449245ea777460f99fd92251e81cee75947dd
+
+Total reclaimed space: 46.92MB
