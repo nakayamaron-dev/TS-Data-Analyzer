@@ -398,6 +398,5 @@ export class VisualizerComponent implements OnInit {
         }
       })
     })
-    this.updateAllGraph();
   }
 }
