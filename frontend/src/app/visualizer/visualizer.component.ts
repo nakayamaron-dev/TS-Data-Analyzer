@@ -44,12 +44,10 @@ export const MOMENT_FORMATS = {
   ]
 })
 export class VisualizerComponent implements OnInit {
-
   deleteIcon = faTrashAlt;
   editIcon = faPen;
   clockIcon = faClock;
   viewModeIcon = faExchangeAlt;
-
   isUnSaved = false;
   fontColor = '#C9CDCE';
 
@@ -78,15 +76,11 @@ export class VisualizerComponent implements OnInit {
   tagInfo?: ItagInfo;
   viewTag: boolean = true;
 
-  constructor(
-    private influx: InfluxService,
-    private mongo: MongoService,
-    private modal: ModalService) { }
+  constructor(private influx: InfluxService, private mongo: MongoService, private modal: ModalService) {}
 
   updateAllGraph(): void {
-    this.plotInfo.forEach(graphInfo => {
-      const tagList = graphInfo.items.map(itm => itm.tag);
-      this.setDataset(graphInfo, tagList);
+    this.plotInfo.forEach((_, graphIdx) => {
+      this.updateSingleGraph(graphIdx);
     })
   }
 
@@ -96,20 +90,11 @@ export class VisualizerComponent implements OnInit {
   }
 
   setDataset(graphInfo: IplotMulti, tagList: string[]) {
-    let From: string;
-    let To: string;
-
-    if (graphInfo.dateRange?.length !== 2) {
-      From = this.defaultXrange[0].toISOString();
-      To = this.defaultXrange[1].toISOString();
-    } else {
-      From = graphInfo.dateRange[0];
-      To = graphInfo.dateRange[1];
-    }
-
+    const From = graphInfo.dateRange?.length === 2? graphInfo.dateRange[0]: this.defaultXrange[0].toISOString();
+    const To = graphInfo.dateRange?.length === 2? graphInfo.dateRange[1]: this.defaultXrange[1].toISOString();
     graphInfo.layout = this.setLayout(graphInfo);
-
     graphInfo.datasets! = [];
+
     this.influx.getHistoricalData(tagList, this.measurement, From, To).subscribe(res => {
       graphInfo.items.forEach((item, idx) => {
         const x = res[item.tag]? res[item.tag].map(itm => itm.timeStamp): [];
@@ -146,9 +131,7 @@ export class VisualizerComponent implements OnInit {
         xanchor: 'center',
         x: 0.5,
         orientation: 'h',
-        font: {
-          color: this.fontColor
-        }
+        font: { color: this.fontColor }
       },
       xaxis: {
         domain: [0.08, 0.92],
@@ -159,10 +142,7 @@ export class VisualizerComponent implements OnInit {
         color: this.colors[0],
         autorange: false,
         zeroline: false,
-        title: {
-          text: '',
-          standoff: 5
-        },
+        title: { text: '', standoff: 5 },
       },
       yaxis2: {
         overlaying: 'y',
@@ -171,10 +151,7 @@ export class VisualizerComponent implements OnInit {
         color: this.colors[1],
         autorange: false,
         zeroline: false,
-        title: {
-          text: '',
-          standoff: 5
-        },
+        title: { text: '', standoff: 5 },
       },
       yaxis3: {
         overlaying: 'y',
@@ -184,10 +161,7 @@ export class VisualizerComponent implements OnInit {
         color: this.colors[2],
         autorange: false,
         zeroline: false,
-        title: {
-          text: '',
-          standoff: 5
-        },
+        title: { text: '', standoff: 5 },
       },
       yaxis4: {
         overlaying: 'y',
@@ -197,10 +171,7 @@ export class VisualizerComponent implements OnInit {
         color: this.colors[3],
         autorange: false,
         zeroline: false,
-        title: {
-          text: '',
-          standoff: 5
-        },
+        title: { text: '', standoff: 5 },
       },
       yaxis5: {
         overlaying: 'y',
@@ -210,10 +181,7 @@ export class VisualizerComponent implements OnInit {
         color: this.colors[4],
         autorange: false,
         zeroline: false,
-        title: {
-          text: '',
-          standoff: 5
-        },
+        title: { text: '', standoff: 5 },
       },
       yaxis6: {
         overlaying: 'y',
@@ -223,10 +191,7 @@ export class VisualizerComponent implements OnInit {
         color: this.colors[5],
         autorange: false,
         zeroline: false,
-        title: {
-          text: '',
-          standoff: 5
-        },
+        title: { text: '', standoff: 5 },
       },
     }
 
@@ -359,11 +324,7 @@ export class VisualizerComponent implements OnInit {
     this.viewTag = !this.viewTag;
     this.plotInfo.forEach(pInfo => {
       pInfo.items.forEach((itm, idx) => {
-        if (this.viewTag) {
-          pInfo.datasets![idx].name = itm.tag;
-        } else {
-          pInfo.datasets![idx].name = this.tagInfo?.items.find(info => info.tag === itm.tag)?.description;
-        }
+        pInfo.datasets![idx].name = this.viewTag? itm.tag: this.tagInfo?.items.find(info => info.tag === itm.tag)?.description;
       })
     })
   }
