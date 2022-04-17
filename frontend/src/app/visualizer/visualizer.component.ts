@@ -66,101 +66,6 @@ export class VisualizerComponent implements OnInit {
     displayModeBar: false,
   }
 
-  layout: Partial<Plotly.Layout> =  {
-    margin: { l: 50, r: 50, b: 35, t: 0 },
-    paper_bgcolor: 'rgb(24, 27, 31)',
-    plot_bgcolor: 'rgb(24, 27, 31)',
-    height: 210,
-    showlegend: true,
-    legend: {
-      y: 1.4,
-      xanchor: 'center',
-      x: 0.5,
-      orientation: 'h',
-      font: {
-        color: this.fontColor
-      }
-    },
-    xaxis: {
-      domain: [0.08, 0.92],
-      showgrid: true,
-      color: this.fontColor,
-    },
-    yaxis: {
-      color: this.colors[0],
-      autorange: false,
-      zeroline: false,
-      title: {
-        text: '',
-        standoff: 5
-      },
-    },
-    yaxis2: {
-      overlaying: 'y',
-      side: 'right',
-      showgrid: false,
-      color: this.colors[1],
-      autorange: false,
-      zeroline: false,
-      title: {
-        text: '',
-        standoff: 5
-      },
-    },
-    yaxis3: {
-      overlaying: 'y',
-      side: 'left',
-      showgrid: false,
-      position: 0.04,
-      color: this.colors[2],
-      autorange: false,
-      zeroline: false,
-      title: {
-        text: '',
-        standoff: 5
-      },
-    },
-    yaxis4: {
-      overlaying: 'y',
-      side: 'right',
-      showgrid: false,
-      position: 0.96,
-      color: this.colors[3],
-      autorange: false,
-      zeroline: false,
-      title: {
-        text: '',
-        standoff: 5
-      },
-    },
-    yaxis5: {
-      overlaying: 'y',
-      side: 'left',
-      showgrid: false,
-      position: 0,
-      color: this.colors[4],
-      autorange: false,
-      zeroline: false,
-      title: {
-        text: '',
-        standoff: 5
-      },
-    },
-    yaxis6: {
-      overlaying: 'y',
-      side: 'right',
-      showgrid: false,
-      position: 1,
-      color: this.colors[5],
-      autorange: false,
-      zeroline: false,
-      title: {
-        text: '',
-        standoff: 5
-      },
-    },
-  }
-
   tagList: string[] = [];
   yrangeList: IdefaultYranges = {};
   plotInfo: IplotMulti[] = [];
@@ -170,6 +75,7 @@ export class VisualizerComponent implements OnInit {
   xrange: Moment[] = [];
   placeholder: string = '';
   tagInfo?: ItagInfo;
+  layouts: Partial<Plotly.Layout>[] = [];
 
   constructor(
     private influx: InfluxService,
@@ -177,18 +83,20 @@ export class VisualizerComponent implements OnInit {
     private modal: ModalService) { }
 
   updateAllGraph(): void {
-    this.plotInfo.forEach(graphInfo => {
+    this.layouts = [];
+    this.plotInfo.forEach((graphInfo, graphIdx) => {
       const tagList = graphInfo.items.map(itm => itm.tag);
       this.setDataset(graphInfo, tagList);
     })
   }
 
   updateSingleGraph(graphIdx: number): void {
+    this.layouts[graphIdx] = {};
     const tagList = this.plotInfo[graphIdx].items.map(itm => itm.tag);
-    this.setDataset(this.plotInfo[graphIdx], tagList);
+    this.setDataset(this.plotInfo[graphIdx], tagList, graphIdx);
   }
 
-  setDataset(graphInfo: IplotMulti, tagList: string[]) {
+  setDataset(graphInfo: IplotMulti, tagList: string[], graphIdx?: number) {
     let From: string;
     let To: string;
 
@@ -200,12 +108,19 @@ export class VisualizerComponent implements OnInit {
       To = graphInfo.dateRange[1];
     }
 
+    if (graphIdx) {
+      const layout = this.setLayout(graphInfo);
+      this.layouts[graphIdx] = layout;
+    } else {
+      const layout = this.setLayout(graphInfo);
+      this.layouts.push(layout);
+    }
+
     graphInfo.datasets! = [];
     this.influx.getHistoricalData(tagList, this.measurement, From, To).subscribe(res => {
       graphInfo.items.forEach((item, idx) => {
         const x = res[item.tag]? res[item.tag].map(itm => itm.timeStamp): [];
         const y = res[item.tag]? res[item.tag].map(itm => itm.value): [];
-        const unit = this.tagInfo?.items.find(itm => itm.tag === item.tag)?.unit;
 
         graphInfo.datasets!.push(
           {
@@ -222,40 +137,139 @@ export class VisualizerComponent implements OnInit {
             max: Math.max(...y)
           }
         }
-        this.setLayoutParams(idx, unit!, item.yrange!);
       })
     })
   }
 
-  setLayoutParams(graphIdx: number, title: string, yrange: {min: number, max: number}) {
-    switch (graphIdx) {
-      case 0:
-        (this.layout.yaxis!.title as Partial<Plotly.DataTitle>).text = title;
-        this.layout.yaxis!.range = [yrange.min, yrange.max];
-        break;
-      case 1:
-        (this.layout.yaxis2!.title as Partial<Plotly.DataTitle>).text = title;
-        this.layout.yaxis2!.range = [yrange.min, yrange.max];
-        break;
-      case 2:
-        (this.layout.yaxis3!.title as Partial<Plotly.DataTitle>).text = title;
-        this.layout.yaxis3!.range = [yrange.min, yrange.max];
-        break;
-      case 3:
-        (this.layout.yaxis4!.title as Partial<Plotly.DataTitle>).text = title;
-        this.layout.yaxis4!.range = [yrange.min, yrange.max];
-        break;
-      case 4:
-        (this.layout.yaxis5!.title as Partial<Plotly.DataTitle>).text = title;
-        this.layout.yaxis5!.range = [yrange.min, yrange.max];
-        break;
-      case 5:
-        (this.layout.yaxis6!.title as Partial<Plotly.DataTitle>).text = title;
-        this.layout.yaxis6!.range = [yrange.min, yrange.max];
-        break;
-      default:
-        break;
+  setLayout(graphInfo: IplotMulti) {
+    const layout: Partial<Plotly.Layout>  = {
+      margin: { l: 50, r: 50, b: 35, t: 0 },
+      paper_bgcolor: 'rgb(24, 27, 31)',
+      plot_bgcolor: 'rgb(24, 27, 31)',
+      height: 210,
+      showlegend: true,
+      legend: {
+        y: 1.4,
+        xanchor: 'center',
+        x: 0.5,
+        orientation: 'h',
+        font: {
+          color: this.fontColor
+        }
+      },
+      xaxis: {
+        domain: [0.08, 0.92],
+        showgrid: true,
+        color: this.fontColor,
+      },
+      yaxis: {
+        color: this.colors[0],
+        autorange: false,
+        zeroline: false,
+        title: {
+          text: '',
+          standoff: 5
+        },
+      },
+      yaxis2: {
+        overlaying: 'y',
+        side: 'right',
+        showgrid: false,
+        color: this.colors[1],
+        autorange: false,
+        zeroline: false,
+        title: {
+          text: '',
+          standoff: 5
+        },
+      },
+      yaxis3: {
+        overlaying: 'y',
+        side: 'left',
+        showgrid: false,
+        position: 0.04,
+        color: this.colors[2],
+        autorange: false,
+        zeroline: false,
+        title: {
+          text: '',
+          standoff: 5
+        },
+      },
+      yaxis4: {
+        overlaying: 'y',
+        side: 'right',
+        showgrid: false,
+        position: 0.96,
+        color: this.colors[3],
+        autorange: false,
+        zeroline: false,
+        title: {
+          text: '',
+          standoff: 5
+        },
+      },
+      yaxis5: {
+        overlaying: 'y',
+        side: 'left',
+        showgrid: false,
+        position: 0,
+        color: this.colors[4],
+        autorange: false,
+        zeroline: false,
+        title: {
+          text: '',
+          standoff: 5
+        },
+      },
+      yaxis6: {
+        overlaying: 'y',
+        side: 'right',
+        showgrid: false,
+        position: 1,
+        color: this.colors[5],
+        autorange: false,
+        zeroline: false,
+        title: {
+          text: '',
+          standoff: 5
+        },
+      },
     }
+
+    graphInfo.items.forEach((itm, idx) => {
+      const unit = this.tagInfo?.items.find(a => a.tag === itm.tag)?.unit;
+      switch (idx) {
+        case 0:
+          (layout.yaxis!.title as Partial<Plotly.DataTitle>).text = unit;
+          layout.yaxis!.range = [itm.yrange!.min, itm.yrange!.max];
+          break;
+        case 1:
+          (layout.yaxis2!.title as Partial<Plotly.DataTitle>).text = unit;
+          layout.yaxis2!.range = [itm.yrange!.min, itm.yrange!.max];
+          break;
+        case 2:
+          (layout.yaxis3!.title as Partial<Plotly.DataTitle>).text = unit;
+          layout.yaxis3!.range = [itm.yrange!.min, itm.yrange!.max];
+          break;
+        case 3:
+          (layout.yaxis4!.title as Partial<Plotly.DataTitle>).text = unit;
+          layout.yaxis4!.range = [itm.yrange!.min, itm.yrange!.max];
+          break;
+        case 4:
+          (layout.yaxis5!.title as Partial<Plotly.DataTitle>).text = unit;
+          layout.yaxis5!.range = [itm.yrange!.min, itm.yrange!.max];
+          break;
+        case 5:
+          (layout.yaxis6!.title as Partial<Plotly.DataTitle>).text = unit;
+          layout.yaxis6!.range = [itm.yrange!.min, itm.yrange!.max];
+          break;
+        default:
+          break;
+      }
+    })
+
+    return layout;
   }
 
   ngOnInit(): void {
@@ -271,13 +285,13 @@ export class VisualizerComponent implements OnInit {
 
     this.mongo.getTagInfo().subscribe(res => {
       this.tagInfo = res;
-    })
 
-    this.mongo.getTSmultiInfoAll().subscribe(res => {
-      this.plotInfo = res;
-      this.xrange = res[0].dateRange? res[0].dateRange.map(itm => moment(itm)): []
-      this.placeholder = this.getTimePlaceholderValue();
-      this.updateAllGraph();
+      this.mongo.getTSmultiInfoAll().subscribe(res => {
+        this.plotInfo = res;
+        this.xrange = res[0].dateRange? res[0].dateRange.map(itm => moment(itm)): []
+        this.placeholder = this.getTimePlaceholderValue();
+        this.updateAllGraph();
+      })
     })
   }
 
@@ -322,6 +336,7 @@ export class VisualizerComponent implements OnInit {
       this.isUnSaved = true;
       this.deleteBuffer.push(this.plotInfo[idx]);
       this.plotInfo.splice(idx, 1);
+      this.layouts.splice(idx, 1);
     }
   }
 
