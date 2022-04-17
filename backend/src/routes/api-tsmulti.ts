@@ -15,7 +15,7 @@ export interface IplotMulti {
   }[]
 }
 
-router.get("/tsmulti/list", async (_req: express.Request, res: express.Response, next: express.NextFunction) => {
+router.get("/list", async (_req: express.Request, res: express.Response, next: express.NextFunction) => {
     let conn;
     try {
       conn = await db.createConnection("data");
@@ -32,7 +32,7 @@ router.get("/tsmulti/list", async (_req: express.Request, res: express.Response,
     }
   });
 
-router.get("/tsmulti/:id", async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+router.get("/:id", async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   let conn;
   try {
     conn = await db.createConnection("data");
@@ -49,7 +49,7 @@ router.get("/tsmulti/:id", async (req: express.Request, res: express.Response, n
   }
 });
 
-router.patch("/tsmulti", async (req: express.Request, res: express.Response<string>, next: express.NextFunction) => {
+router.patch("/", async (req: express.Request, res: express.Response<string>, next: express.NextFunction) => {
   let conn;
   try {
     conn = await db.createConnection("data");
@@ -68,7 +68,7 @@ router.patch("/tsmulti", async (req: express.Request, res: express.Response<stri
   }
 });
 
-router.delete("/tsmulti", async (req: express.Request, res: express.Response<string>, next: express.NextFunction) => {
+router.delete("/", async (req: express.Request, res: express.Response<string>, next: express.NextFunction) => {
   let conn;
   try {
     conn = await db.createConnection("data");

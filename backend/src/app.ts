@@ -7,7 +7,8 @@ const bodyParserText = bodyParser.text({ limit: "1gb" });
 const bodyParserJson = bodyParser.json({ limit: "1gb" });
 
 import apiInfluxRouter from "./routes/api-influx";
-import apiMongoRouter from "./routes/api-tsmulti";
+import apiTSMultiRouter from "./routes/api-tsmulti";
+import apiTagInfoRouter from "./routes/api-tagInfo";
 
 // read environment variables.
 import dotenv from "dotenv";
@@ -15,7 +16,8 @@ dotenv.config({ path: path.join(__dirname, "../.env") });
 
 const app = express();
 
-app.use("/api/v1/mongo", bodyParserJson, apiMongoRouter);
+app.use("/api/v1/mongo/tsmulti", bodyParserJson, apiTSMultiRouter);
+app.use("/api/v1/mongo/taginfo", bodyParserJson, apiTagInfoRouter);
 app.use("/api/v1/ts", bodyParserText, apiInfluxRouter);
 
 // Angularのルーティング

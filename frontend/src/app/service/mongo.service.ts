@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { IplotMulti } from '../visualizer/visualizer.component';
+import { ItagInfo } from '../data-description/data-description.component';
 
 @Injectable({
   providedIn: 'root'
@@ -53,5 +54,14 @@ export class MongoService {
 
   deleteTSmultiInfo(data: IplotMulti[]): Observable<any> {
     return this.http.delete(`/api/v1/mongo/tsmulti`, {body: data});
+  }
+
+  getTagInfo(): Observable<ItagInfo> {
+    return this.http.get<ItagInfo>(`api/v1/mongo/taginfo`, { responseType: 'json' });
+  }
+
+  updateTagInfo(data: ItagInfo): Observable<any> {
+    console.log(data);
+    return this.http.patch(`api/v1/mongo/taginfo`, data);
   }
 }
