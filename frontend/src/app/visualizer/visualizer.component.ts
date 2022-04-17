@@ -139,7 +139,7 @@ export class VisualizerComponent implements OnInit {
       margin: { l: 50, r: 50, b: 35, t: 0 },
       paper_bgcolor: 'rgb(24, 27, 31)',
       plot_bgcolor: 'rgb(24, 27, 31)',
-      height: 200,
+      height: 207,
       showlegend: true,
       legend: {
         y: 1.4,
