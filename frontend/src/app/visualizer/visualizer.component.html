@@ -21,6 +21,10 @@
             <path fill="url(#a)" d="M116.7 24.9H103.6V11.8c0-.6-.5-1.1-1.1-1.1h-12c-.6 0-1.1.5-1.1 1.1v13.1H76.2c-.6 0-1.1.5-1.1 1.1v12c0 .6.5 1.1 1.1 1.1h13.2v13.2c0 .6.5 1.1 1.1 1.1h11.9c.6 0 1.1-.5 1.1-1.1V39.1h13.1c.6 0 1.1-.5 1.1-1.1V26.1c.1-.6-.4-1.2-1-1.2z"></path>
         </svg>
     </button>
+    <select #ViewMode class="SecondaryBGColor" style="border: none; margin-right: 10px; color: #757575;" (change)="changeViewMode(ViewMode.value)">
+        <option>Tag</option>
+        <option>Description</option>
+    </select>
     <input [owlDateTime]="dt" [owlDateTimeTrigger]="dt" [selectMode]="'range'" size="35px"
     [placeholder]="placeholder" (dateTimeChange)="onChangeDateTime()" [(ngModel)]="xrange"
     style="margin-right: 10px; border: none;" class="SecondaryBGColor textColor" readonly>

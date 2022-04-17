@@ -3,11 +3,12 @@ import * as Plotly from 'plotly.js-dist-min';
 import { InfluxService, IdefaultYranges } from '../service/influx.service';
 import { MongoService } from '../service/mongo.service';
 import { ModalService } from '../service/modal.service';
-import { faCirclePlus, faTrashAlt, faPen, faClock } from '@fortawesome/free-solid-svg-icons';
+import { faCirclePlus, faTrashAlt, faPen, faClock, faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
 import { Observable, forkJoin } from 'rxjs';
 import { Moment } from 'moment';
 import * as moment from 'moment';
 import { OWL_DATE_TIME_FORMATS } from '@danielmoncada/angular-datetime-picker';
+import { ItagInfo } from '../data-description/data-description.component';
 
 export interface IplotMulti {
   _id: number,
@@ -25,7 +26,7 @@ export interface IplotMulti {
 // see:https://danielykpan.github.io/date-time-picker/#Use%20picker%20with%20MomentJS
 export const MOMENT_FORMATS = {
   parseInput: 'l LT',
-  fullPickerInput: 'YYYY/MM/DD HH:mm',
+  full: 'YYYY/MM/DD HH:mm',
   datePickerInput: 'l',
   timePickerInput: 'LT',
   monthYearLabel: 'MMM YYYY',
@@ -89,6 +90,10 @@ export class VisualizerComponent implements OnInit {
       color: this.colors[0],
       autorange: false,
       zeroline: false,
+      title: {
+        text: '',
+        standoff: 5
+      },
     },
     yaxis2: {
       overlaying: 'y',
@@ -97,6 +102,10 @@ export class VisualizerComponent implements OnInit {
       color: this.colors[1],
       autorange: false,
       zeroline: false,
+      title: {
+        text: '',
+        standoff: 5
+      },
     },
     yaxis3: {
       overlaying: 'y',
@@ -106,6 +115,10 @@ export class VisualizerComponent implements OnInit {
       color: this.colors[2],
       autorange: false,
       zeroline: false,
+      title: {
+        text: '',
+        standoff: 5
+      },
     },
     yaxis4: {
       overlaying: 'y',
@@ -115,6 +128,10 @@ export class VisualizerComponent implements OnInit {
       color: this.colors[3],
       autorange: false,
       zeroline: false,
+      title: {
+        text: '',
+        standoff: 5
+      },
     },
     yaxis5: {
       overlaying: 'y',
@@ -124,6 +141,10 @@ export class VisualizerComponent implements OnInit {
       color: this.colors[4],
       autorange: false,
       zeroline: false,
+      title: {
+        text: '',
+        standoff: 5
+      },
     },
     yaxis6: {
       overlaying: 'y',
@@ -133,6 +154,10 @@ export class VisualizerComponent implements OnInit {
       color: this.colors[5],
       autorange: false,
       zeroline: false,
+      title: {
+        text: '',
+        standoff: 5
+      },
     },
   }
 
@@ -144,6 +169,7 @@ export class VisualizerComponent implements OnInit {
   defaultXrange: Moment[] = [];
   xrange: Moment[] = [];
   placeholder: string = '';
+  tagInfo?: ItagInfo;
 
   constructor(
     private influx: InfluxService,
@@ -179,6 +205,7 @@ export class VisualizerComponent implements OnInit {
       graphInfo.items.forEach((item, idx) => {
         const x = res[item.tag]? res[item.tag].map(itm => itm.timeStamp): [];
         const y = res[item.tag]? res[item.tag].map(itm => itm.value): [];
+        const unit = this.tagInfo?.items.find(itm => itm.tag === item.tag)?.unit;
 
         graphInfo.datasets!.push(
           {
@@ -195,29 +222,35 @@ export class VisualizerComponent implements OnInit {
             max: Math.max(...y)
           }
         }
-        this.setYrange(idx, item.yrange!);
+        this.setLayoutParams(idx, unit!, item.yrange!);
       })
     })
   }
 
-  setYrange(graphIdx: number, yrange: {min: number, max: number}) {
+  setLayoutParams(graphIdx: number, title: string, yrange: {min: number, max: number}) {
     switch (graphIdx) {
       case 0:
+        (this.layout.yaxis!.title as Partial<Plotly.DataTitle>).text = title;
         this.layout.yaxis!.range = [yrange.min, yrange.max];
         break;
       case 1:
+        (this.layout.yaxis2!.title as Partial<Plotly.DataTitle>).text = title;
         this.layout.yaxis2!.range = [yrange.min, yrange.max];
         break;
       case 2:
+        (this.layout.yaxis3!.title as Partial<Plotly.DataTitle>).text = title;
         this.layout.yaxis3!.range = [yrange.min, yrange.max];
         break;
       case 3:
+        (this.layout.yaxis4!.title as Partial<Plotly.DataTitle>).text = title;
         this.layout.yaxis4!.range = [yrange.min, yrange.max];
         break;
       case 4:
+        (this.layout.yaxis5!.title as Partial<Plotly.DataTitle>).text = title;
         this.layout.yaxis5!.range = [yrange.min, yrange.max];
         break;
       case 5:
+        (this.layout.yaxis6!.title as Partial<Plotly.DataTitle>).text = title;
         this.layout.yaxis6!.range = [yrange.min, yrange.max];
         break;
       default:
@@ -235,6 +268,10 @@ export class VisualizerComponent implements OnInit {
     })
 
     this.getDefaultXrange();
+
+    this.mongo.getTagInfo().subscribe(res => {
+      this.tagInfo = res;
+    })
 
     this.mongo.getTSmultiInfoAll().subscribe(res => {
       this.plotInfo = res;
@@ -330,9 +367,21 @@ export class VisualizerComponent implements OnInit {
   }
 
   getTimePlaceholderValue(): string {
-    let ret = this.xrange[0]? moment(this.xrange[0]).format(MOMENT_FORMATS.fullPickerInput): this.defaultXrange[0].format(MOMENT_FORMATS.fullPickerInput);
+    let ret = this.xrange[0]? moment(this.xrange[0]).format(MOMENT_FORMATS.full): this.defaultXrange[0].format(MOMENT_FORMATS.full);
     ret += ' ~ ';
-    ret += this.xrange[1]? moment(this.xrange[1]).format(MOMENT_FORMATS.fullPickerInput): this.defaultXrange[1].format(MOMENT_FORMATS.fullPickerInput);
+    ret += this.xrange[1]? moment(this.xrange[1]).format(MOMENT_FORMATS.full): this.defaultXrange[1].format(MOMENT_FORMATS.full);
     return ret;
+  }
+
+  changeViewMode(vieMode: string) {
+    this.plotInfo.forEach(itm => {
+      itm.items.forEach((a, idx) => {
+        if (vieMode == "Description") {
+          itm.datasets![idx].name = this.tagInfo?.items.find(info => info.tag === a.tag)?.description;
+        } else {
+          itm.datasets![idx].name = a.tag
+        }
+      })
+    })
   }
 }

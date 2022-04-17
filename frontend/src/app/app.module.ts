@@ -21,7 +21,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
 // https://danielykpan.github.io/date-time-picker/#Use%20picker%20with%20MomentJS
 export const MOMENT_FORMATS = {
   parseInput: 'l LT',
-  fullPickerInput: 'YYYY/MM/DD HH:mm',
+  full: 'YYYY/MM/DD HH:mm',
   datePickerInput: 'l',
   timePickerInput: 'LT',
   monthYearLabel: 'MMM YYYY',

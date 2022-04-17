@@ -6,7 +6,7 @@ import { DataDescriptionComponent } from './data-description/data-description.co
 
 const routes: Routes = [
   {path: '', component: VisualizerComponent, canDeactivate: [BeforeunloadGuard]},
-  {path: 'setting', component: DataDescriptionComponent}
+  {path: 'setting', component: DataDescriptionComponent, canDeactivate: [BeforeunloadGuard]}
 ];
 
 @NgModule({
