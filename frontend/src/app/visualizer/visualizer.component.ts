@@ -3,7 +3,7 @@ import * as Plotly from 'plotly.js-dist-min';
 import { InfluxService, IdefaultYranges } from '../service/influx.service';
 import { MongoService } from '../service/mongo.service';
 import { ModalService } from '../service/modal.service';
-import { faCirclePlus, faTrashAlt, faPen, faClock, faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt, faPen, faClock, faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
 import { Observable, forkJoin } from 'rxjs';
 import { Moment } from 'moment';
 import * as moment from 'moment';
@@ -20,7 +20,8 @@ export interface IplotMulti {
         max: number
     }
   }[],
-  datasets?: Partial<Plotly.PlotData>[]
+  datasets?: Partial<Plotly.PlotData>[],
+  layout?: Partial<Plotly.Layout>
 }
 
 // see:https://danielykpan.github.io/date-time-picker/#Use%20picker%20with%20MomentJS
@@ -44,10 +45,10 @@ export const MOMENT_FORMATS = {
 })
 export class VisualizerComponent implements OnInit {
 
-  plusIcon = faCirclePlus;
   deleteIcon = faTrashAlt;
   editIcon = faPen;
   clockIcon = faClock;
+  viewModeIcon = faExchangeAlt;
 
   isUnSaved = false;
   fontColor = '#C9CDCE';
@@ -75,7 +76,7 @@ export class VisualizerComponent implements OnInit {
   xrange: Moment[] = [];
   placeholder: string = '';
   tagInfo?: ItagInfo;
-  layouts: Partial<Plotly.Layout>[] = [];
+  viewTag: boolean = true;
 
   constructor(
     private influx: InfluxService,
@@ -83,20 +84,18 @@ export class VisualizerComponent implements OnInit {
     private modal: ModalService) { }
 
   updateAllGraph(): void {
-    this.layouts = [];
-    this.plotInfo.forEach((graphInfo, graphIdx) => {
+    this.plotInfo.forEach(graphInfo => {
       const tagList = graphInfo.items.map(itm => itm.tag);
       this.setDataset(graphInfo, tagList);
     })
   }
 
   updateSingleGraph(graphIdx: number): void {
-    this.layouts[graphIdx] = {};
     const tagList = this.plotInfo[graphIdx].items.map(itm => itm.tag);
-    this.setDataset(this.plotInfo[graphIdx], tagList, graphIdx);
+    this.setDataset(this.plotInfo[graphIdx], tagList);
   }
 
-  setDataset(graphInfo: IplotMulti, tagList: string[], graphIdx?: number) {
+  setDataset(graphInfo: IplotMulti, tagList: string[]) {
     let From: string;
     let To: string;
 
@@ -108,13 +107,7 @@ export class VisualizerComponent implements OnInit {
       To = graphInfo.dateRange[1];
     }
 
-    if (graphIdx) {
-      const layout = this.setLayout(graphInfo);
-      this.layouts[graphIdx] = layout;
-    } else {
-      const layout = this.setLayout(graphInfo);
-      this.layouts.push(layout);
-    }
+    graphInfo.layout = this.setLayout(graphInfo);
 
     graphInfo.datasets! = [];
     this.influx.getHistoricalData(tagList, this.measurement, From, To).subscribe(res => {
@@ -268,31 +261,23 @@ export class VisualizerComponent implements OnInit {
           break;
       }
     })
-
     return layout;
   }
 
-  ngOnInit(): void {
-    this.influx.getTagList().subscribe(res => {
-      this.tagList = res
+  async ngOnInit() {
+    await this.setBaseData();
+    this.updateAllGraph();
+  }
 
-      this.influx.getDefaultYrangeList(this.tagList).subscribe(res => {
-        this.yrangeList = res;
-      })
-    })
-
-    this.getDefaultXrange();
-
-    this.mongo.getTagInfo().subscribe(res => {
-      this.tagInfo = res;
-
-      this.mongo.getTSmultiInfoAll().subscribe(res => {
-        this.plotInfo = res;
-        this.xrange = res[0].dateRange? res[0].dateRange.map(itm => moment(itm)): []
-        this.placeholder = this.getTimePlaceholderValue();
-        this.updateAllGraph();
-      })
-    })
+  async setBaseData() {
+    this.tagList = await this.influx.getTagList().toPromise() as string[];
+    this.yrangeList = await this.influx.getDefaultYrangeList(this.tagList).toPromise() as IdefaultYranges;
+    const latestTimeStamp = await this.influx.getLatestTimeStamp().toPromise() as string;
+    this.defaultXrange = [moment(latestTimeStamp).subtract(1, 'd'), moment(latestTimeStamp)]
+    this.tagInfo = await this.mongo.getTagInfo().toPromise() as ItagInfo;
+    this.plotInfo = await this.mongo.getTSmultiInfoAll().toPromise() as IplotMulti[];
+    this.xrange = this.plotInfo[0].dateRange? this.plotInfo[0].dateRange.map(itm => moment(itm)): []
+    this.placeholder = this.getTimePlaceholderValue();
   }
 
   patchPlotInfo(plotInfo: IplotMulti[]): Observable<void> {
@@ -336,14 +321,7 @@ export class VisualizerComponent implements OnInit {
       this.isUnSaved = true;
       this.deleteBuffer.push(this.plotInfo[idx]);
       this.plotInfo.splice(idx, 1);
-      this.layouts.splice(idx, 1);
     }
-  }
-
-  async getDefaultXrange() {
-    this.influx.getLatestTimeStamp().subscribe(res => {
-      this.defaultXrange = [moment(res).subtract(1, 'd'), moment(res)]
-    })
   }
 
   save() {
@@ -358,17 +336,6 @@ export class VisualizerComponent implements OnInit {
     }, (err) => {
       alert(err);
     })
-  }
-
-  shouldConfirmOnBeforeunload() {
-    return this.isUnSaved;
-  }
-
-  @HostListener('window:beforeunload', ['$event'])
-  beforeUnload(e: Event) {
-    if (this.shouldConfirmOnBeforeunload()) {
-      e.returnValue = true;
-    }
   }
 
   onChangeDateTime() {
@@ -388,15 +355,27 @@ export class VisualizerComponent implements OnInit {
     return ret;
   }
 
-  changeViewMode(vieMode: string) {
-    this.plotInfo.forEach(itm => {
-      itm.items.forEach((a, idx) => {
-        if (vieMode == "Description") {
-          itm.datasets![idx].name = this.tagInfo?.items.find(info => info.tag === a.tag)?.description;
+  changeViewMode() {
+    this.viewTag = !this.viewTag;
+    this.plotInfo.forEach(pInfo => {
+      pInfo.items.forEach((itm, idx) => {
+        if (this.viewTag) {
+          pInfo.datasets![idx].name = itm.tag;
         } else {
-          itm.datasets![idx].name = a.tag
+          pInfo.datasets![idx].name = this.tagInfo?.items.find(info => info.tag === itm.tag)?.description;
         }
       })
     })
+  }
+
+  shouldConfirmOnBeforeunload() {
+    return this.isUnSaved;
+  }
+
+  @HostListener('window:beforeunload', ['$event'])
+  beforeUnload(e: Event) {
+    if (this.shouldConfirmOnBeforeunload()) {
+      e.returnValue = true;
+    }
   }
 }
