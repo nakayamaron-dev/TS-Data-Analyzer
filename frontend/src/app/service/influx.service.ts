@@ -30,7 +30,7 @@ export class InfluxService {
 
   }
 
-  getHistoricalData(tags: string[], measurement: string = 'rawdata', fromDate?: string | undefined, toDate?: string | undefined):
+  getHistoricalData(tags: string[], fromDate?: string, toDate?: string, measurement: string = 'rawdata'):
    Observable<{[tag: string]: IHistoricalValue<string>[]}> {
     let qstr = '?tags=' + tags.join(',');
 
@@ -69,10 +69,10 @@ export class InfluxService {
   }
 
   getLatestTimeStamp(measurement: string = "rawdata"): Observable<string> {
-    return this.http.get<string>(`/api/v1/ts/${measurement}/timestamp/last`);
+    return this.http.get<string>(`/api/v1/ts/${measurement}/timestamp/last`)
   }
 
-  getDefaultYrangeList(tags: string[], measurement: string='rawdata', fromDate?: string, toDate?: string): Observable<IdefaultYranges> {
+  getDefaultYrangeList(tags: string[], fromDate?: string, toDate?: string, measurement: string = 'rawdata'): Observable<IdefaultYranges> {
     let qstr = '?tags=' + tags.join(',');
 
     if ( fromDate !== undefined) { qstr += '&from=' + fromDate; }

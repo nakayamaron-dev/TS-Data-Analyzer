@@ -1,22 +1,31 @@
-<nav class="navbar navbar-expand-lg navbar-dark SecondaryBGColor">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">TS-Analyzer</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-      aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="#">TS-Multi-Visualizer</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="setting">Setting</a>
-        </li>
-      </ul>
-    </div>
+<div class="container-fluid">
+  <div class="row flex-nowrap">
+      <div class="col-xl-1 px-sm-1 SecondaryBGColor">
+          <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+              <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto" style="margin-top: 10px;">
+                  <fa-icon class="PrimaryColor" [icon]="titleIcon" size="2x"></fa-icon> 
+              </a>
+              <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                  <li class="nav-item">
+                    <a href="/">
+                      <fa-icon class="PrimaryColor" [icon]="chartLineIcon" size="2x"></fa-icon> 
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <fa-icon class="PrimaryColor" [icon]="cahrtBarIcon" size="2x"></fa-icon> 
+                  </li>
+                  <li class="nav-item">
+                    <a href="setting">
+                      <fa-icon class="PrimaryColor" [icon]="settingIcon" size="2x"></fa-icon> 
+                    </a>
+                  </li>
+              </ul>
+          </div>
+      </div>
+      <div class="col py-3">
+        <router-outlet></router-outlet>
+      </div>
   </div>
-</nav>
+</div>
 
-<router-outlet></router-outlet>
+

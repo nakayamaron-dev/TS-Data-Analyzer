@@ -4,7 +4,7 @@ import { InfluxService, IdefaultYranges } from '../service/influx.service';
 import { MongoService } from '../service/mongo.service';
 import { ModalService } from '../service/modal.service';
 import { faTrashAlt, faPen, faClock, faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
-import { Observable, forkJoin } from 'rxjs';
+import { forkJoin } from 'rxjs';
 import { Moment } from 'moment';
 import * as moment from 'moment';
 import { OWL_DATE_TIME_FORMATS } from '@danielmoncada/angular-datetime-picker';
@@ -24,16 +24,7 @@ export interface IplotMulti {
   layout?: Partial<Plotly.Layout>
 }
 
-// see:https://danielykpan.github.io/date-time-picker/#Use%20picker%20with%20MomentJS
-export const MOMENT_FORMATS = {
-  parseInput: 'l LT',
-  full: 'YYYY/MM/DD HH:mm',
-  datePickerInput: 'l',
-  timePickerInput: 'LT',
-  monthYearLabel: 'MMM YYYY',
-  dateA11yLabel: 'LL',
-  monthYearA11yLabel: 'MMMM YYYY',
-};
+export const MOMENT_FORMATS = 'YYYY/MM/DD HH:mm';
 
 @Component({
   selector: 'app-visualizer',
@@ -69,7 +60,6 @@ export class VisualizerComponent implements OnInit {
   yrangeList: IdefaultYranges = {};
   plotInfo: IplotMulti[] = [];
   deleteBuffer: IplotMulti[] = [];
-  measurement: string = 'rawdata';
   defaultXrange: Moment[] = [];
   xrange: Moment[] = [];
   placeholder: string = '';
@@ -79,23 +69,19 @@ export class VisualizerComponent implements OnInit {
   constructor(private influx: InfluxService, private mongo: MongoService, private modal: ModalService) {}
 
   updateAllGraph(): void {
-    this.plotInfo.forEach((_, graphIdx) => {
-      this.updateSingleGraph(graphIdx);
+    this.plotInfo.forEach(graphInfo => {
+      this.updateSingleGraph(graphInfo);
     })
   }
 
-  updateSingleGraph(graphIdx: number): void {
-    const tagList = this.plotInfo[graphIdx].items.map(itm => itm.tag);
-    this.setDataset(this.plotInfo[graphIdx], tagList);
-  }
-
-  setDataset(graphInfo: IplotMulti, tagList: string[]) {
+  updateSingleGraph(graphInfo: IplotMulti) {
+    const tagList = graphInfo.items.map(itm => itm.tag);
     const From = graphInfo.dateRange?.length === 2? graphInfo.dateRange[0]: this.defaultXrange[0].toISOString();
     const To = graphInfo.dateRange?.length === 2? graphInfo.dateRange[1]: this.defaultXrange[1].toISOString();
     graphInfo.layout = this.setLayout(graphInfo);
-    graphInfo.datasets! = [];
+    graphInfo.datasets = [];
 
-    this.influx.getHistoricalData(tagList, this.measurement, From, To).subscribe(res => {
+    this.influx.getHistoricalData(tagList, From, To).subscribe(res => {
       graphInfo.items.forEach((item, idx) => {
         const x = res[item.tag]? res[item.tag].map(itm => itm.timeStamp): [];
         const y = res[item.tag]? res[item.tag].map(itm => itm.value): [];
@@ -124,7 +110,7 @@ export class VisualizerComponent implements OnInit {
       margin: { l: 50, r: 50, b: 35, t: 0 },
       paper_bgcolor: 'rgb(24, 27, 31)',
       plot_bgcolor: 'rgb(24, 27, 31)',
-      height: 207,
+      height: 220,
       showlegend: true,
       legend: {
         y: 1.4,
@@ -140,7 +126,6 @@ export class VisualizerComponent implements OnInit {
       },
       yaxis: {
         color: this.colors[0],
-        autorange: false,
         zeroline: false,
         title: { text: '', standoff: 5 },
       },
@@ -149,7 +134,6 @@ export class VisualizerComponent implements OnInit {
         side: 'right',
         showgrid: false,
         color: this.colors[1],
-        autorange: false,
         zeroline: false,
         title: { text: '', standoff: 5 },
       },
@@ -159,7 +143,6 @@ export class VisualizerComponent implements OnInit {
         showgrid: false,
         position: 0.04,
         color: this.colors[2],
-        autorange: false,
         zeroline: false,
         title: { text: '', standoff: 5 },
       },
@@ -169,7 +152,6 @@ export class VisualizerComponent implements OnInit {
         showgrid: false,
         position: 0.96,
         color: this.colors[3],
-        autorange: false,
         zeroline: false,
         title: { text: '', standoff: 5 },
       },
@@ -179,7 +161,6 @@ export class VisualizerComponent implements OnInit {
         showgrid: false,
         position: 0,
         color: this.colors[4],
-        autorange: false,
         zeroline: false,
         title: { text: '', standoff: 5 },
       },
@@ -189,10 +170,9 @@ export class VisualizerComponent implements OnInit {
         showgrid: false,
         position: 1,
         color: this.colors[5],
-        autorange: false,
         zeroline: false,
         title: { text: '', standoff: 5 },
-      },
+      }
     }
 
     graphInfo.items.forEach((itm, idx) => {
@@ -222,8 +202,6 @@ export class VisualizerComponent implements OnInit {
           (layout.yaxis6!.title as Partial<Plotly.DataTitle>).text = unit;
           layout.yaxis6!.range = [itm.yrange!.min, itm.yrange!.max];
           break;
-        default:
-          break;
       }
     })
     return layout;
@@ -245,14 +223,6 @@ export class VisualizerComponent implements OnInit {
     this.placeholder = this.getTimePlaceholderValue();
   }
 
-  patchPlotInfo(plotInfo: IplotMulti[]): Observable<void> {
-    return this.mongo.updateTSmultiInfo(plotInfo);
-  }
-
-  deletePlotInfo(plotInfo: IplotMulti[]): Observable<void> {
-    return this.mongo.deleteTSmultiInfo(plotInfo);
-  }
-
   addGraph() {
     this.isUnSaved = true;
     const newItem: IplotMulti = {
@@ -269,14 +239,14 @@ export class VisualizerComponent implements OnInit {
       dateRange: [this.xrange[0].toISOString(), this.xrange[1].toISOString()]
     }
     this.plotInfo.push(newItem);
-    this.updateSingleGraph(this.plotInfo.length - 1);
+    this.updateSingleGraph(newItem);
   }
 
   plotSettingModal(idx: number) {
     this.modal.plotSettingModal(this.plotInfo[idx], this.tagList, this.yrangeList).then(res => {
       this.isUnSaved = true;
       this.plotInfo[idx] = res;
-      this.updateSingleGraph(idx);
+      this.updateSingleGraph(this.plotInfo[idx]);
     }, (err) => {});
   }
 
@@ -292,10 +262,10 @@ export class VisualizerComponent implements OnInit {
   save() {
     forkJoin(
       [
-        this.deletePlotInfo(this.deleteBuffer),
-        this.patchPlotInfo(this.plotInfo)
+        this.mongo.deleteTSmultiInfo(this.deleteBuffer),
+        this.mongo.updateTSmultiInfo(this.plotInfo)
       ]
-    ).subscribe(_ => {
+    ).subscribe( _ => {
       alert('Saved Successfully!');
       this.isUnSaved = false;
     }, (err) => {
@@ -314,9 +284,9 @@ export class VisualizerComponent implements OnInit {
   }
 
   getTimePlaceholderValue(): string {
-    let ret = this.xrange[0]? moment(this.xrange[0]).format(MOMENT_FORMATS.full): this.defaultXrange[0].format(MOMENT_FORMATS.full);
+    let ret = this.xrange[0]? moment(this.xrange[0]).format(MOMENT_FORMATS): this.defaultXrange[0].format(MOMENT_FORMATS);
     ret += ' ~ ';
-    ret += this.xrange[1]? moment(this.xrange[1]).format(MOMENT_FORMATS.full): this.defaultXrange[1].format(MOMENT_FORMATS.full);
+    ret += this.xrange[1]? moment(this.xrange[1]).format(MOMENT_FORMATS): this.defaultXrange[1].format(MOMENT_FORMATS);
     return ret;
   }
 
@@ -329,14 +299,8 @@ export class VisualizerComponent implements OnInit {
     })
   }
 
-  shouldConfirmOnBeforeunload() {
-    return this.isUnSaved;
-  }
-
   @HostListener('window:beforeunload', ['$event'])
   beforeUnload(e: Event) {
-    if (this.shouldConfirmOnBeforeunload()) {
-      e.returnValue = true;
-    }
+    if (this.isUnSaved) { e.returnValue = true; }
   }
 }

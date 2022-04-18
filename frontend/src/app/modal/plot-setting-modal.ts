@@ -27,17 +27,21 @@ import { IdefaultYranges } from '../service/influx.service';
                         <br>
                         <form>
                             <div class="mb-3">
-                                <label class="form-label textColor">yrange min</label>
+                                <label class="textColor">yrange min</label>
+                                <br>
                                 <input #yrangeMin type="text" [value]="itm.yrange?.min" 
-                                (input)="setYrangeMin(yrangeMin.value, i)" class="form-control textColor SecondaryBGColor" style="width: 30%;">
+                                (input)="setYrangeMin(yrangeMin.value, i)" class="textColor SecondaryBGColor" 
+                                style="width: 30%; border-color: white; border-width: 1px">
                             </div>
                             <div class="mb-3">
-                                <label class="form-label textColor">yrange max</label>
+                                <label class="textColor">yrange max</label>
+                                <br>
                                 <input #yrangeMax type="text" [value]="itm.yrange?.max" 
-                                (input)="setYrangeMax(yrangeMax.value, i)" class="form-control textColor SecondaryBGColor" style="width: 30%;">
+                                (input)="setYrangeMax(yrangeMax.value, i)" class="textColor SecondaryBGColor" 
+                                style="width: 30%; border-color: white; border-width: 1px">
                             </div>
                         </form>
-                        <button type="button" class="btn btn-outline-light textColor" (click)="setDefaultYrange(i)">set default yrange</button>
+                        <button class="btn btn-outline-light textColor" (click)="setDefaultYrange(i)">set default yrange</button>
                     </div>
                     <fa-icon *ngIf="setting.items.length < 6" class="col-1 PrimaryColor" [icon]="plusIcon"
                     size="2x" (click)="addTag()" style="margin-top: 28px"></fa-icon>
@@ -45,7 +49,7 @@ import { IdefaultYranges } from '../service/influx.service';
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-outline-light textColor SecondaryBGColor" (click)="activeModal.close(setting)">Update</button>
+            <button class="btn btn-outline-light textColor SecondaryBGColor" (click)="activeModal.close(setting)">Update</button>
         </div>
     </div>
 
