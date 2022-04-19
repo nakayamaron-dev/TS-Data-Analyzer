@@ -1,1 +1,63 @@
-<p>histogram works!</p>
+<div class="d-flex flex-row-reverse bd-highlight" style="background-color: transparent;">
+    <button class="btn SecondaryBGColor" (click)="save()">
+        <svg viewBox="0 0 24 24" width="28" height="28">
+            <path fill="gray" d="M20.71,9.29l-6-6a1,1,0,0,0-.32-.21A1.09,1.09,0,0,0,14,3H6A3,3,0,0,0,3,6V18a3,3,0,0,0,3,3H18a3,3,0,0,0,3-3V10A1,1,0,0,0,20.71,9.29ZM9,5h4V7H9Zm6,14H9V16a1,1,0,0,1,1-1h4a1,1,0,0,1,1,1Zm4-1a1,1,0,0,1-1,1H17V16a3,3,0,0,0-3-3H10a3,3,0,0,0-3,3v3H6a1,1,0,0,1-1-1V6A1,1,0,0,1,6,5H7V8A1,1,0,0,0,8,9h6a1,1,0,0,0,1-1V6.41l4,4Z"></path>
+        </svg>
+    </button>
+    <button class="btn SecondaryBGColor" style="margin-right: 10px;" (click)="addGraph()">
+        <svg viewBox="0 0 117.8 64" width="28" height="28">
+            <linearGradient id="a" x1="96.44" y1="83.7" x2="96.44" y2="-9.48">
+                <stop offset="0" stop-color="#FFF23A"></stop><stop offset=".04" stop-color="#FEE62D"></stop>
+                <stop offset=".12" stop-color="#FED41A"></stop><stop offset=".2" stop-color="#FDC90F"></stop>
+                <stop offset=".28" stop-color="#FDC60B"></stop><stop offset=".67" stop-color="#F28F3F"></stop>
+                <stop offset=".89" stop-color="#ED693C"></stop><stop offset="1" stop-color="#E83E39"></stop>
+            </linearGradient>
+            <path fill="gray" d="M15.2 22.7H1.9c-1.1 0-1.9.9-1.9 1.9v37.5C0 63.2.9 64 1.9 64h13.3c1.1 0 1.9-.9 1.9-1.9V24.6c0-1.1-.8-1.9-1.9-1.9zM36.3 10.2H23c-1.1 0-1.9.9-1.9 1.9v50c0 1.1.9 1.9 1.9 1.9h13.3c1.1 0 1.9-.9 1.9-1.9v-50c0-1-.9-1.9-1.9-1.9zM57.3 32H44c-1.1 0-1.9.9-1.9 1.9V62c0 1.1.9 1.9 1.9 1.9h13.3c1.1 0 1.9-.9 1.9-1.9V34c0-1.1-.8-2-1.9-2zM70.1 38V26.1c0-3.4 2.7-6.1 6.1-6.1h4.1V2c0-1.1-.9-1.9-1.9-1.9H65.1c-1.1-.1-2 .8-2 1.9v60.1c0 1.1.9 1.9 1.9 1.9h13.3c1.1 0 1.9-.9 1.9-1.9v-18h-4.1c-3.2 0-6-2.8-6-6.1z"></path>
+            <path fill="url(#a)" d="M116.7 24.9H103.6V11.8c0-.6-.5-1.1-1.1-1.1h-12c-.6 0-1.1.5-1.1 1.1v13.1H76.2c-.6 0-1.1.5-1.1 1.1v12c0 .6.5 1.1 1.1 1.1h13.2v13.2c0 .6.5 1.1 1.1 1.1h11.9c.6 0 1.1-.5 1.1-1.1V39.1h13.1c.6 0 1.1-.5 1.1-1.1V26.1c.1-.6-.4-1.2-1-1.2z"></path>
+        </svg>
+    </button>
+    <button class="btn SecondaryBGColor" style="margin-right: 10px; width: 54px;" (click)="changeViewMode()">
+        <fa-icon class="PrimaryColor" [icon]="viewModeIcon" size="lg"></fa-icon> 
+    </button>
+    <input [owlDateTime]="dt" [owlDateTimeTrigger]="dt" [selectMode]="'range'" size="35px"
+    [placeholder]="placeholder" (dateTimeChange)="onChangeDateTime()" [(ngModel)]="xrange"
+    style="margin-right: 10px; border: none;" class="SecondaryBGColor textColor" readonly>
+    <owl-date-time #dt></owl-date-time>
+    <fa-icon class="PrimaryColor SecondaryBGColor" [icon]="clockIcon" size="lg" style="padding: 9px 9px 0px 9px;"></fa-icon>
+</div>
+
+<div class="row">
+    <div class="col-3" style="margin: 15px 0px 0px 0px;" *ngFor="let gInfo of plotInfo; index as i">
+        <div class="card SecondaryBGColor">
+            <div class="card-body">
+                <div class="d-flex flex-row-reverse bd-highlight" style="margin-bottom: 5px;">
+                    <div>
+                        <fa-icon class="PrimaryColor" [icon]="deleteIcon" size="lg" (click)="deleteGraph(i)"></fa-icon>  
+                    </div>
+                    <div style="margin-right: 15px;">
+                        <fa-icon class="PrimaryColor" [icon]="editIcon" size="lg" (click)="plotSettingModal(i)"></fa-icon>  
+                    </div>
+                    <!-- <button class="btn btn-outline-light .btn-sm dropdown-toggle textColor" data-bs-toggle="dropdown"
+                     style="width:70px; height: 30px; margin-right: 15px; margin-top: -3px; font-size: 12px;"
+                    >
+                     Tag
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" *ngFor="let tag of tagList">
+                            <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="checkbox1" style="margin-right: 5px;">
+                            <label class="custom-control-label" for="checkbox1">{{tag}}</label>
+                            </div>
+                        </a>
+                    </div> -->
+                </div>
+                <plotly-plot
+                [data]="gInfo.datasets" 
+                [layout]="gInfo.layout"
+                [config]="config"
+                [useResizeHandler]="true">
+                </plotly-plot>
+            </div>
+        </div>
+    </div>
+</div>

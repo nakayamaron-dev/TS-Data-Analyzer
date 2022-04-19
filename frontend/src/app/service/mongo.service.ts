@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { IplotMulti } from '../visualizer/visualizer.component';
 import { ItagInfo } from '../data-description/data-description.component';
+import { IplotHist } from '../histogram/histogram.component';
 
 @Injectable({
   providedIn: 'root'
@@ -61,7 +62,18 @@ export class MongoService {
   }
 
   updateTagInfo(data: ItagInfo): Observable<any> {
-    console.log(data);
     return this.http.patch(`api/v1/mongo/taginfo`, data);
+  }
+
+  getHistogramInfo(): Observable<IplotHist[]> {
+    return this.http.get<IplotHist[]>(`api/v1/mongo/histogram/list`, { responseType: 'json' });
+  }
+
+  updateHistogramInfo(data: IplotHist[]) {
+    return this.http.patch(`api/v1/mongo/histogram`, data);
+  }
+
+  deleteHistogramInfo(data: IplotHist[]): Observable<any> {
+    return this.http.delete(`/api/v1/mongo/histogram`, {body: data});
   }
 }
