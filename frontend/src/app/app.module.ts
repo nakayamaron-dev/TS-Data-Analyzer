@@ -12,6 +12,7 @@ import * as PlotlyJS from 'plotly.js-dist-min';
 import { PlotlyModule } from 'angular-plotly.js';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PlotSetting } from './modal/plot-setting-modal';
+import { HistSetting } from './modal/hist-setting-modal';
 import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_FORMATS } from '@danielmoncada/angular-datetime-picker';
 import { DataDescriptionComponent } from './data-description/data-description.component';
 import { HistogramComponent } from './histogram/histogram.component';
@@ -35,6 +36,7 @@ export const MOMENT_FORMATS = {
     AppComponent,
     VisualizerComponent,
     PlotSetting,
+    HistSetting,
     DataDescriptionComponent,
     HistogramComponent
   ],

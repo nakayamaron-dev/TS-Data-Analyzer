@@ -5,8 +5,14 @@ import * as db from "../models/mongo-local-db";
 
 export interface IplotHist {
     _id: number,
-    dateRange: string[],
-    plotTag: string[]
+    items: {
+      tag: string,
+      xbin: {
+        end: number,
+        size: number,
+        start: number,
+      }
+    }[]
 }
 
 router.get("/list", async (_req: express.Request, res: express.Response, next: express.NextFunction) => {

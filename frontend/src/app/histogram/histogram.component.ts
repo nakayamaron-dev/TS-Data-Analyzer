@@ -1,6 +1,6 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import * as Plotly from 'plotly.js-dist-min';
-import { InfluxService } from '../service/influx.service';
+import { InfluxService, IdefaultYranges } from '../service/influx.service';
 import { MongoService } from '../service/mongo.service';
 import { ModalService } from '../service/modal.service';
 import { faTrashAlt, faPen, faClock, faExchangeAlt, IconPack } from '@fortawesome/free-solid-svg-icons';
@@ -12,8 +12,16 @@ import { ItagInfo } from '../data-description/data-description.component';
 
 export interface IplotHist {
   _id: number,
+  items: {
+    tag: string,
+    xbin?: {
+      end: number,
+      size: number,
+      start: number,
+    },
+    bin?: number,
+  }[],
   dateRange?: string[],
-  plotTag: string[],
   datasets?: Partial<Plotly.PlotData>[],
   layout?: Partial<Plotly.Layout>
 }
@@ -52,6 +60,7 @@ export class HistogramComponent implements OnInit {
   isUnSaved = false;
   fontColor = '#C9CDCE';
   tagList: string[] = [];
+  yrangeList: IdefaultYranges = {};
   plotInfo: IplotHist[] = [];
   deleteBuffer: IplotHist[] = [];
   defaultXrange: Moment[] = [];
@@ -69,6 +78,7 @@ export class HistogramComponent implements OnInit {
 
   async setBaseData() {
     this.tagList = await this.influx.getTagList().toPromise() as string[];
+    this.yrangeList = await this.influx.getDefaultYrangeList(this.tagList).toPromise() as IdefaultYranges;
     this.tagInfo = await this.mongo.getTagInfo().toPromise() as ItagInfo;
     this.plotInfo = await this.mongo.getHistogramInfo().toPromise() as IplotHist[];
     const latestTimeStamp = await this.influx.getLatestTimeStamp().toPromise() as string;
@@ -84,27 +94,42 @@ export class HistogramComponent implements OnInit {
   }
 
   updateSingleGraph(graphInfo: IplotHist) {
+    const tagList = graphInfo.items.map(itm => itm.tag);
     const From = graphInfo.dateRange?.length === 2? graphInfo.dateRange[0]: this.defaultXrange[0].toISOString();
     const To = graphInfo.dateRange?.length === 2? graphInfo.dateRange[1]: this.defaultXrange[1].toISOString();
     graphInfo.layout = this.setLayout();
     graphInfo.datasets = [];
 
-    this.influx.getHistoricalData(graphInfo.plotTag, From, To).subscribe(res => {
-      graphInfo.plotTag.forEach((tag, idx) => {
-        const x = res[tag]? res[tag].map(itm => itm.value): [];
+    this.influx.getHistoricalData(tagList, From, To).subscribe(res => {
+      graphInfo.items.forEach((item, idx) => {
+        const x = res[item.tag]? res[item.tag].map(itm => itm.value): [];
+        const max = Math.max(...x);
+        const min= Math.min(...x);
+        const xbin = {
+          end: item.xbin? item.xbin.end: max, 
+          size: item.xbin? item.xbin.size: (max-min)/15,
+          start: item.xbin? item.xbin.start: min
+        }
 
         graphInfo.datasets!.push(
           {
             x: x,
-            name: tag,
+            name: item.tag,
             type: 'histogram',
             xaxis: `x${idx+1}`,
-            opacity: 0.3,
-            marker: {
-              color: 'yellowgreen',
-           },
+            opacity: 0.5,
+            marker: { color: this.colors[idx] },
+            xbins: xbin
           }
         )
+
+        if (!item.xbin) {
+          item.xbin = xbin;
+        }
+
+        if (!item.bin) {
+          item.bin = Math.round((max - min) / xbin.size);
+        }
       })
     })
   }
@@ -124,13 +149,30 @@ export class HistogramComponent implements OnInit {
         orientation: 'h',
         font: { color: this.fontColor }
       },
-      xaxis: { showgrid: true },
+      yaxis: {
+        domain: [0.08, 1]
+      },
+      xaxis: { 
+        color: this.colors[0],
+        showgrid: true 
+      },
+      xaxis2: { 
+        color: this.colors[1],
+        showgrid: false,
+        overlaying: 'x',
+        side: 'bottom',
+        position: 0,
+      },
     }
     return layout;
   }
 
   plotSettingModal(idx: number) {
-
+    this.modal.histSettingModal(this.plotInfo[idx], this.tagList, this.yrangeList).then(res => {
+      this.isUnSaved = true;
+      this.plotInfo[idx] = res;
+      this.updateSingleGraph(this.plotInfo[idx]);
+    }, (err) => {});
   }
 
   save() {
@@ -150,8 +192,8 @@ export class HistogramComponent implements OnInit {
   changeViewMode() {
     this.viewTag = !this.viewTag;
     this.plotInfo.forEach(pInfo => {
-      pInfo.plotTag.forEach((tag, idx) => {
-        pInfo.datasets![idx].name = this.viewTag? tag: this.tagInfo?.items.find(info => info.tag === tag)?.description;
+      pInfo.items.forEach((itm, idx) => {
+        pInfo.datasets![idx].name = this.viewTag? itm.tag: this.tagInfo?.items.find(info => info.tag === itm.tag)?.description;
       })
     })
   }
@@ -177,7 +219,11 @@ export class HistogramComponent implements OnInit {
     this.isUnSaved = true;
     const newItem: IplotHist = {
       _id: this.plotInfo.slice(-1)[0]._id + 1,
-      plotTag: [this.tagList[0]],
+      items: [
+        {
+          tag: this.tagList[0],
+        }
+      ],
       dateRange: [this.xrange[0].toISOString(), this.xrange[1].toISOString()]
     }
     this.plotInfo.push(newItem);
@@ -191,10 +237,6 @@ export class HistogramComponent implements OnInit {
       this.deleteBuffer.push(this.plotInfo[idx]);
       this.plotInfo.splice(idx, 1);
     }
-  }
-
-  onSelectedTags(val: any) {
-    console.log(val);
   }
 
   @HostListener('window:beforeunload', ['$event'])
