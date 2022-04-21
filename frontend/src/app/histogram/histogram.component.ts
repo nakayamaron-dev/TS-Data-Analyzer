@@ -3,12 +3,13 @@ import * as Plotly from 'plotly.js-dist-min';
 import { InfluxService, IdefaultYranges } from '../service/influx.service';
 import { MongoService } from '../service/mongo.service';
 import { ModalService } from '../service/modal.service';
-import { faTrashAlt, faPen, faClock, faExchangeAlt, IconPack } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt, faPen, faClock, faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
 import { forkJoin } from 'rxjs';
 import { Moment } from 'moment';
 import * as moment from 'moment';
 import { OWL_DATE_TIME_FORMATS } from '@danielmoncada/angular-datetime-picker';
 import { ItagInfo } from '../data-description/data-description.component';
+import { plotlylib } from '../library/plotly';
 
 export interface IplotHist {
   _id: number,
@@ -43,22 +44,8 @@ export class HistogramComponent implements OnInit {
   clockIcon = faClock;
   viewModeIcon = faExchangeAlt;
 
-  colors: string[] = [
-    '#1f77b4',  // muted blue
-    '#ff7f0e',  // safety orange
-    '#2ca02c',  // cooked asparagus green
-    '#d62728',  // brick red
-    '#9467bd',  // muted purple
-    '#8c564b',  // chestnut brown
-  ]
-
-  config: Partial<Plotly.Config> = {
-    displaylogo: false,
-    displayModeBar: false,
-  }
-
+  p_lib = new plotlylib();
   isUnSaved = false;
-  fontColor = '#C9CDCE';
   tagList: string[] = [];
   yrangeList: IdefaultYranges = {};
   plotInfo: IplotHist[] = [];
@@ -77,14 +64,14 @@ export class HistogramComponent implements OnInit {
   }
 
   async setBaseData() {
-    this.tagList = await this.influx.getTagList().toPromise() as string[];
-    this.yrangeList = await this.influx.getDefaultYrangeList(this.tagList).toPromise() as IdefaultYranges;
     this.tagInfo = await this.mongo.getTagInfo().toPromise() as ItagInfo;
+    this.tagList = this.tagInfo.items.map(itm => itm.tag);
+    this.yrangeList = await this.influx.getDefaultYrangeList(this.tagList).toPromise() as IdefaultYranges;
     this.plotInfo = await this.mongo.getHistogramInfo().toPromise() as IplotHist[];
     const latestTimeStamp = await this.influx.getLatestTimeStamp().toPromise() as string;
     this.defaultXrange = [moment(latestTimeStamp).subtract(1, 'd'), moment(latestTimeStamp)];
     this.xrange = this.plotInfo[0].dateRange?.length === 2? this.plotInfo[0].dateRange.map(itm => moment(itm)): this.defaultXrange;
-    this.placeholder = this.getTimePlaceholderValue();
+    this.placeholder = this.p_lib.getTimePlaceholderValue(this.xrange, MOMENT_FORMATS);
   }
 
   updateAllGraph(): void {
@@ -118,7 +105,7 @@ export class HistogramComponent implements OnInit {
             type: 'histogram',
             xaxis: `x${idx+1}`,
             opacity: 0.5,
-            marker: { color: this.colors[idx] },
+            marker: { color: this.p_lib.plotColors[idx] },
             xbins: xbin
           }
         )
@@ -135,36 +122,7 @@ export class HistogramComponent implements OnInit {
   }
 
   setLayout() {
-    const layout: Partial<Plotly.Layout> = {
-      margin: { l: 30, r: 30, b: 25, t: 0 },
-      paper_bgcolor: 'rgb(24, 27, 31)',
-      plot_bgcolor: 'rgb(24, 27, 31)',
-      height: 220,
-      showlegend: true,
-      barmode: "overlay",
-      legend: {
-        y: 1.2,
-        xanchor: 'center',
-        x: 0.5,
-        orientation: 'h',
-        font: { color: this.fontColor }
-      },
-      yaxis: {
-        domain: [0.08, 1]
-      },
-      xaxis: { 
-        color: this.colors[0],
-        showgrid: true 
-      },
-      xaxis2: { 
-        color: this.colors[1],
-        showgrid: false,
-        overlaying: 'x',
-        side: 'bottom',
-        position: 0,
-      },
-    }
-    return layout;
+    return this.p_lib.getHistogramLayout();
   }
 
   plotSettingModal(idx: number) {
@@ -182,37 +140,30 @@ export class HistogramComponent implements OnInit {
         this.mongo.updateHistogramInfo(this.plotInfo)
       ]
     ).subscribe( _ => {
-      alert('Saved Successfully!');
       this.isUnSaved = false;
+      alert('Saved Successfully!');
     }, (err) => {
       alert(err);
     })
   }
 
-  changeViewMode() {
-    this.viewTag = !this.viewTag;
+  changeViewMode(viewTag: boolean) {
     this.plotInfo.forEach(pInfo => {
       pInfo.items.forEach((itm, idx) => {
-        pInfo.datasets![idx].name = this.viewTag? itm.tag: this.tagInfo?.items.find(info => info.tag === itm.tag)?.description;
+        pInfo.datasets![idx].name = viewTag? itm.tag: this.tagInfo?.items.find(info => info.tag === itm.tag)?.description;
       })
     })
   }
 
-  onChangeDateTime() {
+  onChangeDateTime(xrange: Moment[]) {
     this.isUnSaved = true;
+    this.xrange = xrange;
+    this.placeholder = this.p_lib.getTimePlaceholderValue(this.xrange, MOMENT_FORMATS);
     this.plotInfo = this.plotInfo.map(itm => {
-      itm.dateRange = [this.xrange[0].toISOString(), this.xrange[1].toISOString()];
+      itm.dateRange = [xrange[0].toISOString(), xrange[1].toISOString()];
       return itm
     })
-    this.placeholder = this.getTimePlaceholderValue();
     this.updateAllGraph();
-  }
-
-  getTimePlaceholderValue(): string {
-    let ret = this.xrange[0]? moment(this.xrange[0]).format(MOMENT_FORMATS): this.defaultXrange[0].format(MOMENT_FORMATS);
-    ret += ' ~ ';
-    ret += this.xrange[1]? moment(this.xrange[1]).format(MOMENT_FORMATS): this.defaultXrange[1].format(MOMENT_FORMATS);
-    return ret;
   }
 
   addGraph() {

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VisualizerComponent } from './visualizer.component';
+import { TsMultiComponent } from './tsmulti.component';
 
-describe('VisualizerComponent', () => {
-  let component: VisualizerComponent;
-  let fixture: ComponentFixture<VisualizerComponent>;
+describe('TsMultiComponent', () => {
+  let component: TsMultiComponent;
+  let fixture: ComponentFixture<TsMultiComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ VisualizerComponent ]
+      declarations: [ TsMultiComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(VisualizerComponent);
+    fixture = TestBed.createComponent(TsMultiComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

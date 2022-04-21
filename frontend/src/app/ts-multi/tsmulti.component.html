@@ -1,0 +1,27 @@
+<app-header
+[placeholder]="placeholder"
+(onSelectDatetime)="onChangeDateTime($event)"
+(onClickViewMode)="changeViewMode($event)"
+(onClickAddChart)="addGraph()"
+(onClickSave)="save()"
+></app-header>
+
+<div class="card SecondaryBGColor" style="margin: 10px 0px 10px 0px;" *ngFor="let gInfo of plotInfo; index as i">
+    <div class="card-body">
+        <div class="d-flex flex-row-reverse bd-highlight">
+            <div>
+                <fa-icon class="PrimaryColor" [icon]="deleteIcon" size="lg" (click)="deleteGraph(i)"></fa-icon>  
+            </div>
+            <div style="margin-right: 45px;">
+                <fa-icon class="PrimaryColor" [icon]="editIcon" size="lg" (click)="plotSettingModal(i)"></fa-icon>  
+            </div>
+        </div>
+        
+        <plotly-plot
+        [data]="gInfo.datasets" 
+        [layout]="gInfo.layout"
+        [config]="p_lib.config"
+        [useResizeHandler]="true">
+        </plotly-plot>
+    </div>
+</div>

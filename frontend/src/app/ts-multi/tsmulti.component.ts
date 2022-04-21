@@ -9,6 +9,7 @@ import { Moment } from 'moment';
 import * as moment from 'moment';
 import { OWL_DATE_TIME_FORMATS } from '@danielmoncada/angular-datetime-picker';
 import { ItagInfo } from '../data-description/data-description.component';
+import { plotlylib } from '../library/plotly';
 
 export interface IplotMulti {
   _id: number,
@@ -27,35 +28,21 @@ export interface IplotMulti {
 export const MOMENT_FORMATS = 'YYYY/MM/DD HH:mm';
 
 @Component({
-  selector: 'app-visualizer',
-  templateUrl: './visualizer.component.html',
-  styleUrls: ['./visualizer.component.css'],
+  selector: 'app-tsmulti',
+  templateUrl: './tsmulti.component.html',
+  styleUrls: ['./tsmulti.component.css'],
   providers: [
     { provide: OWL_DATE_TIME_FORMATS, useValue: MOMENT_FORMATS }
   ]
 })
-export class VisualizerComponent implements OnInit {
+export class TsMultiComponent implements OnInit {
   deleteIcon = faTrashAlt;
   editIcon = faPen;
   clockIcon = faClock;
   viewModeIcon = faExchangeAlt;
   isUnSaved = false;
-  fontColor = '#C9CDCE';
 
-  colors: string[] = [
-    '#1f77b4',  // muted blue
-    '#ff7f0e',  // safety orange
-    '#2ca02c',  // cooked asparagus green
-    '#d62728',  // brick red
-    '#9467bd',  // muted purple
-    '#8c564b',  // chestnut brown
-  ]
-
-  config: Partial<Plotly.Config> = {
-    displaylogo: false,
-    displayModeBar: false,
-  }
-
+  p_lib = new plotlylib();
   tagList: string[] = [];
   yrangeList: IdefaultYranges = {};
   plotInfo: IplotMulti[] = [];
@@ -106,74 +93,7 @@ export class VisualizerComponent implements OnInit {
   }
 
   setLayout(graphInfo: IplotMulti) {
-    const layout: Partial<Plotly.Layout>  = {
-      margin: { l: 50, r: 50, b: 35, t: 0 },
-      paper_bgcolor: 'rgb(24, 27, 31)',
-      plot_bgcolor: 'rgb(24, 27, 31)',
-      height: 220,
-      showlegend: true,
-      legend: {
-        y: 1.4,
-        xanchor: 'center',
-        x: 0.5,
-        orientation: 'h',
-        font: { color: this.fontColor }
-      },
-      xaxis: {
-        domain: [0.08, 0.92],
-        showgrid: true,
-        color: this.fontColor,
-      },
-      yaxis: {
-        color: this.colors[0],
-        zeroline: false,
-        title: { text: '', standoff: 5 },
-      },
-      yaxis2: {
-        overlaying: 'y',
-        side: 'right',
-        showgrid: false,
-        color: this.colors[1],
-        zeroline: false,
-        title: { text: '', standoff: 5 },
-      },
-      yaxis3: {
-        overlaying: 'y',
-        side: 'left',
-        showgrid: false,
-        position: 0.04,
-        color: this.colors[2],
-        zeroline: false,
-        title: { text: '', standoff: 5 },
-      },
-      yaxis4: {
-        overlaying: 'y',
-        side: 'right',
-        showgrid: false,
-        position: 0.96,
-        color: this.colors[3],
-        zeroline: false,
-        title: { text: '', standoff: 5 },
-      },
-      yaxis5: {
-        overlaying: 'y',
-        side: 'left',
-        showgrid: false,
-        position: 0,
-        color: this.colors[4],
-        zeroline: false,
-        title: { text: '', standoff: 5 },
-      },
-      yaxis6: {
-        overlaying: 'y',
-        side: 'right',
-        showgrid: false,
-        position: 1,
-        color: this.colors[5],
-        zeroline: false,
-        title: { text: '', standoff: 5 },
-      }
-    }
+    const layout: Partial<Plotly.Layout>  = this.p_lib.getTsMultiLayout();
 
     graphInfo.items.forEach((itm, idx) => {
       const unit = this.tagInfo?.items.find(a => a.tag === itm.tag)?.unit;
@@ -213,14 +133,14 @@ export class VisualizerComponent implements OnInit {
   }
 
   async setBaseData() {
-    this.tagList = await this.influx.getTagList().toPromise() as string[];
+    this.tagInfo = await this.mongo.getTagInfo().toPromise() as ItagInfo;
+    this.tagList = this.tagInfo.items.map(itm => itm.tag);
     this.yrangeList = await this.influx.getDefaultYrangeList(this.tagList).toPromise() as IdefaultYranges;
     const latestTimeStamp = await this.influx.getLatestTimeStamp().toPromise() as string;
     this.defaultXrange = [moment(latestTimeStamp).subtract(1, 'd'), moment(latestTimeStamp)]
-    this.tagInfo = await this.mongo.getTagInfo().toPromise() as ItagInfo;
     this.plotInfo = await this.mongo.getTSmultiInfoAll().toPromise() as IplotMulti[];
     this.xrange = this.plotInfo[0].dateRange? this.plotInfo[0].dateRange.map(itm => moment(itm)): []
-    this.placeholder = this.getTimePlaceholderValue();
+    this.placeholder = this.p_lib.getTimePlaceholderValue(this.xrange, MOMENT_FORMATS);
   }
 
   addGraph() {
@@ -266,35 +186,28 @@ export class VisualizerComponent implements OnInit {
         this.mongo.updateTSmultiInfo(this.plotInfo)
       ]
     ).subscribe( _ => {
-      alert('Saved Successfully!');
       this.isUnSaved = false;
+      alert('Saved Successfully!');
     }, (err) => {
       alert(err);
     })
   }
 
-  onChangeDateTime() {
+  onChangeDateTime(xrange: Moment[]) {
     this.isUnSaved = true;
+    this.xrange = xrange;
+    this.placeholder = this.p_lib.getTimePlaceholderValue(this.xrange, MOMENT_FORMATS);
     this.plotInfo = this.plotInfo.map(itm => {
-      itm.dateRange = [this.xrange[0].toISOString(), this.xrange[1].toISOString()];
+      itm.dateRange = [xrange[0].toISOString(), xrange[1].toISOString()];
       return itm
     })
-    this.placeholder = this.getTimePlaceholderValue();
     this.updateAllGraph();
   }
 
-  getTimePlaceholderValue(): string {
-    let ret = this.xrange[0]? moment(this.xrange[0]).format(MOMENT_FORMATS): this.defaultXrange[0].format(MOMENT_FORMATS);
-    ret += ' ~ ';
-    ret += this.xrange[1]? moment(this.xrange[1]).format(MOMENT_FORMATS): this.defaultXrange[1].format(MOMENT_FORMATS);
-    return ret;
-  }
-
-  changeViewMode() {
-    this.viewTag = !this.viewTag;
+  changeViewMode(viewTag: boolean) {
     this.plotInfo.forEach(pInfo => {
       pInfo.items.forEach((itm, idx) => {
-        pInfo.datasets![idx].name = this.viewTag? itm.tag: this.tagInfo?.items.find(info => info.tag === itm.tag)?.description;
+        pInfo.datasets![idx].name = viewTag? itm.tag: this.tagInfo?.items.find(info => info.tag === itm.tag)?.description;
       })
     })
   }

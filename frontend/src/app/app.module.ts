@@ -7,7 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AppComponent } from './app.component';
-import { VisualizerComponent } from './visualizer/visualizer.component';
+import { TsMultiComponent } from './ts-multi/tsmulti.component';
 import * as PlotlyJS from 'plotly.js-dist-min';
 import { PlotlyModule } from 'angular-plotly.js';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -16,6 +16,7 @@ import { HistSetting } from './modal/hist-setting-modal';
 import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_FORMATS } from '@danielmoncada/angular-datetime-picker';
 import { DataDescriptionComponent } from './data-description/data-description.component';
 import { HistogramComponent } from './histogram/histogram.component';
+import { HeaderComponent } from './header/header.component';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -34,11 +35,12 @@ export const MOMENT_FORMATS = {
 @NgModule({
   declarations: [
     AppComponent,
-    VisualizerComponent,
+    TsMultiComponent,
     PlotSetting,
     HistSetting,
     DataDescriptionComponent,
-    HistogramComponent
+    HistogramComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserAnimationsModule,

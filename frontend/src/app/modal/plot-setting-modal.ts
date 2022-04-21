@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { IplotMulti } from '../visualizer/visualizer.component';
+import { IplotMulti } from '../ts-multi/tsmulti.component';
 import { faCirclePlus, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { IdefaultYranges } from '../service/influx.service';
 

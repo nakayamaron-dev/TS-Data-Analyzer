@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PlotSetting } from '../modal/plot-setting-modal';
 import { HistSetting } from '../modal/hist-setting-modal';
-import { IplotMulti } from '../visualizer/visualizer.component';
+import { IplotMulti } from '../ts-multi/tsmulti.component';
 import { IplotHist } from '../histogram/histogram.component';
 import { IdefaultYranges } from './influx.service';
 

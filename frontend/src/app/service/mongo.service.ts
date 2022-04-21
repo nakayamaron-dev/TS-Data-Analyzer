@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
-import { IplotMulti } from '../visualizer/visualizer.component';
+import { IplotMulti } from '../ts-multi/tsmulti.component';
 import { ItagInfo } from '../data-description/data-description.component';
 import { IplotHist } from '../histogram/histogram.component';
 
