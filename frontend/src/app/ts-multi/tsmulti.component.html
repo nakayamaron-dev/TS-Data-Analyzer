@@ -10,10 +10,10 @@
     <div class="card-body">
         <div class="d-flex flex-row-reverse bd-highlight">
             <div>
-                <fa-icon class="PrimaryColor" [icon]="deleteIcon" size="lg" (click)="deleteGraph(i)"></fa-icon>  
+                <mat-icon (click)="deleteGraph(i)">delete</mat-icon>
             </div>
             <div style="margin-right: 45px;">
-                <fa-icon class="PrimaryColor" [icon]="editIcon" size="lg" (click)="plotSettingModal(i)"></fa-icon>  
+                <mat-icon (click)="plotSettingModal(i)">edit</mat-icon>
             </div>
         </div>
         

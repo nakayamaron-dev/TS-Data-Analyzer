@@ -21,3 +21,8 @@ body {
 .textColor {
     color: #C9CDCE;
 }
+
+.mat-icon {
+    font-size: 36px;
+    color: gray;
+  }

@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule }   from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -54,6 +55,7 @@ export const MOMENT_FORMATS = {
     NgbModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
+    MatIconModule,
   ],
   providers: [
     {provide: OWL_DATE_TIME_FORMATS, useValue: MOMENT_FORMATS},

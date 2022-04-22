@@ -3,7 +3,6 @@ import * as Plotly from 'plotly.js-dist-min';
 import { InfluxService, IdefaultYranges } from '../service/influx.service';
 import { MongoService } from '../service/mongo.service';
 import { ModalService } from '../service/modal.service';
-import { faTrashAlt, faPen, faClock, faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
 import { forkJoin } from 'rxjs';
 import { Moment } from 'moment';
 import * as moment from 'moment';
@@ -36,12 +35,8 @@ export const MOMENT_FORMATS = 'YYYY/MM/DD HH:mm';
   ]
 })
 export class TsMultiComponent implements OnInit {
-  deleteIcon = faTrashAlt;
-  editIcon = faPen;
-  clockIcon = faClock;
-  viewModeIcon = faExchangeAlt;
-  isUnSaved = false;
 
+  isUnSaved = false;
   p_lib = new plotlylib();
   tagList: string[] = [];
   yrangeList: IdefaultYranges = {};
