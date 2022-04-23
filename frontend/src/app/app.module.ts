@@ -14,10 +14,12 @@ import { PlotlyModule } from 'angular-plotly.js';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PlotSetting } from './modal/plot-setting-modal';
 import { HistSetting } from './modal/hist-setting-modal';
+import { ScatterSetting } from './modal/scatter-setting-modal';
 import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_FORMATS } from '@danielmoncada/angular-datetime-picker';
 import { DataDescriptionComponent } from './data-description/data-description.component';
 import { HistogramComponent } from './histogram/histogram.component';
 import { HeaderComponent } from './header/header.component';
+import { ScatterComponent } from './scatter/scatter.component';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -39,9 +41,11 @@ export const MOMENT_FORMATS = {
     TsMultiComponent,
     PlotSetting,
     HistSetting,
+    ScatterSetting,
     DataDescriptionComponent,
     HistogramComponent,
     HeaderComponent,
+    ScatterComponent,
   ],
   imports: [
     BrowserAnimationsModule,

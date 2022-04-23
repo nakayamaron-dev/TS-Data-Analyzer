@@ -4,6 +4,7 @@ import { map, Observable } from 'rxjs';
 import { IplotMulti } from '../ts-multi/tsmulti.component';
 import { ItagInfo } from '../data-description/data-description.component';
 import { IplotHist } from '../histogram/histogram.component';
+import { IplotScatter } from '../scatter/scatter.component';
 
 @Injectable({
   providedIn: 'root'
@@ -75,5 +76,17 @@ export class MongoService {
 
   deleteHistogramInfo(data: IplotHist[]): Observable<any> {
     return this.http.delete(`/api/v1/mongo/histogram`, {body: data});
+  }
+
+  getScatterInfo(): Observable<IplotScatter[]> {
+    return this.http.get<IplotScatter[]>(`api/v1/mongo/scatter/list`, { responseType: 'json' });
+  }
+
+  updateScatterInfo(data: IplotScatter[]) {
+    return this.http.patch(`api/v1/mongo/scatter`, data);
+  }
+
+  deleteScatterInfo(data: IplotScatter[]): Observable<any> {
+    return this.http.delete(`/api/v1/mongo/scatter`, {body: data});
   }
 }

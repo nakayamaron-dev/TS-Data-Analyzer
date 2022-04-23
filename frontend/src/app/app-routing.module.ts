@@ -4,11 +4,13 @@ import { BeforeunloadGuard } from './guards/beforeunload.guard';
 import { DataDescriptionComponent } from './data-description/data-description.component';
 import { HistogramComponent } from './histogram/histogram.component';
 import { TsMultiComponent } from './ts-multi/tsmulti.component';
+import { ScatterComponent } from './scatter/scatter.component';
 
 const routes: Routes = [
   {path: '', component: TsMultiComponent, canDeactivate: [BeforeunloadGuard]},
   {path: 'ts-multi', component: TsMultiComponent, canDeactivate: [BeforeunloadGuard]},
   {path: 'histogram', component: HistogramComponent, canDeactivate: [BeforeunloadGuard]},
+  {path: 'scatter', component: ScatterComponent, canDeactivate: [BeforeunloadGuard]},
   {path: 'setting', component: DataDescriptionComponent, canDeactivate: [BeforeunloadGuard]}
 ];
 
