@@ -23,6 +23,7 @@ app.use("/api/v1/mongo/taginfo", bodyParserJson, apiTagInfoRouter);
 app.use("/api/v1/mongo/histogram", bodyParserJson, apiHistogramRouter);
 app.use("/api/v1/mongo/scatter", bodyParserJson, apiScatterRouter);
 app.use("/api/v1/ts", bodyParserText, apiInfluxRouter);
+app.use("/api/*", (_, res) => { res.status(404).json({ error: "404 Not Found(No route for API)" }); });
 
 // Angularのルーティング
 app.use(express.static(path.join(__dirname, '../../frontend/dist/ts-data-analyzer')));
