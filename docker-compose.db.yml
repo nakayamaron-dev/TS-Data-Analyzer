@@ -11,15 +11,15 @@ services:
     volumes:
       - influxdb_lib:/var/lib/influxdb
 
-  grafana:
-    image: grafana/grafana
-    container_name: grafana
-    ports:
-      - "8030:3000"
-    volumes:
-      - grafana_lib:/var/lib/grafana
-    depends_on:
-      - influxdb
+  # grafana:
+  #   image: grafana/grafana
+  #   container_name: grafana
+  #   ports:
+  #     - "8030:3000"
+  #   volumes:
+  #     - grafana_lib:/var/lib/grafana
+  #   depends_on:
+  #     - influxdb
 
   mongo:
     image: mongo:4.2.8
@@ -46,6 +46,6 @@ services:
       - mongo
 
 volumes:
-  grafana_lib:
+  # grafana_lib:
   influxdb_lib:
   mongo-lib:

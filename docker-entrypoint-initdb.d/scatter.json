@@ -1,0 +1,19 @@
+[
+    {
+        "_id":0,
+        "tag_x":"Temp",
+        "tag_y":"RelativeHumidity",
+        "dateRange":["2022-03-01T00:45:28.000Z","2022-03-31T00:45:28.000Z"],
+        "xrange":{"min":0,"max":22.9},
+        "yrange":{"min":20,"max":97}
+    },
+    {
+        "_id":1,
+        "__v":0,
+        "dateRange":["2022-03-01T00:45:28.000Z","2022-03-31T00:45:28.000Z"],
+        "tag_x":"DewPointTemp",
+        "tag_y":"Temp",
+        "xrange":{"min":-11.7,"max":17.1},
+        "yrange":{"min":2.3,"max":22.9}
+    }
+]

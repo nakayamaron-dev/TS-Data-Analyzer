@@ -10,4 +10,7 @@ var user = {
 };
 
 db.createUser(user);
-db.createCollection('plotinfo');
+db.createCollection('tsmulti');
+db.createCollection('taginfo');
+db.createCollection('histogram');
+db.createCollection('scatter');
