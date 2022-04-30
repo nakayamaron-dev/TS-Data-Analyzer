@@ -61,7 +61,7 @@ import { IdefaultYranges } from '../service/influx.service';
                             <label class="textColor">Yaxis max</label>
                             <br>
                             <input #yrangeMax type="text" [value]="setting.yrange?.max" 
-                            (input)="setTagYrangeMin(yrangeMax.value)" class="textColor SecondaryBGColor" 
+                            (input)="setTagYrangeMax(yrangeMax.value)" class="textColor SecondaryBGColor" 
                             style="width: 75%; border-color: white; border-width: 1px">
                         </div>
                         </form>
