@@ -1,8 +1,8 @@
-import { Component, OnInit, HostListener, Input, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChildren, QueryList } from '@angular/core';
 import { MongoService } from '../service/mongo.service';
 import { InfluxService } from '../service/influx.service';
 import { SortableHeader, SortColumn, SortDirection, SortEvent } from 'src/app/directive/sortable-header.directive';
-import { BehaviorSubject, forkJoin, Observable, of, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
