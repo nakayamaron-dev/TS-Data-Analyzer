@@ -48,6 +48,8 @@ export class DataDescriptionComponent implements OnInit {
   searchIcon = faSearch;
   private _contents: VariableListTable[] = []; 
   private _search$ = new Subject<void>();
+  private _contentsList = new BehaviorSubject<VariableListTable[]>([]);  // List to display table
+  private _total = new BehaviorSubject<number>(0);
   private _state: State = {
     page: 1,
     pageSize: 10,
@@ -57,9 +59,6 @@ export class DataDescriptionComponent implements OnInit {
   };
 
   get vList(): VariableListTable[] { return this._contents; }
-  private _contentsList = new BehaviorSubject<VariableListTable[]>([]);  // List to display table
-
-  private _total = new BehaviorSubject<number>(0);
   get page() { return this._state.page; }
   set page(page: number) { this._state.page = page; this._search$.next(); }
   get pageSize() { return this._state.pageSize; }
@@ -165,5 +164,4 @@ export class DataDescriptionComponent implements OnInit {
     valueList = valueList.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
     return of({valueList, total});
   }
-
 }

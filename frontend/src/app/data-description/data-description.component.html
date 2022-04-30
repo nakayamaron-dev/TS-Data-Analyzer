@@ -6,15 +6,12 @@
         </svg>
     </button>
   </div>
-  <div class="search-box" style="margin-right: 10px; padding: 0;">
+  <div class="search-box" style="margin-right: 10px;">
     <input
       type="text"
       class="SecondaryBGColor textColor shadow-none"
-      name="searchTerm" 
       [(ngModel)]="searchTerm" 
       placeholder="Filter with keywords..."
-      aria-label="Recipient's username"
-      aria-describedby="basic-addon2"
       size="35px"
       style="border:none; height: 42px;"
     />
@@ -22,9 +19,9 @@
   <fa-icon class="PrimaryColor SecondaryBGColor" [icon]="searchIcon" size="lg" style="padding: 9px 9px 0px 9px;"></fa-icon>
 </div>
 
-<div class="card SecondaryBGColor" style="margin: 10px 10px 10px 10px;">
+<div class="card SecondaryBGColor" style="margin: 10px;">
     <div class="card-body">
-        <table class="table textColor">
+        <table class="table table-hover textColor">
             <thead class="row-heading">
               <tr>
                   <th sortable="tag" (sort)="onSort($event)">Tag</th>
