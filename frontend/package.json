@@ -9,7 +9,6 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "docs:json": "compodoc -p ./tsconfig.json -e json -d .",
-    "storybook": "npm run docs:json && start-storybook -p 6006",
     "build-storybook": "npm run docs:json && build-storybook"
   },
   "dependencies": {
@@ -46,14 +45,6 @@
     "@angular/compiler-cli": "~13.3.0",
     "@babel/core": "^7.17.8",
     "@compodoc/compodoc": "^1.1.19",
-    "@storybook/addon-actions": "^6.4.19",
-    "@storybook/addon-essentials": "^6.4.19",
-    "@storybook/addon-interactions": "^6.4.19",
-    "@storybook/addon-links": "^6.4.19",
-    "@storybook/angular": "^6.4.19",
-    "@storybook/builder-webpack5": "^6.4.19",
-    "@storybook/manager-webpack5": "^6.4.19",
-    "@storybook/testing-library": "^0.0.9",
     "@types/bootstrap": "^5.1.9",
     "@types/jasmine": "~3.10.0",
     "@types/node": "^12.11.1",
