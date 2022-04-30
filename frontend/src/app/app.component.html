@@ -3,27 +3,39 @@
       <div class="col-xl-1 px-sm-1 SecondaryBGColor">
           <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
               <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto" style="margin-top: 10px;">
-                  <mat-icon>polymer</mat-icon>
+                <fa-icon class="PrimaryColor" [icon]="logo" size="2x"></fa-icon>
               </a>
               <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                   <li class="nav-item">
                     <a href="ts-multi">
-                      <mat-icon>stacked_line_chart</mat-icon>
+                      <mat-icon *ngIf="url !== '/ts-multi'; else tsMulti">stacked_line_chart</mat-icon>
+                      <ng-template #tsMulti>
+                        <mat-icon style="color: #ff7f0e;" >stacked_line_chart</mat-icon>
+                      </ng-template>
                     </a>
                   </li>
                   <li class="nav-item">
                     <a href="histogram">
-                      <mat-icon>bar_chart</mat-icon>
+                      <mat-icon *ngIf="url !== '/histogram'; else histogram">bar_chart</mat-icon>
+                      <ng-template #histogram>
+                        <mat-icon style="color: #ff7f0e;">bar_chart</mat-icon>
+                      </ng-template>
                     </a>
                   </li>
                   <li class="nav-item">
                     <a href="scatter">
-                      <mat-icon>scatter_plot</mat-icon>
+                      <mat-icon *ngIf="url !== '/scatter'; else scatter">scatter_plot</mat-icon>
+                      <ng-template #scatter>
+                        <mat-icon style="color: #ff7f0e;">scatter_plot</mat-icon>
+                      </ng-template>
                     </a>
                   </li>
                   <li class="nav-item">
                     <a href="setting">
-                      <mat-icon>settings</mat-icon>
+                      <mat-icon *ngIf="url !== '/setting'; else settings">settings</mat-icon>
+                      <ng-template #settings>
+                        <mat-icon style="color: #ff7f0e;">settings</mat-icon>
+                      </ng-template>
                     </a>
                   </li>
               </ul>
@@ -34,4 +46,3 @@
       </div>
   </div>
 </div>
-
