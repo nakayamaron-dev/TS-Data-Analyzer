@@ -7,6 +7,14 @@
 
 ## How to set up
 
+### initialize databases
+
+First, build a database and write sample data.
+
+```
+bash init_db.sh
+```
+
 ### Install Modules
 
 ```
@@ -25,14 +33,14 @@ npm run build
 npm run start-server
 ```
 
-### Launch Frontend Server
+### Launch Angular
 
 ```
 npm run start-front
 ```
 
-### write sample lineprotocol to influxDB
+### Launch Web Server by Docker
 
 ```
-curl -i -XPOST "http://localhost:8086/write?db=t<dbname>" --data-binary @<lineprotocol filename>
+docker-compose up -d
 ```

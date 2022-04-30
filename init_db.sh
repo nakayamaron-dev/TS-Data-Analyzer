@@ -1,3 +1,3 @@
 docker-compose -f docker-compose.db.yml up -d && \
 sleep 1 && \
-bash write_sampledata_influx.sh
+curl -i -XPOST 'http://localhost:8086/write?db=test' --data-binary @sampledata/lp.txt
