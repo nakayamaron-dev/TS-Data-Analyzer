@@ -1,0 +1,15 @@
+.my-pagination::ng-deep .page-item .page-link {
+    z-index: 1;
+    color: #C9CDCE;
+    background-color:transparent !important;
+    border-color: #009DA0;
+}
+
+.my-pagination::ng-deep .page-item.active {
+    background-color:rgb(17, 18, 23) !important;
+}
+
+textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus {
+    outline: none;
+    box-shadow: none;
+}

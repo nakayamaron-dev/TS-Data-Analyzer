@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { SharedModule } from './shared/shared.module';
 import { AppComponent } from './app.component';
 import { TsMultiComponent } from './ts-multi/tsmulti.component';
 import * as PlotlyJS from 'plotly.js-dist-min';
@@ -60,6 +61,7 @@ export const MOMENT_FORMATS = {
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     MatIconModule,
+    SharedModule
   ],
   providers: [
     {provide: OWL_DATE_TIME_FORMATS, useValue: MOMENT_FORMATS},

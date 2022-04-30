@@ -1,22 +1,41 @@
-<div class="d-flex flex-row-reverse bd-highlight" style="margin-top: 10px; background-color: transparent;">
-    <button class="btn SecondaryBGColor" style="margin-right: 10px;" (click)="save()">
-        <svg viewBox="0 0 24 24" width="28" height="28">
-            <path fill="gray" d="M20.71,9.29l-6-6a1,1,0,0,0-.32-.21A1.09,1.09,0,0,0,14,3H6A3,3,0,0,0,3,6V18a3,3,0,0,0,3,3H18a3,3,0,0,0,3-3V10A1,1,0,0,0,20.71,9.29ZM9,5h4V7H9Zm6,14H9V16a1,1,0,0,1,1-1h4a1,1,0,0,1,1,1Zm4-1a1,1,0,0,1-1,1H17V16a3,3,0,0,0-3-3H10a3,3,0,0,0-3,3v3H6a1,1,0,0,1-1-1V6A1,1,0,0,1,6,5H7V8A1,1,0,0,0,8,9h6a1,1,0,0,0,1-1V6.41l4,4Z"></path>
-        </svg>
-    </button>
+<div class="container-fluid">
+  <div class="d-flex flex-row-reverse bd-highlight">
+    <div style="background-color: transparent;">
+      <button class="btn SecondaryBGColor" style="margin-right: 10px;" (click)="save()">
+          <svg viewBox="0 0 24 24" width="28" height="28">
+              <path fill="gray" d="M20.71,9.29l-6-6a1,1,0,0,0-.32-.21A1.09,1.09,0,0,0,14,3H6A3,3,0,0,0,3,6V18a3,3,0,0,0,3,3H18a3,3,0,0,0,3-3V10A1,1,0,0,0,20.71,9.29ZM9,5h4V7H9Zm6,14H9V16a1,1,0,0,1,1-1h4a1,1,0,0,1,1,1Zm4-1a1,1,0,0,1-1,1H17V16a3,3,0,0,0-3-3H10a3,3,0,0,0-3,3v3H6a1,1,0,0,1-1-1V6A1,1,0,0,1,6,5H7V8A1,1,0,0,0,8,9h6a1,1,0,0,0,1-1V6.41l4,4Z"></path>
+          </svg>
+      </button>
+    </div>
+    <div class="search-box" style="margin-right: 10px; padding: 0;">
+      <input
+        type="text"
+        class="SecondaryBGColor textColor shadow-none"
+        name="searchTerm" 
+        [(ngModel)]="searchTerm" 
+        placeholder="Filter with keywords..."
+        aria-label="Recipient's username"
+        aria-describedby="basic-addon2"
+        size="35px"
+        style="border:none; height: 42px;"
+      />
+    </div>
+    <fa-icon class="PrimaryColor SecondaryBGColor" [icon]="searchIcon" size="lg" style="padding: 9px 9px 0px 9px;"></fa-icon>
+  </div>
 </div>
+
 <div class="card SecondaryBGColor" style="margin: 10px 10px 10px 10px;">
     <div class="card-body">
         <table class="table textColor">
-            <thead>
+            <thead class="row-heading">
               <tr>
-                  <th>Tag</th>
-                  <th>Unit</th>
-                  <th>Description</th>
+                  <th sortable="tag" (sort)="onSort($event)">Tag</th>
+                  <th sortable="unit" (sort)="onSort($event)">Unit</th>
+                  <th sortable="description" (sort)="onSort($event)">Description</th>
                 </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let itm of tagInfo?.items; index as i">
+              <tr *ngFor="let itm of contents | async; index as i">
                   <td>
                     <input
                     #tag
@@ -47,5 +66,12 @@
               </tr>
             </tbody>
         </table>
+        <pagination 
+          class="justify-content-center my-pagination" 
+          previousText="&laquo;" 
+          nextText="&raquo;"
+          [totalItems]="(total | async)!" 
+          [(ngModel)]="page">
+        </pagination>
     </div>
 </div>
