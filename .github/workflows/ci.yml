@@ -18,7 +18,7 @@ jobs:
         run: npm ci
       - name: API Test
         run: |
-          bash init_db
+          bash init_db.sh
           npm run api-test
       - name: Build Image
         run: npm run docker-build-up
