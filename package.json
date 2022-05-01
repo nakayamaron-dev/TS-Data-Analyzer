@@ -13,7 +13,8 @@
     "build-server": "npm run build --workspace=backend",
     "build": "npm run build --workspaces",
     "docker-build-up": "docker-compose up -d --build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "api-test": "npm run api-test --workspace=backend"
   },
   "repository": {
     "type": "git",
