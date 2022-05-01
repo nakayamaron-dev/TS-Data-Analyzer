@@ -1,0 +1,22 @@
+<h4 class="textColor">Summary</h4>
+<div class="card SecondaryBGColor" style="margin-top: 10px;">
+    <div class="card-body">
+        <table class="table textColor">
+            <thead class="row-heading">
+                <tr>
+                    <th>Tag</th>
+                    <th *ngFor="let col of columns"> 
+                      <span> {{col}} </span></th>
+                  </tr>
+            </thead>
+            <tbody class="row-body" *ngFor="let row of rows">
+                <tr>
+                    <td>{{row}}</td>
+                    <td *ngFor="let col of columns">
+                        <span *ngIf="summaryInfo">{{ summaryInfo[col][row] }}</span>
+                    </td>
+                </tr>
+          </tbody>
+        </table>
+    </div>
+</div>

@@ -21,6 +21,7 @@ import { DataDescriptionComponent } from './data-description/data-description.co
 import { HistogramComponent } from './histogram/histogram.component';
 import { HeaderComponent } from './header/header.component';
 import { ScatterComponent } from './scatter/scatter.component';
+import { DatasetSummaryComponent } from './dataset-summary/dataset-summary.component';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -47,6 +48,7 @@ export const MOMENT_FORMATS = {
     HistogramComponent,
     HeaderComponent,
     ScatterComponent,
+    DatasetSummaryComponent,
   ],
   imports: [
     BrowserAnimationsModule,

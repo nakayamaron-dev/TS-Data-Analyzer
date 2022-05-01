@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, concatMap } from 'rxjs/operators';
 
 interface IGetData {
   time: string;
@@ -19,6 +19,17 @@ export interface IdefaultYranges {
       min: number,
       max: number
   }
+}
+
+export interface DatasetValuesSummaryInfo {
+  count: Record<string, string>;
+  mean: Record<string, string>;
+  std: Record<string, string>;
+  min: Record<string, string>;
+  '25%': Record<string, string>;
+  '50%': Record<string, string>;
+  '75%': Record<string, string>;
+  max: Record<string, string>;
 }
 
 @Injectable({
@@ -103,4 +114,97 @@ export class InfluxService {
     )
   }
 
+  getDatasetSummary(): Observable<DatasetValuesSummaryInfo> {
+    let datasetValuesSummaryInfo: DatasetValuesSummaryInfo = {
+      count: {},
+      mean: {},
+      std: {},
+      min: {},
+      '25%': {},
+      '50%': {},
+      '75%': {},
+      max: {},
+    }
+
+    return this.getTagList().pipe(
+      concatMap(tagList => this.getHistoricalData(tagList).pipe(
+        map(res => {
+          (Object.keys(datasetValuesSummaryInfo) as (keyof DatasetValuesSummaryInfo)[]).forEach(key => {
+            Object.keys(res).forEach(tag => {
+              datasetValuesSummaryInfo[key][tag] = this.calcSummary(res[tag].map(itm => itm.value), key);
+            })
+          })
+          return datasetValuesSummaryInfo;
+        })
+        )
+      )
+    )
+  }
+
+  public calcSummary(numbers: number[], key: keyof(DatasetValuesSummaryInfo)): string {
+    switch(key) {
+      case 'count':
+        return numbers.length.toFixed();
+      case 'mean':
+        return this.calcAverage(numbers).toFixed(2);
+      case 'std':
+        return Math.sqrt(this.calcVariance(numbers)).toFixed(2);
+      case 'min':
+        return numbers.length > 0 ? Math.min(...numbers).toFixed(2) : '';
+      case '25%':
+        return this.calcQuartile(numbers, 0.25).toFixed(2);
+      case '50%':
+        return this.calcQuartile(numbers, 0.5).toFixed(2);
+      case '75%':
+        return this.calcQuartile(numbers, 0.75).toFixed(2);
+      case 'max':
+        return numbers.length > 0 ? Math.max(...numbers).toFixed(2) :'';
+      default:
+        return '';
+    }
+  }
+
+  public calcSum(numbers: number[], initialValue: number = 0): number {
+    if (numbers.length === 0) { return NaN }
+
+    return numbers.reduce(
+      (accumulator: number, currentValue: number) => accumulator + currentValue,
+      initialValue
+    )
+  }
+
+  public calcAverage(numbers: number[]): number {
+    if (numbers.length === 0) { return NaN }
+
+    return this.calcSum(numbers) / numbers.length;
+  }
+
+  public calcVariance(numbers:number[]): number {
+    if (numbers.length === 0) { return NaN }
+
+    const average = this.calcAverage(numbers);
+    const length = numbers.length;
+
+    const squaredDifference = numbers.map((current) => {
+      const difference = current - average;
+      return difference ** 2;
+    });
+
+    return squaredDifference.reduce((previous, current) => previous + current) / length;
+  }
+
+  public calcQuartile(numbers: number[], q: number): number {
+    if (numbers.length === 0) { return NaN }
+
+    numbers = numbers.sort((a, b) => a - b);
+    const pos = ((numbers.length) - 1) * q;
+    const base = Math.floor(pos);
+    const rest = pos - base;
+
+    if( (numbers[base+1] !== undefined) ) {
+      return numbers[base] + rest * (numbers[base+1] - numbers[base]);
+    } else {
+      return numbers[base];
+    }
+  }
 }
