@@ -23,7 +23,6 @@ jobs:
       - name: API Test
         run: |
           bash init_db.sh
-          docker ps
           npm run api-test
       - name: login github, push image to github repository
         if: github.ref == 'refs/heads/main'
