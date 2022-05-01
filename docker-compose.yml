@@ -11,3 +11,11 @@ services:
     container_name: ts-data-analyzer
     ports:
       - "8000:8000"
+    environment:
+      MONGO_HOSTNAME: mongo:27017
+      MONGO_USERNAME: mongo
+      MONGO_PASSWORD: mongo
+      INFLUXDB_HOST: influxdb
+      INFLUXDB_PORT: 8086
+      INFLUXDB_PROTOCOL: http
+      INFLUXDB_NAME: test
