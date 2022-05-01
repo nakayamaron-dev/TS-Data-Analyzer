@@ -19,6 +19,7 @@ jobs:
       - name: API Test
         run: |
           bash init_db.sh
+          docker ps
           npm run api-test
       - name: Build Image
         run: npm run docker-build-up
