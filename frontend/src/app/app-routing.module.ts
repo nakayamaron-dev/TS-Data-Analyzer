@@ -11,7 +11,7 @@ const routes: Routes = [
   {path: 'ts-multi', component: TsMultiComponent, canDeactivate: [BeforeunloadGuard]},
   {path: 'histogram', component: HistogramComponent, canDeactivate: [BeforeunloadGuard]},
   {path: 'scatter', component: ScatterComponent, canDeactivate: [BeforeunloadGuard]},
-  {path: 'setting', component: DataDescriptionComponent, canDeactivate: [BeforeunloadGuard]}
+  {path: 'description', component: DataDescriptionComponent, canDeactivate: [BeforeunloadGuard]}
 ];
 
 @NgModule({
