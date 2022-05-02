@@ -1,0 +1,35 @@
+<div class="col-6" style="margin-top: 10px;">
+    <div class="card SecondaryBGColor" style="margin-top: 10px;">
+        <div class="card-body">
+            <h4 class="textColor">Data Source</h4>
+            <form>
+                <div class="mb-3">
+                    <label for="hostInfo" class="form-label textColor">HostInfo</label>
+                    <input type="text" class="form-control" id="hostInfo" placeholder="localhost:8086">
+                </div>
+                <div class="mb-3">
+                    <label for="dbname" class="form-label textColor">Database Name</label>
+                    <input type="password" class="form-control" id="dbname">
+                </div>
+                <button type="submit" class="btn btn-dark">Save & test</button>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="col-6" style="margin-top: 10px;">
+    <div class="card SecondaryBGColor" style="margin-top: 10px;">
+        <div class="card-body">
+            <h4 class="textColor">Upload Data</h4>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="csv file name" readonly 
+                style="background-color: transparent;" [value]="filename">
+                <span class="input-group-text" id="basic-addon2" style="background-color: transparent;">
+                    <mat-icon style="font-size: 24px;" (click)="fileExcel.click()">upload_file</mat-icon>
+                </span>
+            </div>
+            <button type="submit" class="btn btn-dark" (click)="writeInflux()">Write to influx</button>
+        </div>
+    </div>
+</div>
+
+<input type="file" accept=".xlsx" style="visibility: hidden" (change)="onChangeExcelInput($event)" #fileExcel>

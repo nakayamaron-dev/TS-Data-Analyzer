@@ -6,38 +6,46 @@
                 <fa-icon class="PrimaryColor" [icon]="logo" size="2x"></fa-icon>
               </a>
               <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-                  <li class="nav-item">
-                    <a href="ts-multi">
-                      <mat-icon *ngIf="url !== '/ts-multi'; else tsMulti">stacked_line_chart</mat-icon>
-                      <ng-template #tsMulti>
-                        <mat-icon style="color: white;" >stacked_line_chart</mat-icon>
-                      </ng-template>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="histogram">
-                      <mat-icon *ngIf="url !== '/histogram'; else histogram">bar_chart</mat-icon>
-                      <ng-template #histogram>
-                        <mat-icon style="color: white;">bar_chart</mat-icon>
-                      </ng-template>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="scatter">
-                      <mat-icon *ngIf="url !== '/scatter'; else scatter">scatter_plot</mat-icon>
-                      <ng-template #scatter>
-                        <mat-icon style="color: white;">scatter_plot</mat-icon>
-                      </ng-template>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="description">
-                      <mat-icon *ngIf="url !== '/description'; else description">description</mat-icon>
-                      <ng-template #description>
-                        <mat-icon style="color: white;">description</mat-icon>
-                      </ng-template>
-                    </a>
-                  </li>
+                <li class="nav-item">
+                  <a href="ts-multi">
+                    <mat-icon *ngIf="url !== '/ts-multi'; else tsMulti">stacked_line_chart</mat-icon>
+                    <ng-template #tsMulti>
+                      <mat-icon style="color: white;" >stacked_line_chart</mat-icon>
+                    </ng-template>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="histogram">
+                    <mat-icon *ngIf="url !== '/histogram'; else histogram">bar_chart</mat-icon>
+                    <ng-template #histogram>
+                      <mat-icon style="color: white;">bar_chart</mat-icon>
+                    </ng-template>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="scatter">
+                    <mat-icon *ngIf="url !== '/scatter'; else scatter">scatter_plot</mat-icon>
+                    <ng-template #scatter>
+                      <mat-icon style="color: white;">scatter_plot</mat-icon>
+                    </ng-template>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="description">
+                    <mat-icon *ngIf="url !== '/description'; else description">description</mat-icon>
+                    <ng-template #description>
+                      <mat-icon style="color: white;">description</mat-icon>
+                    </ng-template>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="setting">
+                    <mat-icon *ngIf="url !== '/setting'; else setting">settings</mat-icon>
+                    <ng-template #setting>
+                      <mat-icon style="color: white;">settings</mat-icon>
+                    </ng-template>
+                  </a>
+                </li>
               </ul>
           </div>
       </div>

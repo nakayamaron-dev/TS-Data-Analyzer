@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, concatMap } from 'rxjs/operators';
 
@@ -113,6 +113,14 @@ export class InfluxService {
       })
     )
   }
+
+  deleteAllHistoricalData(): Observable<any> {
+    return this.http.delete('/api/v1/ts/delete?tags=all');
+  }
+
+  writeData(lineProtocolData: string[]): Observable<HttpResponse<any>> {
+    return this.http.post('/api/v1/ts/rawdata/upload', lineProtocolData.join('\n'), { observe: 'response'});
+}
 
   getDatasetSummary(): Observable<DatasetValuesSummaryInfo> {
     let datasetValuesSummaryInfo: DatasetValuesSummaryInfo = {
