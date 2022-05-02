@@ -1,6 +1,7 @@
 import { Component, OnInit, HostListener, ViewChildren, QueryList } from '@angular/core';
 import { MongoService } from '../service/mongo.service';
 import { InfluxService } from '../service/influx.service';
+import { ModalService } from '../service/modal.service';
 import { SortableHeader, SortColumn, SortDirection, SortEvent } from 'src/app/directive/sortable-header.directive';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
@@ -70,7 +71,7 @@ export class DataDescriptionComponent implements OnInit {
   set sortDirection(sortDirection: SortDirection) { this._state.sortDirection = sortDirection; this._search$.next(); }
   get contents() { return this._contentsList.asObservable(); }
 
-  constructor(private mongo: MongoService, private influx: InfluxService) {
+  constructor(private mongo: MongoService, private modal: ModalService) {
     this._search$.pipe(
       switchMap(() => this._search()),
     ).subscribe(result => {
@@ -89,10 +90,10 @@ export class DataDescriptionComponent implements OnInit {
 
   save() {
     this.mongo.updateTagInfo(this.tagInfo!).subscribe(res => {
-      alert('Saved Successfully!');
+      this.modal.message('Saved', 'This dashboard was saved successfully.').then().catch();
       this.isUnSaved = false;
     }, (err) => {
-      alert(err);
+      this.modal.message('Error', 'Save Failed. Something is wrong.').then().catch();
     });
   }
 

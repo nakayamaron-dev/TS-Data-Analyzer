@@ -188,9 +188,9 @@ export class ScatterComponent implements OnInit {
       ]
     ).subscribe( _ => {
       this.isUnSaved = false;
-      alert('Saved Successfully!');
+      this.modal.message('Saved', 'This dashboard was saved successfully.').then().catch();
     }, (err) => {
-      alert(err);
+      this.modal.message('Error', 'Save Failed. Something is wrong.').then().catch();
     })
   }
 

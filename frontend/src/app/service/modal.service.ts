@@ -3,6 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PlotSetting } from '../modal/plot-setting-modal';
 import { HistSetting } from '../modal/hist-setting-modal';
 import { ScatterSetting } from '../modal/scatter-setting-modal';
+import { PopUp } from '../modal/popup-modal';
 import { IplotMulti } from '../ts-multi/tsmulti.component';
 import { IplotHist } from '../histogram/histogram.component';
 import { IplotScatter } from '../scatter/scatter.component';
@@ -52,5 +53,21 @@ export class ModalService {
     }
 
     return modalRef.result;
+  }
+
+  message(title: string, message: string, okCaption?: string): Promise<boolean> {
+    const modalRef = this.modalService.open(PopUp);
+    const component = modalRef.componentInstance as PopUp;
+    if (component != null) {
+      component.title = title;
+      component.message = message;
+      component.okCaption = okCaption || 'OK';
+    }
+
+    return modalRef.result.then((result) => {
+      return true;  // はい を押したらこっち
+    }, (reason) => {
+      return false; // いいえ や x でダイアログを閉じたらこっち
+    });
   }
 }

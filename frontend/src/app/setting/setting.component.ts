@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { concatMap } from 'rxjs';
 import { ExcelParser } from '../service/excel-parser';
 import { InfluxService } from '../service/influx.service';
+import { ModalService } from '../service/modal.service';
 
 @Component({
   selector: 'app-setting',
@@ -19,7 +20,7 @@ export class SettingComponent implements OnInit {
   isLoading = false;
   showTable = false;
 
-  constructor(private influx: InfluxService) { }
+  constructor(private influx: InfluxService, private modal: ModalService) { }
 
   ngOnInit(): void {
   }
@@ -38,7 +39,7 @@ export class SettingComponent implements OnInit {
       });
       reader.readAsArrayBuffer(file);
     } else {
-      // this.modal.message('Error', 'Files larger than 100MB cannot be uploaded.').then().catch();
+      this.modal.message('Error', 'Files larger than 100MB cannot be uploaded.').then().catch();
     }
   }
 
@@ -79,10 +80,10 @@ export class SettingComponent implements OnInit {
       .subscribe(res => {
         this.isLoading = false;
         this.filename = '';
-        alert('Uploaded!!');
+        this.modal.message('Message', 'Uploaded!')
       })
     } else {
-      // this.modal.message('Message', 'No data for upload');
+      this.modal.message('Message', 'No data for upload');
     }
   }
 }
