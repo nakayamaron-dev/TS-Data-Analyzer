@@ -31,6 +31,14 @@
                   </a>
                 </li>
                 <li class="nav-item">
+                  <a href="analyze">
+                    <mat-icon *ngIf="url !== '/analyze'; else analyze">psychology</mat-icon>
+                    <ng-template #analyze>
+                      <mat-icon style="color: white;">psychology</mat-icon>
+                    </ng-template>
+                  </a>
+                </li>
+                <li class="nav-item">
                   <a href="description">
                     <mat-icon *ngIf="url !== '/description'; else description">description</mat-icon>
                     <ng-template #description>

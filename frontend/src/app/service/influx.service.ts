@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { concat, Observable, of, zip } from 'rxjs';
 import { map, concatMap } from 'rxjs/operators';
 
 interface IGetData {
@@ -30,6 +30,12 @@ export interface DatasetValuesSummaryInfo {
   '50%': Record<string, string>;
   '75%': Record<string, string>;
   max: Record<string, string>;
+}
+
+export interface CorrelationCoefficientMatrixInfo {
+  x: string[];
+  y: string[];
+  matrix: number[][];
 }
 
 @Injectable({
@@ -147,6 +153,50 @@ export class InfluxService {
         )
       )
     )
+  }
+
+  getCorrelationCoefficientMatrix(): Observable<CorrelationCoefficientMatrixInfo> {
+    const result: CorrelationCoefficientMatrixInfo = {
+      x: [],
+      y: [],
+      matrix: []
+    }
+
+    return this.getTagList().pipe(
+      concatMap(tagList => this.getHistoricalData(tagList).pipe(
+        map(res => {
+
+          result.x = tagList;
+          result.y = tagList;
+
+          Object.keys(res).forEach(tag_x => {
+            const row: number[] = [];
+            Object.keys(res).forEach(tag_y => {
+              row.push(this.calcCorrelationCoefficient(res[tag_x].map(itm => itm.value), res[tag_y].map(itm => itm.value)))
+            })
+            result.matrix.push(row);
+          })
+          return result;
+        })
+      ))
+    )
+  }
+
+  public calcCorrelationCoefficient(x: number[], y: number[]): number {
+    const n = Math.min(x.length, y.length);
+    const std_x = Math.sqrt(this.calcVariance(x));
+    const std_y = Math.sqrt(this.calcVariance(y));
+    const avg_x = this.calcAverage(x);
+    const avg_y = this.calcAverage(y);
+    let covar = 1;
+
+    for (let i = 0; i < n; i++) {
+      covar += (x[i] - avg_x) * (y[i] - avg_y)
+    }
+
+    covar /= n;
+
+    return Number((covar / (std_x * std_y)).toFixed(2));
   }
 
   public calcSummary(numbers: number[], key: keyof(DatasetValuesSummaryInfo)): string {

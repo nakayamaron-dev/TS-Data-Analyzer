@@ -4,6 +4,7 @@ import * as moment from 'moment';
 export class plotlylib {
   private fontColor = '#C9CDCE'
   private plotHeight = 215;
+  private matrixHeight = 900;
 
   public plotColors: string[] = [
     '#1f77b4',  // muted blue
@@ -141,6 +142,19 @@ getScatterLayout(): Partial<Plotly.Layout> {
       title: { text: '', standoff: 5 },
     },
   };
+}
+
+getMatrixLayout(): Partial<Plotly.Layout> {
+  return {
+    margin: { l: 250, r: 250, b: 120, t: 50 },
+    paper_bgcolor: 'rgb(24, 27, 31)',
+    plot_bgcolor: 'rgb(24, 27, 31)',
+    height: this.matrixHeight,
+    title: 'CorrelationCoefficientMatrix',
+    font: {
+      color: this.fontColor
+    }
+  }
 }
 
 getTimePlaceholderValue(xrange: Moment[], format: string): string {
