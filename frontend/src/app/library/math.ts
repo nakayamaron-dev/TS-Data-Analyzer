@@ -17,7 +17,7 @@ export class my_math {
         return Number((covar / (std_x * std_y)).toFixed(2));
     }
     
-      public calcSummary(numbers: number[], key: string): string {
+    public calcSummary(numbers: number[], key: string): string {
         switch(key) {
           case 'count':
             return numbers.length.toFixed();
@@ -40,7 +40,7 @@ export class my_math {
         }
     }
     
-      public calcSum(numbers: number[], initialValue: number = 0): number {
+    public calcSum(numbers: number[], initialValue: number = 0): number {
         if (numbers.length === 0) { return NaN }
     
         return numbers.reduce(
@@ -49,13 +49,13 @@ export class my_math {
         )
     }
     
-      public calcAverage(numbers: number[]): number {
+    public calcAverage(numbers: number[]): number {
         if (numbers.length === 0) { return NaN }
     
         return this.calcSum(numbers) / numbers.length;
     }
     
-      public calcVariance(numbers:number[]): number {
+    public calcVariance(numbers:number[]): number {
         if (numbers.length === 0) { return NaN }
     
         const average = this.calcAverage(numbers);
@@ -69,7 +69,7 @@ export class my_math {
         return squaredDifference.reduce((previous, current) => previous + current) / length;
     }
     
-      public calcQuartile(numbers: number[], q: number): number {
+    public calcQuartile(numbers: number[], q: number): number {
         if (numbers.length === 0) { return NaN }
     
         numbers = numbers.sort((a, b) => a - b);
