@@ -52,7 +52,6 @@ import { IdefaultYranges } from '../service/influx.service';
             <button class="btn btn-outline-light textColor SecondaryBGColor" (click)="activeModal.close(setting)">Update</button>
         </div>
     </div>
-
     `
 })
 
