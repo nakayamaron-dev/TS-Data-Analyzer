@@ -7,15 +7,15 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   template:
     `
-<div class="modal-header">
-  <h4 class="modal-title">{{title}}</h4>
+<div class="modal-header SecondaryBGColor">
+  <h4 class="modal-title textColor">{{title}}</h4>
 </div>
-<div class="modal-body">
-  <p>{{message}}</p>
+<div class="modal-body SecondaryBGColor">
+  <p class="textColor">{{message}}</p>
 </div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-primary" (click)="activeModal.close('ok')">{{okCaption}}</button>
-  <button *ngIf="showCancel" type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss('cancel')">{{cancelCaption}}</button>
+<div class="modal-footer SecondaryBGColor">
+  <button class="btn btn-outline-light textColor SecondaryBGColor" (click)="activeModal.close('ok')">{{okCaption}}</button>
+  <button *ngIf="showCancel" class="btn btn-outline-light textColor SecondaryBGColor" (click)="activeModal.dismiss('cancel')">{{cancelCaption}}</button>
 </div>
   `
 })
