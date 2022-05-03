@@ -39,6 +39,7 @@ import { IdefaultYranges } from '../service/influx.service';
                             style="width: 75%; border-color: white; border-width: 1px">
                         </div>
                         </form>
+                        <button class="btn btn-outline-light textColor" (click)="setDefaultXrange()">set default yrange</button>
                     </div>
                     <div class="col-6">
                         <select 
@@ -65,6 +66,7 @@ import { IdefaultYranges } from '../service/influx.service';
                             style="width: 75%; border-color: white; border-width: 1px">
                         </div>
                         </form>
+                        <button class="btn btn-outline-light textColor" (click)="setDefaultYrange()">set default yrange</button>
                     </div>
                 </div>
             </div>
@@ -124,5 +126,19 @@ export class ScatterSetting {
 
     setTagXrangeMax(val: string) {
         this.setting.xrange!.max = Number(val);
+    }
+
+    setDefaultYrange() {
+        this.setting.yrange = {
+            min: this.yrangeList[this.setting.tag_y].min,
+            max: this.yrangeList[this.setting.tag_y].max,
+        }
+    }
+
+    setDefaultXrange() {
+        this.setting.xrange = {
+            min: this.yrangeList[this.setting.tag_x].min,
+            max: this.yrangeList[this.setting.tag_x].max,
+        }
     }
 }
