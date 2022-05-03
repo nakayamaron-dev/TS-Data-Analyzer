@@ -8,9 +8,8 @@ describe('HistogramComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ HistogramComponent ]
-    })
-    .compileComponents();
+      declarations: [HistogramComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

@@ -23,26 +23,35 @@ app.use("/api/v1/mongo/taginfo", bodyParserJson, apiTagInfoRouter);
 app.use("/api/v1/mongo/histogram", bodyParserJson, apiHistogramRouter);
 app.use("/api/v1/mongo/scatter", bodyParserJson, apiScatterRouter);
 app.use("/api/v1/ts", bodyParserText, apiInfluxRouter);
-app.use("/api/*", (_, res) => { res.status(404).json({ error: "404 Not Found(No route for API)" }); });
+app.use("/api/*", (_, res) => {
+  res.status(404).json({ error: "404 Not Found(No route for API)" });
+});
 
 // Angularのルーティング
-app.use(express.static(path.join(__dirname, '../../frontend/dist/ts-data-analyzer')));
-app.use('/*', express.static(path.join(__dirname, '../../frontend/dist/ts-data-analyzer/index.html')));
+app.use(
+  express.static(path.join(__dirname, "../../frontend/dist/ts-data-analyzer"))
+);
+app.use(
+  "/*",
+  express.static(
+    path.join(__dirname, "../../frontend/dist/ts-data-analyzer/index.html")
+  )
+);
 
 // catch 404 and forward to error handler
-app.use(function(next: NextFunction) {
-    next(createError(404));
+app.use(function (next: NextFunction) {
+  next(createError(404));
 });
 
 // error handler
-app.use(function(err: any, req: Request, res: Response) {
+app.use(function (err: any, req: Request, res: Response) {
   // set locals, only providing error in development
   res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  res.locals.error = req.app.get("env") === "development" ? err : {};
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render("error");
 });
 
 export default app;

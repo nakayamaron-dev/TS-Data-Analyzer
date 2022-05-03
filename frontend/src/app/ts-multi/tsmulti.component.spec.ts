@@ -8,9 +8,8 @@ describe('TsMultiComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TsMultiComponent ]
-    })
-    .compileComponents();
+      declarations: [TsMultiComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

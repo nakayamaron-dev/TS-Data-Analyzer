@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule }   from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
@@ -17,7 +17,11 @@ import { PlotSetting } from './modal/plot-setting-modal';
 import { HistSetting } from './modal/hist-setting-modal';
 import { ScatterSetting } from './modal/scatter-setting-modal';
 import { PopUp } from './modal/popup-modal';
-import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_FORMATS } from '@danielmoncada/angular-datetime-picker';
+import {
+  OwlDateTimeModule,
+  OwlNativeDateTimeModule,
+  OWL_DATE_TIME_FORMATS,
+} from '@danielmoncada/angular-datetime-picker';
 import { DataDescriptionComponent } from './data-description/data-description.component';
 import { HistogramComponent } from './histogram/histogram.component';
 import { HeaderComponent } from './header/header.component';
@@ -69,11 +73,9 @@ export const MOMENT_FORMATS = {
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     MatIconModule,
-    SharedModule
+    SharedModule,
   ],
-  providers: [
-    {provide: OWL_DATE_TIME_FORMATS, useValue: MOMENT_FORMATS},
-  ],
-  bootstrap: [AppComponent]
+  providers: [{ provide: OWL_DATE_TIME_FORMATS, useValue: MOMENT_FORMATS }],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

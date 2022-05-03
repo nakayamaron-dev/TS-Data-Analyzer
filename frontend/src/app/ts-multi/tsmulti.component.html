@@ -1,27 +1,36 @@
 <app-header
-[placeholder]="placeholder"
-(onSelectDatetime)="onChangeDateTime($event)"
-(onClickViewMode)="changeViewMode($event)"
-(onClickAddChart)="addGraph()"
-(onClickSave)="save()"
+  [placeholder]="placeholder"
+  (onSelectDatetime)="onChangeDateTime($event)"
+  (onClickViewMode)="changeViewMode($event)"
+  (onClickAddChart)="addGraph()"
+  (onClickSave)="save()"
 ></app-header>
 
-<div class="card SecondaryBGColor" style="margin: 10px 0px 10px 0px;" *ngFor="let gInfo of plotInfo; index as i">
-    <div class="card-body">
-        <div class="d-flex flex-row-reverse bd-highlight">
-            <div>
-                <mat-icon (click)="deleteGraph(i)" style="font-size: 24px;">delete</mat-icon>
-            </div>
-            <div style="margin-right: 15px;">
-                <mat-icon (click)="plotSettingModal(i)" style="font-size: 24px;">edit</mat-icon>
-            </div>
-        </div>
-        
-        <plotly-plot
-        [data]="gInfo.datasets" 
-        [layout]="gInfo.layout"
-        [config]="p_lib.config"
-        [useResizeHandler]="true">
-        </plotly-plot>
+<div
+  class="card SecondaryBGColor"
+  style="margin: 10px 0px 10px 0px"
+  *ngFor="let gInfo of plotInfo; index as i"
+>
+  <div class="card-body">
+    <div class="d-flex flex-row-reverse bd-highlight">
+      <div>
+        <mat-icon (click)="deleteGraph(i)" style="font-size: 24px"
+          >delete</mat-icon
+        >
+      </div>
+      <div style="margin-right: 15px">
+        <mat-icon (click)="plotSettingModal(i)" style="font-size: 24px"
+          >edit</mat-icon
+        >
+      </div>
     </div>
+
+    <plotly-plot
+      [data]="gInfo.datasets"
+      [layout]="gInfo.layout"
+      [config]="p_lib.config"
+      [useResizeHandler]="true"
+    >
+    </plotly-plot>
+  </div>
 </div>

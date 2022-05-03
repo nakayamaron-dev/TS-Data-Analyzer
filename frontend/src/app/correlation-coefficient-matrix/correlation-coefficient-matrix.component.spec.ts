@@ -8,9 +8,8 @@ describe('CorrelationCoefficientMatrixComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CorrelationCoefficientMatrixComponent ]
-    })
-    .compileComponents();
+      declarations: [CorrelationCoefficientMatrixComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

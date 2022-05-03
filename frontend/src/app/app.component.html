@@ -1,70 +1,94 @@
 <div class="container-fluid">
   <div class="row flex-nowrap">
-      <div class="col-xl-1 px-sm-1 SecondaryBGColor">
-          <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
-              <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto" style="margin-top: 10px;">
-                <fa-icon class="PrimaryColor" [icon]="logo" size="2x"></fa-icon>
-              </a>
-              <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-                <li class="nav-item">
-                  <a href="ts-multi">
-                    <mat-icon *ngIf="url !== '/ts-multi'; else tsMulti">stacked_line_chart</mat-icon>
-                    <ng-template #tsMulti>
-                      <mat-icon style="color: white;" >stacked_line_chart</mat-icon>
-                    </ng-template>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="histogram">
-                    <mat-icon *ngIf="url !== '/histogram'; else histogram">bar_chart</mat-icon>
-                    <ng-template #histogram>
-                      <mat-icon style="color: white;">bar_chart</mat-icon>
-                    </ng-template>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="scatter">
-                    <mat-icon *ngIf="url !== '/scatter'; else scatter">scatter_plot</mat-icon>
-                    <ng-template #scatter>
-                      <mat-icon style="color: white;">scatter_plot</mat-icon>
-                    </ng-template>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="analyze">
-                    <mat-icon *ngIf="url !== '/analyze'; else analyze">psychology</mat-icon>
-                    <ng-template #analyze>
-                      <mat-icon style="color: white;">psychology</mat-icon>
-                    </ng-template>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="description">
-                    <mat-icon *ngIf="url !== '/description'; else description">description</mat-icon>
-                    <ng-template #description>
-                      <mat-icon style="color: white;">description</mat-icon>
-                    </ng-template>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="setting">
-                    <mat-icon *ngIf="url !== '/setting'; else setting">settings</mat-icon>
-                    <ng-template #setting>
-                      <mat-icon style="color: white;">settings</mat-icon>
-                    </ng-template>
-                  </a>
-                </li>
-              </ul>
-              <div style="flex: 1 1 0%;"></div>
-              <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-                <li class="nav-item">
-                  <mat-icon style="margin-bottom: 50px;">account_circle</mat-icon>
-                </li>
-              </ul>
-          </div>
+    <div class="col-xl-1 px-sm-1 SecondaryBGColor">
+      <div
+        class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100"
+      >
+        <a
+          href="/"
+          class="d-flex align-items-center pb-3 mb-md-0 me-md-auto"
+          style="margin-top: 10px"
+        >
+          <fa-icon class="PrimaryColor" [icon]="logo" size="2x"></fa-icon>
+        </a>
+        <ul
+          class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+          id="menu"
+        >
+          <li class="nav-item">
+            <a href="ts-multi">
+              <mat-icon *ngIf="url !== '/ts-multi'; else tsMulti"
+                >stacked_line_chart</mat-icon
+              >
+              <ng-template #tsMulti>
+                <mat-icon style="color: white">stacked_line_chart</mat-icon>
+              </ng-template>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="histogram">
+              <mat-icon *ngIf="url !== '/histogram'; else histogram"
+                >bar_chart</mat-icon
+              >
+              <ng-template #histogram>
+                <mat-icon style="color: white">bar_chart</mat-icon>
+              </ng-template>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="scatter">
+              <mat-icon *ngIf="url !== '/scatter'; else scatter"
+                >scatter_plot</mat-icon
+              >
+              <ng-template #scatter>
+                <mat-icon style="color: white">scatter_plot</mat-icon>
+              </ng-template>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="analyze">
+              <mat-icon *ngIf="url !== '/analyze'; else analyze"
+                >psychology</mat-icon
+              >
+              <ng-template #analyze>
+                <mat-icon style="color: white">psychology</mat-icon>
+              </ng-template>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="description">
+              <mat-icon *ngIf="url !== '/description'; else description"
+                >description</mat-icon
+              >
+              <ng-template #description>
+                <mat-icon style="color: white">description</mat-icon>
+              </ng-template>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="setting">
+              <mat-icon *ngIf="url !== '/setting'; else setting"
+                >settings</mat-icon
+              >
+              <ng-template #setting>
+                <mat-icon style="color: white">settings</mat-icon>
+              </ng-template>
+            </a>
+          </li>
+        </ul>
+        <div style="flex: 1 1 0%"></div>
+        <ul
+          class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+          id="menu"
+        >
+          <li class="nav-item">
+            <mat-icon style="margin-bottom: 50px">account_circle</mat-icon>
+          </li>
+        </ul>
       </div>
-      <div class="col py-3">
-        <router-outlet></router-outlet>
-      </div>
+    </div>
+    <div class="col py-3">
+      <router-outlet></router-outlet>
+    </div>
   </div>
 </div>

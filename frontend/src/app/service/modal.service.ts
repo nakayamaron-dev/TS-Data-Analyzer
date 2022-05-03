@@ -10,14 +10,20 @@ import { IplotScatter } from '../scatter/scatter.component';
 import { IdefaultYranges } from './influx.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ModalService {
+  constructor(private modalService: NgbModal) {}
 
-  constructor(private modalService: NgbModal) { }
-
-  plotSettingModal(plotInfo: IplotMulti, tagList: string[], yrangeList: IdefaultYranges): Promise<IplotMulti> {
-    const modalRef = this.modalService.open(PlotSetting, { size: 'xl', centered: true });
+  plotSettingModal(
+    plotInfo: IplotMulti,
+    tagList: string[],
+    yrangeList: IdefaultYranges
+  ): Promise<IplotMulti> {
+    const modalRef = this.modalService.open(PlotSetting, {
+      size: 'xl',
+      centered: true,
+    });
     const component = modalRef.componentInstance as PlotSetting;
 
     if (component != null) {
@@ -29,8 +35,15 @@ export class ModalService {
     return modalRef.result;
   }
 
-  histSettingModal(plotInfo: IplotHist, tagList: string[], yrangeList: IdefaultYranges): Promise<IplotHist> {
-    const modalRef = this.modalService.open(HistSetting, { size: 'md', centered: true });
+  histSettingModal(
+    plotInfo: IplotHist,
+    tagList: string[],
+    yrangeList: IdefaultYranges
+  ): Promise<IplotHist> {
+    const modalRef = this.modalService.open(HistSetting, {
+      size: 'md',
+      centered: true,
+    });
     const component = modalRef.componentInstance as HistSetting;
 
     if (component != null) {
@@ -42,8 +55,15 @@ export class ModalService {
     return modalRef.result;
   }
 
-  scatterSettingModal(plotInfo: IplotScatter, tagList: string[], yrangeList: IdefaultYranges): Promise<IplotScatter> {
-    const modalRef = this.modalService.open(ScatterSetting, { size: 'lg', centered: true });
+  scatterSettingModal(
+    plotInfo: IplotScatter,
+    tagList: string[],
+    yrangeList: IdefaultYranges
+  ): Promise<IplotScatter> {
+    const modalRef = this.modalService.open(ScatterSetting, {
+      size: 'lg',
+      centered: true,
+    });
     const component = modalRef.componentInstance as ScatterSetting;
 
     if (component != null) {
@@ -55,7 +75,11 @@ export class ModalService {
     return modalRef.result;
   }
 
-  message(title: string, message: string, okCaption?: string): Promise<boolean> {
+  message(
+    title: string,
+    message: string,
+    okCaption?: string
+  ): Promise<boolean> {
     const modalRef = this.modalService.open(PopUp);
     const component = modalRef.componentInstance as PopUp;
     if (component != null) {
@@ -64,10 +88,13 @@ export class ModalService {
       component.okCaption = okCaption || 'OK';
     }
 
-    return modalRef.result.then((_) => {
-      return true;
-    }, (_) => {
-      return false;
-    });
+    return modalRef.result.then(
+      (_) => {
+        return true;
+      },
+      (_) => {
+        return false;
+      }
+    );
   }
 }

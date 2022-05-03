@@ -1,4 +1,4 @@
-import {Directive, EventEmitter, Input, Output} from '@angular/core';
+import { Directive, EventEmitter, Input, Output } from '@angular/core';
 
 export type SortColumn<T> = keyof T | '';
 export type SortDirection = 'asc' | 'desc' | '';
@@ -8,7 +8,11 @@ export interface SortEvent<T> {
   direction: SortDirection;
 }
 
-const rotate: {[key: string]: SortDirection} = { 'asc': 'desc', 'desc': '', '': 'asc' };
+const rotate: { [key: string]: SortDirection } = {
+  asc: 'desc',
+  desc: '',
+  '': 'asc',
+};
 
 @Directive({
   // tslint:disable-next-line:directive-selector
@@ -17,8 +21,8 @@ const rotate: {[key: string]: SortDirection} = { 'asc': 'desc', 'desc': '', '': 
   host: {
     '[class.asc]': 'direction === "asc"',
     '[class.desc]': 'direction === "desc"',
-    '(click)': 'rotate()'
-  }
+    '(click)': 'rotate()',
+  },
 })
 // tslint:disable-next-line:directive-class-suffix
 export class SortableHeader<T> {
@@ -28,6 +32,6 @@ export class SortableHeader<T> {
 
   rotate() {
     this.direction = rotate[this.direction];
-    this.sort.emit({column: this.sortable, direction: this.direction});
+    this.sort.emit({ column: this.sortable, direction: this.direction });
   }
 }

@@ -7,15 +7,13 @@ export const MOMENT_FORMATS = 'YYYY/MM/DD HH:mm';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.css'],
 })
-
 export class HeaderComponent implements OnInit {
-
   viewModeIcon = faExchangeAlt;
   clockIcon = faClock;
   viewTag: boolean = true;
-  xrange: Moment[] = []
+  xrange: Moment[] = [];
 
   @Input() placeholder: string = '';
 
@@ -24,9 +22,9 @@ export class HeaderComponent implements OnInit {
   @Output() onClickAddChart: EventEmitter<void> = new EventEmitter();
   @Output() onClickSave: EventEmitter<void> = new EventEmitter();
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   save() {
     this.onClickSave.emit();

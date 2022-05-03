@@ -3,19 +3,9 @@ import { SortableHeader } from '../directive/sortable-header.directive';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 
-
 @NgModule({
-  declarations: [
-    SortableHeader
-  ],
-  imports: [
-    TooltipModule.forRoot(),
-    PaginationModule.forRoot(),
-  ],
-  exports:[
-    SortableHeader,
-    TooltipModule,
-    PaginationModule
-  ],
+  declarations: [SortableHeader],
+  imports: [TooltipModule.forRoot(), PaginationModule.forRoot()],
+  exports: [SortableHeader, TooltipModule, PaginationModule],
 })
-export class SharedModule { }
+export class SharedModule {}

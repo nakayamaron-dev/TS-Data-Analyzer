@@ -1,14 +1,12 @@
 import mongoose from "mongoose";
 
-export default new mongoose.Schema(
+export default new mongoose.Schema({
+  _id: Object,
+  items: [
     {
-        _id: Object,
-        items: [
-            {
-                tag: String,
-                unit: String,
-                description: String
-            }
-        ]
-    }
-);
+      tag: String,
+      unit: String,
+      description: String,
+    },
+  ],
+});
