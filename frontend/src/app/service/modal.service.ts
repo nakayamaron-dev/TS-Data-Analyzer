@@ -64,10 +64,10 @@ export class ModalService {
       component.okCaption = okCaption || 'OK';
     }
 
-    return modalRef.result.then((result) => {
-      return true;  // はい を押したらこっち
-    }, (reason) => {
-      return false; // いいえ や x でダイアログを閉じたらこっち
+    return modalRef.result.then((_) => {
+      return true;
+    }, (_) => {
+      return false;
     });
   }
 }
