@@ -25,29 +25,46 @@
   <div class="card SecondaryBGColor" style="margin-top: 10px">
     <div class="card-body">
       <h4 class="textColor">Upload Data</h4>
-      <div class="input-group mb-3">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Please upload excel file"
-          readonly
-          style="background-color: transparent"
-          [value]="filename"
-          (click)="fileExcel.click()"
-        />
-        <span
-          class="input-group-text"
-          id="basic-addon2"
-          style="background-color: transparent"
+      <form>
+        <div class="input-group mb-3">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Please upload excel file"
+            readonly
+            style="background-color: transparent"
+            [value]="filename"
+            (click)="fileExcel.click()"
+          />
+          <span class="input-group-text" style="background-color: transparent">
+            <mat-icon style="font-size: 24px" (click)="fileExcel.click()"
+              >upload_file</mat-icon
+            >
+          </span>
+        </div>
+        <div class="form-check textColor">
+          <input
+            #CreateNewDatabase
+            class="form-check-input"
+            type="checkbox"
+            value=""
+            id="flexCheckDefault"
+            style="border-color: #c9cdce"
+            (click)="onClickCreateNewDatabase(CreateNewDatabase.checked)"
+          />
+          <label class="form-check-label" for="flexCheckDefault">
+            Create New Database
+          </label>
+        </div>
+        <br />
+        <button
+          type="submit"
+          class="btn btn-dark"
+          (click)="onClickWriteInflux()"
         >
-          <mat-icon style="font-size: 24px" (click)="fileExcel.click()"
-            >upload_file</mat-icon
-          >
-        </span>
-      </div>
-      <button type="submit" class="btn btn-dark" (click)="writeInflux()">
-        Write to influx
-      </button>
+          Write to influx
+        </button>
+      </form>
     </div>
   </div>
 </div>

@@ -19,6 +19,7 @@ export class SettingComponent implements OnInit {
   filename: string = '';
   isLoading = false;
   showTable = false;
+  isCreateNewDatabase = false;
 
   constructor(private influx: InfluxService, private modal: ModalService) {}
 
@@ -43,6 +44,10 @@ export class SettingComponent implements OnInit {
         .then()
         .catch();
     }
+  }
+
+  onClickCreateNewDatabase(flag: boolean) {
+    this.isCreateNewDatabase = flag;
   }
 
   parseExcelFile(array: Uint8Array) {
@@ -70,20 +75,34 @@ export class SettingComponent implements OnInit {
     }
   }
 
-  writeInflux() {
+  onClickWriteInflux() {
     if (this.lineProtocol.length > 0) {
       this.isLoading = true;
 
-      this.influx
-        .deleteAllHistoricalData()
-        .pipe(concatMap((res) => this.influx.writeData(this.lineProtocol)))
-        .subscribe((res) => {
-          this.isLoading = false;
-          this.filename = '';
-          this.modal.message('Message', 'Uploaded!');
-        });
+      if (this.isCreateNewDatabase) {
+        this.writeInfluxNew();
+      } else {
+        this.writeInfluxExisting();
+      }
     } else {
       this.modal.message('Message', 'No data for upload');
     }
+  }
+
+  writeInfluxNew() {
+    this.influx
+      .deleteAllHistoricalData()
+      .pipe(concatMap((_) => this.influx.writeData(this.lineProtocol)))
+      .subscribe((_) => {
+        this.filename = '';
+        this.modal.message('Message', 'Uploaded!');
+      });
+  }
+
+  writeInfluxExisting() {
+    this.influx.writeData(this.lineProtocol).subscribe((_) => {
+      this.filename = '';
+      this.modal.message('Message', 'Uploaded!');
+    });
   }
 }
