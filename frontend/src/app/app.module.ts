@@ -29,6 +29,8 @@ import { ScatterComponent } from './scatter/scatter.component';
 import { DatasetSummaryComponent } from './dataset-summary/dataset-summary.component';
 import { SettingComponent } from './setting/setting.component';
 import { CorrelationCoefficientMatrixComponent } from './correlation-coefficient-matrix/correlation-coefficient-matrix.component';
+import { DataAnalyzeComponent } from './data-analyze/data-analyze.component';
+import { HomeComponent } from './home/home.component';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -59,6 +61,8 @@ export const MOMENT_FORMATS = {
     DatasetSummaryComponent,
     SettingComponent,
     CorrelationCoefficientMatrixComponent,
+    DataAnalyzeComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserAnimationsModule,

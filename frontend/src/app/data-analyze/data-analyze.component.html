@@ -1,0 +1,24 @@
+<div class="card SecondaryBGColor">
+  <div class="card-body" style="border: none">
+    <ul
+      ngbNav
+      [(activeId)]="active_tab"
+      (navChange)="changeTab($event.nextId)"
+      class="nav-tabs"
+    >
+      <li *ngFor="let tabid of tabs" [ngbNavItem]="tabid">
+        <a ngbNavLink>
+          {{ tabid }}
+        </a>
+      </li>
+    </ul>
+
+    <div *ngIf="active_tab === 'Summay'">
+      <app-dataset-summary></app-dataset-summary>
+    </div>
+
+    <div *ngIf="active_tab === 'Correlation'">
+      <app-correlation-coefficient-matrix></app-correlation-coefficient-matrix>
+    </div>
+  </div>
+</div>

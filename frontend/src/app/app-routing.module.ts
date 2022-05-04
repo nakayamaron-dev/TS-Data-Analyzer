@@ -5,14 +5,14 @@ import { DataDescriptionComponent } from './data-description/data-description.co
 import { HistogramComponent } from './histogram/histogram.component';
 import { TsMultiComponent } from './ts-multi/tsmulti.component';
 import { ScatterComponent } from './scatter/scatter.component';
-import { DatasetSummaryComponent } from './dataset-summary/dataset-summary.component';
 import { SettingComponent } from './setting/setting.component';
-import { CorrelationCoefficientMatrixComponent } from './correlation-coefficient-matrix/correlation-coefficient-matrix.component';
+import { DataAnalyzeComponent } from './data-analyze/data-analyze.component';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: DatasetSummaryComponent,
+    component: HomeComponent,
     canDeactivate: [BeforeunloadGuard],
   },
   {
@@ -37,7 +37,7 @@ const routes: Routes = [
   },
   {
     path: 'analyze',
-    component: CorrelationCoefficientMatrixComponent,
+    component: DataAnalyzeComponent,
     canDeactivate: [BeforeunloadGuard],
   },
   {

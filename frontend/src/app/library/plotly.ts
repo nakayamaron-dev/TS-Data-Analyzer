@@ -4,7 +4,7 @@ import * as moment from 'moment';
 export class plotlylib {
   private fontColor = '#C9CDCE';
   private plotHeight = 215;
-  private matrixHeight = 900;
+  private matrixHeight = 825;
 
   public plotColors: string[] = [
     '#1f77b4', // muted blue
