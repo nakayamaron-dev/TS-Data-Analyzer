@@ -29,10 +29,11 @@
         <input
           type="text"
           class="form-control"
-          placeholder="csv file name"
+          placeholder="Please upload excel file"
           readonly
           style="background-color: transparent"
           [value]="filename"
+          (click)="fileExcel.click()"
         />
         <span
           class="input-group-text"
