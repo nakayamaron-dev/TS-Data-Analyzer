@@ -13,14 +13,14 @@ const executeInfluxQuery = async (influxQueries, res) => {
     const result = (await influx.query(influxQueries)).flat();
     res.status(200).json(result);
 };
-const getInfluxInstance = () => {
+const getInfluxInstance = (host, dbname) => {
     return new influx_1.InfluxDB({
-        host: process.env.INFLUXDB_HOST,
-        database: process.env.INFLUXDB_NAME,
+        host: host ? host : process.env.INFLUXDB_HOST,
+        database: dbname ? dbname : process.env.INFLUXDB_NAME,
         username: "",
         password: "",
         port: Number(process.env.INFLUXDB_PORT),
-        protocol: process.env.INFLUXDB_PROTOCOL
+        protocol: process.env.INFLUXDB_PROTOCOL,
     });
 };
 router.get("/:measurement/last", async (req, res, next) => {
@@ -34,12 +34,24 @@ router.get("/:measurement/last", async (req, res, next) => {
         query += " WHERE ";
         query += conditions.join(" AND ");
     }
-    query += " group by \"tag\"";
+    query += ' group by "tag"';
     try {
         await executeInfluxQuery([query], res);
     }
     catch (err) {
         next(err);
+    }
+});
+router.get("/databases", async (req, res) => {
+    let query = String.raw `SHOW DATABASES`;
+    try {
+        const influx = getInfluxInstance(req.query.host);
+        const result = (await influx.query(query)).flat();
+        res.status(200).json(result);
+    }
+    catch (err) {
+        res.status(404).json("not found");
+        return;
     }
 });
 router.get("/:measurement", async (req, res, next) => {
@@ -59,7 +71,7 @@ router.get("/:measurement", async (req, res, next) => {
         query += " WHERE ";
         query += conditions.join(" AND ");
     }
-    query += " group by \"tag\"";
+    query += ' group by "tag"';
     try {
         await executeInfluxQuery([query], res);
     }
@@ -100,10 +112,10 @@ router.delete("/delete", async (req, res, next) => {
     }
 });
 router.post("/:measurement/upload", async (req, res) => {
-    let lines = req.body.split('\n');
+    let lines = req.body.split("\n");
     const buffer = [];
     while (lines.length > 0) {
-        buffer.push(lines.splice(0, 200000).join('\n'));
+        buffer.push(lines.splice(0, 200000).join("\n"));
     }
     const postDataFunc = async (postData) => {
         const options = {
@@ -113,11 +125,12 @@ router.post("/:measurement/upload", async (req, res) => {
             method: "POST",
             headers: {
                 "Content-Type": "text/plain",
-                "Content-Length": Buffer.byteLength(postData)
-            }
+                "Content-Length": Buffer.byteLength(postData),
+            },
         };
         const statusCode = await new Promise((resolve) => {
-            const req_post = http_1.default.request(options, (influxResponse) => {
+            const req_post = http_1.default
+                .request(options, (influxResponse) => {
                 console.log("STATUS: " + influxResponse.statusCode);
                 console.log("HEADERS: " + JSON.stringify(influxResponse.headers));
                 influxResponse.setEncoding("utf8");
@@ -128,7 +141,8 @@ router.post("/:measurement/upload", async (req, res) => {
                     var _a;
                     resolve((_a = influxResponse.statusCode) !== null && _a !== void 0 ? _a : 0);
                 });
-            }).on("error", (err) => {
+            })
+                .on("error", (err) => {
                 console.log(err.name);
                 console.log(err.message);
                 resolve(500);
@@ -144,11 +158,11 @@ router.post("/:measurement/upload", async (req, res) => {
         console.log(`Uploading...(${idx + 1}/${buffer.length})`);
         statusCode = await postDataFunc(buffer[idx]);
         if (statusCode === 500) {
-            res.status(500).json({ "status": "error" });
+            res.status(500).json({ status: "error" });
             return;
         }
     }
-    res.status(statusCode).json({ "status": "completed" });
+    res.status(statusCode).json({ status: "completed" });
 });
 router.use(function (err, _req, res, _next) {
     res.status(500).json({ error: err });

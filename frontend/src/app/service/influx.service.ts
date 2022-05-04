@@ -39,6 +39,10 @@ export interface CorrelationCoefficientMatrixInfo {
   matrix: number[][];
 }
 
+export interface Idatabases {
+  name: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -225,5 +229,9 @@ export class InfluxService {
         )
       )
     );
+  }
+
+  getDatabases(host: string): Observable<Idatabases[]> {
+    return this.http.get<Idatabases[]>(`/api/v1/ts/databases?host=${host}`);
   }
 }

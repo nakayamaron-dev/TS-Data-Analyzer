@@ -10,14 +10,12 @@ import { ModalService } from '../service/modal.service';
   styleUrls: ['./setting.component.css'],
 })
 export class SettingComponent implements OnInit {
-  tags: string[] = [];
-  times: string[] = [];
   lineProtocol: string[] = [];
-  values: string[][] = [];
-  firstdata: string[][] = [];
-  lastdata: string[][] = [];
   filename: string = '';
-  showTable = false;
+  hostInfo: string = '';
+  dbName: string = '';
+  dbState: string = '';
+  isDatabaseOk = false;
   isCreateNewDatabase = false;
 
   constructor(private influx: InfluxService, private modal: ModalService) {}
@@ -29,7 +27,6 @@ export class SettingComponent implements OnInit {
     this.filename = file.name;
 
     if (file.size < 100000000) {
-      this.showTable = true;
       const reader = new FileReader();
       reader.onload = (e) => {
         this.parseExcelFile(new Uint8Array(e.target!.result as ArrayBuffer));
@@ -53,20 +50,6 @@ export class SettingComponent implements OnInit {
       const sheet = parser.sheets[0];
       if (sheet.isAvailable) {
         const dt = sheet.parseExcelFile();
-        this.tags = sheet.tags;
-        this.tags.unshift('timestamp');
-
-        this.times = sheet.timeStampArray.map((itm) => {
-          return new Date(itm).toLocaleString(); // moment(new Date(itm)).format("YYYY-MM-DD HH:mm");
-        });
-
-        this.values = sheet.timeStampArray.map((itm) => {
-          const values = Object.values(dt!.valuesWithTimeStamp(itm));
-          return values.map((itm2) => (isNaN(itm2) ? '' : itm2.toFixed(2)));
-        });
-
-        this.firstdata = this.values.slice(0, 5);
-        this.lastdata = this.values.slice(-5);
         this.lineProtocol = dt!.toLineProtocolFormat();
       }
     }
@@ -99,5 +82,42 @@ export class SettingComponent implements OnInit {
       this.filename = '';
       this.modal.message('Message', 'Uploaded!');
     });
+  }
+
+  onInputHostInfo(val: string) {
+    this.hostInfo = val;
+  }
+
+  onInputDatabaseName(val: string) {
+    this.dbName = val;
+  }
+
+  checkDisableDBCheck() {
+    return this.hostInfo === '';
+  }
+
+  checkDisableWrite() {
+    return (
+      this.dbState === '' ||
+      this.dbState === 'Database is not hosted.' ||
+      this.lineProtocol.length === 0
+    );
+  }
+
+  onClickDatabaseCheck() {
+    this.influx.getDatabases(this.hostInfo).subscribe(
+      (res) => {
+        const databases = res.map((itm) => itm.name);
+
+        if (databases.includes(this.dbName)) {
+          this.dbState = 'host is OK. database is existing.';
+        } else {
+          this.dbState = 'host is OK. database is not existing.';
+        }
+      },
+      (err) => {
+        this.dbState = 'Database is not hosted.';
+      }
+    );
   }
 }

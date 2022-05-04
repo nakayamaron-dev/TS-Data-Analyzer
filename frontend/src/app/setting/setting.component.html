@@ -4,19 +4,35 @@
       <h4 class="textColor">Data Source</h4>
       <form>
         <div class="mb-3">
-          <label for="hostInfo" class="form-label textColor">HostInfo</label>
+          <label for="hostInfo" class="form-label textColor">Host</label>
           <input
+            #hostInfo
             type="text"
             class="form-control"
             id="hostInfo"
-            placeholder="localhost:8086"
+            placeholder="localhost"
+            (input)="onInputHostInfo(hostInfo.value)"
           />
         </div>
         <div class="mb-3">
           <label for="dbname" class="form-label textColor">Database Name</label>
-          <input type="password" class="form-control" id="dbname" />
+          <input
+            #dbName
+            type="text"
+            class="form-control"
+            id="dbname"
+            (input)="onInputDatabaseName(dbName.value)"
+          />
         </div>
-        <button type="submit" class="btn btn-dark">Save & test</button>
+        <button
+          type="submit"
+          class="btn btn-dark"
+          (click)="onClickDatabaseCheck()"
+          [disabled]="checkDisableDBCheck()"
+        >
+          DB Check
+        </button>
+        <p class="textColor">{{ dbState }}</p>
       </form>
     </div>
   </div>
@@ -53,7 +69,7 @@
             (click)="onClickCreateNewDatabase(CreateNewDatabase.checked)"
           />
           <label class="form-check-label" for="flexCheckDefault">
-            Create New Database
+            Overwrite data (drop and create database)
           </label>
         </div>
         <br />
@@ -61,6 +77,7 @@
           type="submit"
           class="btn btn-dark"
           (click)="onClickWriteInflux()"
+          [disabled]="checkDisableWrite()"
         >
           Write to influx
         </button>
