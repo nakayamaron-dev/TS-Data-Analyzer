@@ -14,6 +14,7 @@ import * as PlotlyJS from 'plotly.js-dist-min';
 import { PlotlyModule } from 'angular-plotly.js';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PlotSetting } from './modal/plot-setting-modal';
+import { SinglePlotSetting } from './modal/single-setting-modal';
 import { HistSetting } from './modal/hist-setting-modal';
 import { ScatterSetting } from './modal/scatter-setting-modal';
 import { PopUp } from './modal/popup-modal';
@@ -31,6 +32,7 @@ import { SettingComponent } from './setting/setting.component';
 import { CorrelationCoefficientMatrixComponent } from './correlation-coefficient-matrix/correlation-coefficient-matrix.component';
 import { DataAnalyzeComponent } from './data-analyze/data-analyze.component';
 import { HomeComponent } from './home/home.component';
+import { TsSingleComponent } from './ts-single/ts-single.component';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -50,6 +52,7 @@ export const MOMENT_FORMATS = {
   declarations: [
     AppComponent,
     TsMultiComponent,
+    SinglePlotSetting,
     PlotSetting,
     HistSetting,
     ScatterSetting,
@@ -63,6 +66,7 @@ export const MOMENT_FORMATS = {
     CorrelationCoefficientMatrixComponent,
     DataAnalyzeComponent,
     HomeComponent,
+    TsSingleComponent,
   ],
   imports: [
     BrowserAnimationsModule,

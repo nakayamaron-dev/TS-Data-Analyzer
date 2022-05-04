@@ -16,6 +16,16 @@
           id="menu"
         >
           <li class="nav-item">
+            <a href="ts-single">
+              <mat-icon *ngIf="url !== '/ts-single'; else tsSingle"
+                >show_chart</mat-icon
+              >
+              <ng-template #tsSingle>
+                <mat-icon style="color: white">show_chart</mat-icon>
+              </ng-template>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="ts-multi">
               <mat-icon *ngIf="url !== '/ts-multi'; else tsMulti"
                 >stacked_line_chart</mat-icon

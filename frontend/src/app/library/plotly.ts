@@ -3,6 +3,7 @@ import * as moment from 'moment';
 
 export class plotlylib {
   private fontColor = '#C9CDCE';
+  private singlePlotHeight = 140;
   private plotHeight = 215;
   private matrixHeight = 825;
 
@@ -19,6 +20,42 @@ export class plotlylib {
     displaylogo: false,
     displayModeBar: false,
   };
+
+  getTSSingleLayout(): Partial<Plotly.Layout> {
+    return {
+      margin: { l: 50, r: 50, b: 35, t: 0 },
+      paper_bgcolor: 'rgb(24, 27, 31)',
+      plot_bgcolor: 'rgb(24, 27, 31)',
+      height: this.singlePlotHeight,
+      showlegend: true,
+      legend: {
+        y: 1.4,
+        xanchor: 'center',
+        x: 0.5,
+        orientation: 'h',
+        font: { color: this.fontColor },
+      },
+      xaxis: {
+        domain: [0, 0.85],
+        showgrid: true,
+        color: this.fontColor,
+      },
+      xaxis2: {
+        domain: [0.86, 1],
+        color: this.fontColor,
+      },
+      yaxis: {
+        color: this.plotColors[0],
+        zeroline: false,
+        showgrid: true,
+        title: { text: '', standoff: 5 },
+      },
+      yaxis2: {
+        color: this.plotColors[0],
+        zeroline: false,
+      },
+    };
+  }
 
   getTsMultiLayout(): Partial<Plotly.Layout> {
     return {

@@ -7,6 +7,7 @@ const bodyParserText = bodyParser.text({ limit: "1gb" });
 const bodyParserJson = bodyParser.json({ limit: "1gb" });
 
 import apiInfluxRouter from "./routes/api-influx";
+import apiTSSingleRouter from "./routes/api-tssingle";
 import apiTSMultiRouter from "./routes/api-tsmulti";
 import apiTagInfoRouter from "./routes/api-tagInfo";
 import apiHistogramRouter from "./routes/api-histogram";
@@ -18,6 +19,7 @@ dotenv.config({ path: path.join(__dirname, "../.env") });
 
 const app = express();
 
+app.use("/api/v1/mongo/tssingle", bodyParserJson, apiTSSingleRouter);
 app.use("/api/v1/mongo/tsmulti", bodyParserJson, apiTSMultiRouter);
 app.use("/api/v1/mongo/taginfo", bodyParserJson, apiTagInfoRouter);
 app.use("/api/v1/mongo/histogram", bodyParserJson, apiHistogramRouter);

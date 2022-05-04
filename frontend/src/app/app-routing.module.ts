@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { BeforeunloadGuard } from './guards/beforeunload.guard';
 import { DataDescriptionComponent } from './data-description/data-description.component';
 import { HistogramComponent } from './histogram/histogram.component';
+import { TsSingleComponent } from './ts-single/ts-single.component';
 import { TsMultiComponent } from './ts-multi/tsmulti.component';
 import { ScatterComponent } from './scatter/scatter.component';
 import { SettingComponent } from './setting/setting.component';
@@ -13,6 +14,11 @@ const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
+    canDeactivate: [BeforeunloadGuard],
+  },
+  {
+    path: 'ts-single',
+    component: TsSingleComponent,
     canDeactivate: [BeforeunloadGuard],
   },
   {

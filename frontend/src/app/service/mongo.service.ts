@@ -5,12 +5,64 @@ import { IplotMulti } from '../ts-multi/tsmulti.component';
 import { ItagInfo } from '../data-description/data-description.component';
 import { IplotHist } from '../histogram/histogram.component';
 import { IplotScatter } from '../scatter/scatter.component';
+import { IplotSingle } from '../ts-single/ts-single.component';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MongoService {
   constructor(private http: HttpClient) {}
+
+  getTSSingleInfoAll(): Observable<IplotSingle[]> {
+    return this.http
+      .get<IplotSingle[]>('/api/v1/mongo/tssingle/list', {
+        responseType: 'json',
+      })
+      .pipe(
+        map((res) => {
+          const ret: IplotSingle[] = [];
+
+          res.forEach((itm) => {
+            ret.push({
+              _id: itm._id,
+              tag: itm.tag,
+              xbin: itm.xbin,
+              dateRange: itm.dateRange,
+              datasets: [],
+            });
+          });
+
+          return ret;
+        })
+      );
+  }
+
+  getTSSingleInfo(id: number): Observable<IplotSingle> {
+    return this.http
+      .get<IplotSingle>(`/api/v1/mongo/tssingle/${id}`, {
+        responseType: 'json',
+      })
+      .pipe(
+        map((res) => {
+          const ret: IplotSingle = {
+            _id: res._id,
+            tag: res.tag,
+            xbin: res.xbin,
+            dateRange: res.dateRange,
+            datasets: [],
+          };
+          return ret;
+        })
+      );
+  }
+
+  updateTSSingleInfo(data: IplotSingle[]): Observable<any> {
+    return this.http.patch(`/api/v1/mongo/tssingle`, data);
+  }
+
+  deleteTSSingleInfo(data: IplotSingle[]): Observable<any> {
+    return this.http.delete(`/api/v1/mongo/tssingle`, { body: data });
+  }
 
   getTSmultiInfoAll(): Observable<IplotMulti[]> {
     return this.http
