@@ -17,7 +17,6 @@ export class SettingComponent implements OnInit {
   firstdata: string[][] = [];
   lastdata: string[][] = [];
   filename: string = '';
-  isLoading = false;
   showTable = false;
   isCreateNewDatabase = false;
 
@@ -30,12 +29,10 @@ export class SettingComponent implements OnInit {
     this.filename = file.name;
 
     if (file.size < 100000000) {
-      this.isLoading = true;
       this.showTable = true;
       const reader = new FileReader();
       reader.onload = (e) => {
         this.parseExcelFile(new Uint8Array(e.target!.result as ArrayBuffer));
-        this.isLoading = false;
       };
       reader.readAsArrayBuffer(file);
     } else {
@@ -77,8 +74,6 @@ export class SettingComponent implements OnInit {
 
   onClickWriteInflux() {
     if (this.lineProtocol.length > 0) {
-      this.isLoading = true;
-
       if (this.isCreateNewDatabase) {
         this.writeInfluxNew();
       } else {
