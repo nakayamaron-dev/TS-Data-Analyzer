@@ -1,6 +1,5 @@
 version: "3"
 services:
-      
   ts-data-analyzer:
     build:
       context: ./
