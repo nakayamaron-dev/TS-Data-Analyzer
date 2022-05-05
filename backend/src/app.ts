@@ -12,6 +12,7 @@ import apiTSMultiRouter from "./routes/api-tsmulti";
 import apiTagInfoRouter from "./routes/api-tagInfo";
 import apiHistogramRouter from "./routes/api-histogram";
 import apiScatterRouter from "./routes/api-scatter";
+import apiGeneralSettingRouter from "./routes/api-generalsetting";
 
 // read environment variables.
 import dotenv from "dotenv";
@@ -24,6 +25,11 @@ app.use("/api/v1/mongo/tsmulti", bodyParserJson, apiTSMultiRouter);
 app.use("/api/v1/mongo/taginfo", bodyParserJson, apiTagInfoRouter);
 app.use("/api/v1/mongo/histogram", bodyParserJson, apiHistogramRouter);
 app.use("/api/v1/mongo/scatter", bodyParserJson, apiScatterRouter);
+app.use(
+  "/api/v1/mongo/generalsettings",
+  bodyParserJson,
+  apiGeneralSettingRouter
+);
 app.use("/api/v1/ts", bodyParserText, apiInfluxRouter);
 app.use("/api/*", (_, res) => {
   res.status(404).json({ error: "404 Not Found(No route for API)" });
