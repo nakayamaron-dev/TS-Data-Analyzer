@@ -3,8 +3,8 @@ import * as moment from 'moment';
 
 export class plotlylib {
   private fontColor = '#C9CDCE';
-  private singlePlotHeight = 140;
-  private plotHeight = 215;
+  private singlePlotHeight = 135;
+  private plotHeight = 205;
   private matrixHeight = 825;
 
   public plotColors: string[] = [
@@ -29,7 +29,7 @@ export class plotlylib {
       height: this.singlePlotHeight,
       showlegend: true,
       legend: {
-        y: 1.4,
+        y: 1.5,
         xanchor: 'center',
         x: 0.5,
         orientation: 'h',
@@ -192,12 +192,5 @@ export class plotlylib {
         color: this.fontColor,
       },
     };
-  }
-
-  getTimePlaceholderValue(xrange: Moment[], format: string): string {
-    let ret = moment(xrange[0]).format(format);
-    ret += ' ~ ';
-    ret += moment(xrange[1]).format(format);
-    return ret;
   }
 }

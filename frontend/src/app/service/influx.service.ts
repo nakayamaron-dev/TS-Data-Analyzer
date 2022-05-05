@@ -109,7 +109,7 @@ export class InfluxService {
     return this.http.get<string>(`/api/v1/ts/${measurement}/timestamp/last`);
   }
 
-  getDefaultYrangeList(
+  getYrangeList(
     tags: string[],
     fromDate?: string,
     toDate?: string,

@@ -2,13 +2,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BeforeunloadGuard } from './guards/beforeunload.guard';
 import { DataDescriptionComponent } from './data-description/data-description.component';
-import { HistogramComponent } from './histogram/histogram.component';
-import { TsSingleComponent } from './ts-single/ts-single.component';
-import { TsMultiComponent } from './ts-multi/tsmulti.component';
-import { ScatterComponent } from './scatter/scatter.component';
 import { SettingComponent } from './setting/setting.component';
 import { DataAnalyzeComponent } from './data-analyze/data-analyze.component';
 import { HomeComponent } from './home/home.component';
+import { VisualizerComponent } from './visualizer/visualizer.component';
 
 const routes: Routes = [
   {
@@ -17,23 +14,8 @@ const routes: Routes = [
     canDeactivate: [BeforeunloadGuard],
   },
   {
-    path: 'ts-single',
-    component: TsSingleComponent,
-    canDeactivate: [BeforeunloadGuard],
-  },
-  {
-    path: 'ts-multi',
-    component: TsMultiComponent,
-    canDeactivate: [BeforeunloadGuard],
-  },
-  {
-    path: 'histogram',
-    component: HistogramComponent,
-    canDeactivate: [BeforeunloadGuard],
-  },
-  {
-    path: 'scatter',
-    component: ScatterComponent,
+    path: 'charts',
+    component: VisualizerComponent,
     canDeactivate: [BeforeunloadGuard],
   },
   {

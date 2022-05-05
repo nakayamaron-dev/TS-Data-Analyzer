@@ -17,7 +17,7 @@ import { IdefaultYranges } from './influx.service';
 export class ModalService {
   constructor(private modalService: NgbModal) {}
 
-  plotSingleSettingModal(
+  singleSettingModal(
     plotInfo: IplotSingle,
     tagList: string[],
     yrangeList: IdefaultYranges
@@ -37,7 +37,7 @@ export class ModalService {
     return modalRef.result;
   }
 
-  plotSettingModal(
+  multiSettingModal(
     plotInfo: IplotMulti,
     tagList: string[],
     yrangeList: IdefaultYranges
@@ -57,7 +57,7 @@ export class ModalService {
     return modalRef.result;
   }
 
-  histSettingModal(
+  histoSettingModal(
     plotInfo: IplotHist,
     tagList: string[],
     yrangeList: IdefaultYranges

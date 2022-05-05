@@ -5,7 +5,6 @@ import * as db from "../models/mongo-local-db";
 
 export interface IplotSingle {
   _id: number;
-  dateRange?: string[];
   tag: string;
   bin?: number;
   xbin?: {

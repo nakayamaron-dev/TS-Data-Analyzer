@@ -1,0 +1,56 @@
+<app-header
+  [placeholder]="placeholder"
+  (onSelectDatetime)="onChangeDateTime($event)"
+  (onClickViewMode)="onClickChangeViewMode($event)"
+  (onClickAddChart)="onClickAddChart()"
+  (onClickSave)="onClickSave()"
+></app-header>
+
+<div class="card" style="background-color: transparent; border: none">
+  <div class="card-body" style="border: none">
+    <ul
+      ngbNav
+      [(activeId)]="active_tab"
+      (navChange)="changeTab($event.nextId)"
+      class="nav-tabs"
+    >
+      <li *ngFor="let tabid of tabs" [ngbNavItem]="tabid">
+        <a ngbNavLink>
+          <mat-icon class="maticon">{{ tabid }}</mat-icon>
+        </a>
+      </li>
+    </ul>
+
+    <div *ngIf="active_tab === 'show_chart'">
+      <app-ts-single
+        [plotInfo]="SingleInfo"
+        (onDeleteChart)="onClickTrash($event)"
+        (onSettingModal)="onClickEdit($event)"
+      ></app-ts-single>
+    </div>
+
+    <div *ngIf="active_tab === 'stacked_line_chart'">
+      <app-tsmulti
+        [plotInfo]="MultiInfo"
+        (onDeleteChart)="onClickTrash($event)"
+        (onSettingModal)="onClickEdit($event)"
+      ></app-tsmulti>
+    </div>
+
+    <div *ngIf="active_tab === 'bar_chart'">
+      <app-histogram
+        [plotInfo]="HistoInfo"
+        (onDeleteChart)="onClickTrash($event)"
+        (onSettingModal)="onClickEdit($event)"
+      ></app-histogram>
+    </div>
+
+    <div *ngIf="active_tab === 'scatter_plot'">
+      <app-scatter
+        [plotInfo]="ScatterInfo"
+        (onDeleteChart)="onClickTrash($event)"
+        (onSettingModal)="onClickEdit($event)"
+      ></app-scatter>
+    </div>
+  </div>
+</div>

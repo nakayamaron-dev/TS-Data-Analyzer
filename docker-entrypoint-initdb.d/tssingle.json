@@ -1,0 +1,33 @@
+[
+  {
+    "_id": 0,
+    "tag": "DewPointTemp",
+    "yrange": { "min": -11.7, "max": 20.9 },
+    "bin": 15,
+    "xbin": { "end": 20.9, "size": 2.173333333333333, "start": -11.7 }
+  },
+  {
+    "_id": 2,
+    "__v": 0,
+    "tag": "RelativeHumidity",
+    "yrange": { "min": 20, "max": 98 },
+    "bin": 17,
+    "xbin": { "end": 98, "size": 4.6, "start": 29 }
+  },
+  {
+    "_id": 3,
+    "__v": 0,
+    "tag": "SeaLevelPressure",
+    "yrange": { "min": 992.7, "max": 1031.5 },
+    "bin": 19,
+    "xbin": { "end": 1030.7, "size": 2.066666666666667, "start": 999.7 }
+  },
+  {
+    "_id": 4,
+    "__v": 0,
+    "bin": 15,
+    "tag": "Temp",
+    "xbin": { "end": 26.1, "size": 1.5866666666666667, "start": 2.3 },
+    "yrange": { "min": 2.3, "max": 26.1 }
+  }
+]

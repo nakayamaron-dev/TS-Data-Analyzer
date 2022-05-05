@@ -16,42 +16,12 @@
           id="menu"
         >
           <li class="nav-item">
-            <a href="ts-single">
-              <mat-icon *ngIf="url !== '/ts-single'; else tsSingle"
-                >show_chart</mat-icon
+            <a href="charts">
+              <mat-icon *ngIf="url !== '/charts'; else charts"
+                >grid_view</mat-icon
               >
-              <ng-template #tsSingle>
-                <mat-icon style="color: white">show_chart</mat-icon>
-              </ng-template>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="ts-multi">
-              <mat-icon *ngIf="url !== '/ts-multi'; else tsMulti"
-                >stacked_line_chart</mat-icon
-              >
-              <ng-template #tsMulti>
-                <mat-icon style="color: white">stacked_line_chart</mat-icon>
-              </ng-template>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="histogram">
-              <mat-icon *ngIf="url !== '/histogram'; else histogram"
-                >bar_chart</mat-icon
-              >
-              <ng-template #histogram>
-                <mat-icon style="color: white">bar_chart</mat-icon>
-              </ng-template>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="scatter">
-              <mat-icon *ngIf="url !== '/scatter'; else scatter"
-                >scatter_plot</mat-icon
-              >
-              <ng-template #scatter>
-                <mat-icon style="color: white">scatter_plot</mat-icon>
+              <ng-template #charts>
+                <mat-icon style="color: white">grid_view</mat-icon>
               </ng-template>
             </a>
           </li>

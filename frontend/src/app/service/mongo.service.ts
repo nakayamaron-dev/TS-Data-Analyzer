@@ -9,11 +9,7 @@ import { IplotSingle } from '../ts-single/ts-single.component';
 
 export interface IgeneralSetting {
   _id: any;
-  dateRange: {
-    From: string;
-    To: string;
-  };
-  viewMode: 'tag' | 'description';
+  dateRange: string[];
 }
 
 @Injectable({
@@ -36,7 +32,6 @@ export class MongoService {
               _id: itm._id,
               tag: itm.tag,
               xbin: itm.xbin,
-              dateRange: itm.dateRange,
               datasets: [],
             });
           });
@@ -57,7 +52,6 @@ export class MongoService {
             _id: res._id,
             tag: res.tag,
             xbin: res.xbin,
-            dateRange: res.dateRange,
             datasets: [],
           };
           return ret;
@@ -84,7 +78,6 @@ export class MongoService {
             ret.push({
               _id: itm._id,
               items: itm.items,
-              dateRange: itm.dateRange,
               datasets: [],
             });
           });
@@ -102,7 +95,6 @@ export class MongoService {
           const ret: IplotMulti = {
             _id: res._id,
             items: res.items,
-            dateRange: res.dateRange,
             datasets: [],
           };
           return ret;
@@ -158,5 +150,9 @@ export class MongoService {
 
   getGeneralSettings(): Observable<IgeneralSetting> {
     return this.http.get<IgeneralSetting>(`api/v1/mongo/generalsettings`);
+  }
+
+  updateGeneralSettings(data: IgeneralSetting) {
+    return this.http.patch('api/v1/mongo/generalsettings', data);
   }
 }

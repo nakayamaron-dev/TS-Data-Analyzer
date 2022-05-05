@@ -5,7 +5,6 @@ import * as db from "../models/mongo-local-db";
 
 export interface IplotScatter {
   _id: number;
-  dateRange?: string[];
   tag_x: string;
   tag_y: string;
   xrange?: {

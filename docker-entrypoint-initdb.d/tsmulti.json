@@ -1,47 +1,44 @@
 [
-    {
-        "_id":0,
-        "items":[
-            {
-                "_id":{"$oid":"62594927a917e33dfa875842"},
-                "yrange":{"min":20,"max":97},
-                "tag":"RelativeHumidity"
-            },
-            {
-                "_id":{"$oid":"625a763a15ef33f480db568b"},
-                "yrange":{"min":2.3,"max":22.9},
-                "tag":"Temp"
-            }
-        ],
-        "dateRange":["2022-03-01T00:45:28.000Z","2022-03-31T00:45:28.000Z"]
-    },
-    {
-        "_id":6,
-        "__v":0,
-        "items":[
-            {
-                "_id":{"$oid":"625c051894b52a7e8ea3dab9"},
-                "yrange":{"min":2.5,"max":19.4},
-                "tag":"VaporPressure"
-            },
-            {
-                "_id":{"$oid":"625bfaf994b52a7e8ea3da2b"},
-                "yrange":{"min":992.7,"max":1031.5},
-                "tag":"SeaLevelPressure"
-            }
-        ],
-        "dateRange":["2022-03-01T00:45:28.000Z","2022-03-31T00:45:28.000Z"]
-    }, 
-    {
-        "_id":7,
-        "__v":0,
-        "items":[
-            {
-                "_id":{"$oid":"626158db921c136635ff09dd"},
-                "tag":"WindSpeed",
-                "yrange":{"min":0.4,"max":10.2}
-            }
-        ],
-        "dateRange":["2022-03-01T00:45:28.000Z","2022-03-31T00:45:28.000Z"]
-    }
+  {
+    "_id": 0,
+    "items": [
+      {
+        "_id": { "$oid": "62594927a917e33dfa875842" },
+        "yrange": { "min": 20, "max": 97 },
+        "tag": "RelativeHumidity"
+      },
+      {
+        "_id": { "$oid": "625a763a15ef33f480db568b" },
+        "yrange": { "min": 2.3, "max": 22.9 },
+        "tag": "Temp"
+      }
+    ]
+  },
+  {
+    "_id": 6,
+    "__v": 0,
+    "items": [
+      {
+        "_id": { "$oid": "625c051894b52a7e8ea3dab9" },
+        "yrange": { "min": 2.5, "max": 19.4 },
+        "tag": "VaporPressure"
+      },
+      {
+        "_id": { "$oid": "625bfaf994b52a7e8ea3da2b" },
+        "yrange": { "min": 992.7, "max": 1031.5 },
+        "tag": "SeaLevelPressure"
+      }
+    ]
+  },
+  {
+    "_id": 7,
+    "__v": 0,
+    "items": [
+      {
+        "_id": { "$oid": "626158db921c136635ff09dd" },
+        "tag": "WindSpeed",
+        "yrange": { "min": 0.4, "max": 10.2 }
+      }
+    ]
+  }
 ]

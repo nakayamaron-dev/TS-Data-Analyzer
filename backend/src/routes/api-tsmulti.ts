@@ -5,7 +5,6 @@ import * as db from "../models/mongo-local-db";
 
 export interface IplotMulti {
   _id: number;
-  dateRange?: string[];
   items: {
     tag: string;
     yrange?: {

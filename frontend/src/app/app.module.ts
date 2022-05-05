@@ -33,6 +33,7 @@ import { CorrelationCoefficientMatrixComponent } from './correlation-coefficient
 import { DataAnalyzeComponent } from './data-analyze/data-analyze.component';
 import { HomeComponent } from './home/home.component';
 import { TsSingleComponent } from './ts-single/ts-single.component';
+import { VisualizerComponent } from './visualizer/visualizer.component';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -67,6 +68,7 @@ export const MOMENT_FORMATS = {
     DataAnalyzeComponent,
     HomeComponent,
     TsSingleComponent,
+    VisualizerComponent,
   ],
   imports: [
     BrowserAnimationsModule,

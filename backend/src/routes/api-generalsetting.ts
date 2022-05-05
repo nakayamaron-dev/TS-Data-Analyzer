@@ -5,11 +5,7 @@ import * as db from "../models/mongo-local-db";
 
 export interface IgeneralSetting {
   _id: any;
-  dateRange: {
-    From: string;
-    To: string;
-  };
-  viewMode: "tag" | "description";
+  dateRange: string[];
 }
 
 router.get(
@@ -52,9 +48,9 @@ router.patch(
     try {
       conn = await db.createConnection("data");
       const gensetting = conn.model(
-        "generalSetting",
+        "generalSettings",
         generalSettingSchema,
-        "generalsetting"
+        "generalsettings"
       );
       await gensetting.findByIdAndUpdate(
         req.body._id,
