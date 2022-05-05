@@ -7,6 +7,15 @@ import { IplotHist } from '../histogram/histogram.component';
 import { IplotScatter } from '../scatter/scatter.component';
 import { IplotSingle } from '../ts-single/ts-single.component';
 
+export interface IgeneralSetting {
+  _id: any;
+  dateRange: {
+    From: string;
+    To: string;
+  };
+  viewMode: 'tag' | 'description';
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -145,5 +154,9 @@ export class MongoService {
 
   deleteScatterInfo(data: IplotScatter[]): Observable<any> {
     return this.http.delete(`/api/v1/mongo/scatter`, { body: data });
+  }
+
+  getGeneralSettings(): Observable<IgeneralSetting> {
+    return this.http.get<IgeneralSetting>(`api/v1/mongo/generalsettings`);
   }
 }
