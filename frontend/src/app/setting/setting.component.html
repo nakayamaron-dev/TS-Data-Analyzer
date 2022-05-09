@@ -1,87 +1,137 @@
-<div class="col-6" style="margin-top: 10px">
-  <div class="card SecondaryBGColor" style="margin-top: 10px">
-    <div class="card-body">
-      <h4 class="textColor">Data Source</h4>
-      <form>
-        <div class="mb-3">
-          <label for="hostInfo" class="form-label textColor">Host</label>
-          <input
-            #hostInfo
-            type="text"
-            class="form-control"
-            id="hostInfo"
-            placeholder="localhost"
-            (input)="onInputHostInfo(hostInfo.value)"
-          />
-        </div>
-        <div class="mb-3">
-          <label for="dbname" class="form-label textColor">Database Name</label>
-          <input
-            #dbName
-            type="text"
-            class="form-control"
-            id="dbname"
-            (input)="onInputDatabaseName(dbName.value)"
-          />
-        </div>
-        <button
-          type="submit"
-          class="btn btn-dark"
-          (click)="onClickDatabaseCheck()"
-          [disabled]="checkDisableDBCheck()"
-        >
-          DB Check
-        </button>
+<div class="row">
+  <div class="col-6" style="margin-top: 10px">
+    <div class="card SecondaryBGColor" style="margin-top: 10px">
+      <div class="card-body">
+        <h4 class="textColor">Data Source</h4>
+        <form>
+          <div class="mb-3">
+            <label for="hostInfo" class="form-label textColor">Host</label>
+            <input
+              #hostInfo
+              type="text"
+              class="form-control"
+              id="hostInfo"
+              placeholder="localhost"
+              (input)="onInputDSHostInfo(hostInfo.value)"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="dbname" class="form-label textColor"
+              >Database Name</label
+            >
+            <input
+              #dbName
+              type="text"
+              class="form-control"
+              id="dbname"
+              (input)="onInputDSDatabaseName(dbName.value)"
+            />
+          </div>
+          <button
+            type="submit"
+            class="btn btn-dark"
+            (click)="onClickDatabaseCheck()"
+            [disabled]="checkDisableDBCheck()"
+          >
+            DB Check
+          </button>
+        </form>
         <p class="textColor">{{ dbState }}</p>
-      </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-6" style="margin-top: 10px">
+    <div class="card SecondaryBGColor" style="margin-top: 10px">
+      <div class="card-body">
+        <h4 class="textColor">Create Database</h4>
+        <form>
+          <div class="mb-3">
+            <label for="hostInfo" class="form-label textColor">Host</label>
+            <input
+              #CDhostInfo
+              type="text"
+              class="form-control"
+              id="hostInfo"
+              placeholder="localhost"
+              (input)="onInputCDHostInfo(CDhostInfo.value)"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="dbname" class="form-label textColor"
+              >Database Name</label
+            >
+            <input
+              #CDdbName
+              type="text"
+              class="form-control"
+              id="dbname"
+              (input)="onInputCDDatabaseName(CDdbName.value)"
+            />
+          </div>
+          <button
+            type="submit"
+            class="btn btn-dark"
+            (click)="onClickCreateDatabase()"
+            [disabled]="checkDisableCreateDB()"
+          >
+            Create Database
+          </button>
+        </form>
+        <p class="textColor">{{ createResult }}</p>
+      </div>
     </div>
   </div>
 </div>
-<div class="col-6" style="margin-top: 10px">
-  <div class="card SecondaryBGColor" style="margin-top: 10px">
-    <div class="card-body">
-      <h4 class="textColor">Upload Data</h4>
-      <form>
-        <div class="input-group mb-3">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Please upload excel file"
-            readonly
-            style="background-color: transparent"
-            [value]="filename"
-            (click)="fileExcel.click()"
-          />
-          <span class="input-group-text" style="background-color: transparent">
-            <mat-icon style="font-size: 24px" (click)="fileExcel.click()"
-              >upload_file</mat-icon
+<div class="row">
+  <div class="col-6" style="margin-top: 10px">
+    <div class="card SecondaryBGColor" style="margin-top: 10px">
+      <div class="card-body">
+        <h4 class="textColor">Upload Data</h4>
+        <form>
+          <div class="input-group mb-3">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Please upload excel file"
+              readonly
+              style="background-color: transparent"
+              [value]="filename"
+              (click)="fileExcel.click()"
+            />
+            <span
+              class="input-group-text"
+              style="background-color: transparent"
             >
-          </span>
-        </div>
-        <div class="form-check textColor">
-          <input
-            #CreateNewDatabase
-            class="form-check-input"
-            type="checkbox"
-            value=""
-            id="flexCheckDefault"
-            style="border-color: #c9cdce"
-            (click)="onClickCreateNewDatabase(CreateNewDatabase.checked)"
-          />
-          <label class="form-check-label" for="flexCheckDefault">
-            Overwrite data (drop and create database)
-          </label>
-        </div>
-        <br />
-        <button
-          type="submit"
-          class="btn btn-dark"
-          (click)="onClickWriteInflux()"
-          [disabled]="checkDisableWrite()"
-        >
-          Write to influx
-        </button>
-      </form>
+              <mat-icon style="font-size: 24px" (click)="fileExcel.click()"
+                >upload_file</mat-icon
+              >
+            </span>
+          </div>
+          <div class="form-check textColor">
+            <input
+              #CreateNewDatabase
+              class="form-check-input"
+              type="checkbox"
+              value=""
+              id="flexCheckDefault"
+              style="border-color: #c9cdce"
+              (click)="onClickCreateNewDatabase(CreateNewDatabase.checked)"
+            />
+            <label class="form-check-label" for="flexCheckDefault">
+              Overwrite data (drop and create database)
+            </label>
+          </div>
+          <br />
+          <button
+            type="submit"
+            class="btn btn-dark"
+            (click)="onClickWriteInflux()"
+            [disabled]="checkDisableWrite()"
+          >
+            Write to influx
+          </button>
+        </form>
+      </div>
     </div>
   </div>
 </div>

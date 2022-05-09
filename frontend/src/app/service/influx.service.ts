@@ -40,6 +40,7 @@ export interface CorrelationCoefficientMatrixInfo {
 }
 
 export interface Idatabases {
+  host?: string;
   name: string;
 }
 
@@ -233,5 +234,9 @@ export class InfluxService {
 
   getDatabases(host: string): Observable<Idatabases[]> {
     return this.http.get<Idatabases[]>(`/api/v1/ts/databases?host=${host}`);
+  }
+
+  createDatabase(data: Idatabases) {
+    return this.http.post(`/api/v1/ts/createdb`, data);
   }
 }

@@ -42,6 +42,16 @@ router.get("/:measurement/last", async (req, res, next) => {
         next(err);
     }
 });
+router.post("/createdb", async (req, res, next) => {
+    try {
+        const influx = getInfluxInstance(req.body.host);
+        influx.createDatabase(req.body.dbname);
+        res.status(200).json("status ok");
+    }
+    catch (err) {
+        next(err);
+    }
+});
 router.get("/databases", async (req, res) => {
     let query = String.raw `SHOW DATABASES`;
     try {

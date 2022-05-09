@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { concatMap } from 'rxjs';
+import { concatMap, forkJoin } from 'rxjs';
 import { ExcelParser } from '../service/excel-parser';
-import { InfluxService } from '../service/influx.service';
+import { Idatabases, InfluxService } from '../service/influx.service';
+import { MongoService } from '../service/mongo.service';
 import { ModalService } from '../service/modal.service';
 
 @Component({
@@ -12,13 +13,20 @@ import { ModalService } from '../service/modal.service';
 export class SettingComponent implements OnInit {
   lineProtocol: string[] = [];
   filename: string = '';
-  hostInfo: string = '';
-  dbName: string = '';
+  DShostInfo: string = '';
+  DSdbName: string = '';
   dbState: string = '';
+  CDhostInfo: string = '';
+  CDdbName: string = '';
+  createResult: string = '';
   isDatabaseOk = false;
   isCreateNewDatabase = false;
 
-  constructor(private influx: InfluxService, private modal: ModalService) {}
+  constructor(
+    private influx: InfluxService,
+    private modal: ModalService,
+    private mongo: MongoService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -84,16 +92,28 @@ export class SettingComponent implements OnInit {
     });
   }
 
-  onInputHostInfo(val: string) {
-    this.hostInfo = val;
+  onInputDSHostInfo(val: string) {
+    this.DShostInfo = val;
   }
 
-  onInputDatabaseName(val: string) {
-    this.dbName = val;
+  onInputDSDatabaseName(val: string) {
+    this.DSdbName = val;
+  }
+
+  onInputCDHostInfo(val: string) {
+    this.CDhostInfo = val;
+  }
+
+  onInputCDDatabaseName(val: string) {
+    this.CDdbName = val;
   }
 
   checkDisableDBCheck() {
-    return this.hostInfo === '';
+    return this.DShostInfo === '';
+  }
+
+  checkDisableCreateDB() {
+    return this.CDhostInfo === '' || this.CDdbName === '';
   }
 
   checkDisableWrite() {
@@ -105,11 +125,11 @@ export class SettingComponent implements OnInit {
   }
 
   onClickDatabaseCheck() {
-    this.influx.getDatabases(this.hostInfo).subscribe(
+    this.influx.getDatabases(this.DShostInfo).subscribe(
       (res) => {
         const databases = res.map((itm) => itm.name);
 
-        if (databases.includes(this.dbName)) {
+        if (databases.includes(this.DSdbName)) {
           this.dbState = 'host is OK. database is existing.';
         } else {
           this.dbState = 'host is OK. database is not existing.';
@@ -120,4 +140,20 @@ export class SettingComponent implements OnInit {
       }
     );
   }
+
+  onClickCreateDatabase() {
+    const data: Idatabases = {
+      host: this.CDhostInfo,
+      name: this.CDdbName,
+    };
+    this.influx.createDatabase(data).subscribe((res) => {
+      if (res === 'status ok') {
+        this.createResult = `Created ${this.CDhostInfo}/${this.CDdbName}`;
+      } else {
+        this.createResult = `Failed to create ${this.CDhostInfo}/${this.CDdbName}`;
+      }
+    });
+  }
+
+  initializeMongoDB() {}
 }

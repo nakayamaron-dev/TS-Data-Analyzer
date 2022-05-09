@@ -7,7 +7,6 @@ const http_errors_1 = __importDefault(require("http-errors"));
 const path_1 = __importDefault(require("path"));
 const express_1 = __importDefault(require("express"));
 const body_parser_1 = __importDefault(require("body-parser"));
-const bodyParserText = body_parser_1.default.text({ limit: "1gb" });
 const bodyParserJson = body_parser_1.default.json({ limit: "1gb" });
 const api_influx_1 = __importDefault(require("./routes/api-influx"));
 const api_tssingle_1 = __importDefault(require("./routes/api-tssingle"));
@@ -25,7 +24,7 @@ app.use("/api/v1/mongo/taginfo", bodyParserJson, api_tagInfo_1.default);
 app.use("/api/v1/mongo/histogram", bodyParserJson, api_histogram_1.default);
 app.use("/api/v1/mongo/scatter", bodyParserJson, api_scatter_1.default);
 app.use("/api/v1/mongo/generalsettings", bodyParserJson, api_generalsetting_1.default);
-app.use("/api/v1/ts", bodyParserText, api_influx_1.default);
+app.use("/api/v1/ts", bodyParserJson, api_influx_1.default);
 app.use("/api/*", (_, res) => {
     res.status(404).json({ error: "404 Not Found(No route for API)" });
 });

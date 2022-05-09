@@ -3,7 +3,6 @@ import createError from "http-errors";
 import path from "path";
 import express from "express";
 import bodyParser from "body-parser";
-const bodyParserText = bodyParser.text({ limit: "1gb" });
 const bodyParserJson = bodyParser.json({ limit: "1gb" });
 
 import apiInfluxRouter from "./routes/api-influx";
@@ -30,7 +29,7 @@ app.use(
   bodyParserJson,
   apiGeneralSettingRouter
 );
-app.use("/api/v1/ts", bodyParserText, apiInfluxRouter);
+app.use("/api/v1/ts", bodyParserJson, apiInfluxRouter);
 app.use("/api/*", (_, res) => {
   res.status(404).json({ error: "404 Not Found(No route for API)" });
 });
