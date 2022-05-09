@@ -1,1 +1,25 @@
 <h2 class="textColor">Welcome to TS Analyzer</h2>
+<br />
+<h4 class="textColor">Contents</h4>
+<div class="card SecondaryBGColor" style="margin-top: 10px">
+  <div class="card-body">
+    <table class="table textColor">
+      <thead class="row-heading">
+        <tr>
+          <th>Menu</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let itm of menulist">
+          <td>
+            <mat-icon style="color: white">{{ itm.icon }}</mat-icon>
+          </td>
+          <td>
+            {{ itm.description }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
