@@ -564,7 +564,7 @@ export class VisualizerComponent implements OnInit {
       case 'show_chart':
         return this.TSSingleSettingModal(idx);
       case 'stacked_line_chart':
-        return this.TSSingleSettingModal(idx);
+        return this.TSMultiSettingModal(idx);
       case 'bar_chart':
         return this.histogramSettingModal(idx);
       case 'scatter_plot':
